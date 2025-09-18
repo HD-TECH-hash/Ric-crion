@@ -8,9 +8,10 @@
   :root{
     --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
     --primary:#2343d5; --primary-2:#2e61ff;
-    --danger:#ef4444;
-    /* Roxo padrão para as sombras dos cards */
+    --lime:#a3e635; --danger:#ef4444;
+    /* sombras */
     --shadow-purple:0 16px 36px #7C3AED40,0 2px 6px #7C3AED40;
+    /* bordas */
     --border-purple:#e2d6ff;
   }
   *{box-sizing:border-box}
@@ -18,69 +19,82 @@
     margin:0;
     font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
     background:radial-gradient(1200px 600px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%);
-    color:var(--ink);
   }
   .wrap{max-width:1240px;margin:0 auto;padding:24px}
 
-  /* ===== HEADER (logo à esquerda, título central, badge à direita) ===== */
+  /* HERO (barra azul) */
+  .hero-wrap{position:relative;margin-bottom:22px}
   .hero{
+    position:relative;
     background:linear-gradient(135deg,var(--primary),var(--primary-2));
-    color:#fff;border-radius:28px;padding:18px 24px;margin-bottom:22px;
-    display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;
+    color:#fff;border-radius:28px;padding:22px 24px;
+    display:flex;align-items:center;justify-content:center;
     box-shadow:0 24px 56px rgba(46,97,255,.15),0 2px 8px rgba(46,97,255,.18);
   }
-  .hero .title{margin:0;font-size:30px;letter-spacing:.5px;text-align:center;white-space:nowrap}
-  .logo{height:28px;width:auto;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.18))}
+  .hero h1{margin:0;font-size:32px;letter-spacing:.5px;text-align:center}
+  .logo{
+    position:absolute; left:28px; top:50%; transform:translateY(-50%);
+    height:36px; width:auto; object-fit:contain;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,.25));
+  }
   .badge{
-    font-size:12px;color:#111;background:#fff;border:1px solid #E5E7EB;
-    padding:6px 12px;border-radius:999px;box-shadow:0 10px 24px #0001,0 2px 6px #0001;
-    white-space:nowrap
+    position:absolute; right:28px; top:50%; transform:translateY(-50%);
+    font-size:12px;color:#111;background:#fff;
+    border:1px solid #E5E7EB;padding:8px 14px;border-radius:999px;
+    box-shadow:0 10px 24px #0001,0 2px 6px #0001; white-space:nowrap;
   }
 
-  /* ===== GRID ===== */
+  /* GRID */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
   @media (max-width:980px){ .grid{grid-template-columns:1fr} }
-  @media (max-width:520px){
-    .hero{grid-template-columns:auto 1fr;row-gap:10px}
-    .badge{grid-column:1 / -1;justify-self:center}
-    .logo{height:24px}
-    .hero .title{font-size:22px}
-  }
 
-  /* ===== CARDS (todas sombras roxas) ===== */
+  /* CARDS (todas com roxo) */
   .card{
     background:#fff;border:1px solid var(--border-purple);
-    border-radius:16px;padding:16px;box-shadow:var(--shadow-purple);
+    border-radius:16px;padding:16px; box-shadow:var(--shadow-purple);
   }
+  .card h2{margin:0 0 10px;font-size:18px;color:var(--ink)}
 
-  h2{margin:0 0 10px;font-size:18px}
-  .tag{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;
-       font-size:13px;margin-bottom:10px;border:1px solid #e5d9ff;background:#f7f2ff;color:#5534b8}
+  /* etiquetas */
+  .tag{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:13px;margin-bottom:10px;border:1px solid}
+  .tag.alert{background:#fff1e6;border-color:#ffdaba;color:#b45309}
+  .tag.sites{background:#ebf5ff;border-color:#cfe8ff;color:#1e40af}
+  .tag.pdf{background:#f1eaff;border-color:#dacfff;color:#5b21b6}
+  .tag.crion{background:#eefcf6;border-color:#cbf5e1;color:#065f46}
+
+  /* inputs / botões */
   .row{display:flex;gap:10px;align-items:center}
   .input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;background:#fbfbff}
   .input::placeholder{color:#9aa3b2}
-  .btn{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;
-       color:#fff;background:var(--primary);box-shadow:0 8px 18px rgba(35,67,213,.28);transition:transform .02s ease, filter .1s}
+  .btn{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;color:#fff;background:var(--primary);
+       box-shadow:0 8px 18px rgba(35,67,213,.28);transition:transform .02s ease, filter .1s}
   .btn:active{transform:translateY(1px)}
   .btn[disabled]{filter:saturate(.2);opacity:.6;cursor:not-allowed}
   .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
   .btn-danger{background:var(--danger); color:#fff; box-shadow:0 8px 18px #EF44443A}
   .btn-small{padding:8px 12px;border-radius:10px;font-weight:800}
+
+  /* listas/snippets */
   .list{margin:10px 0 0;padding:0;list-style:none}
   .item{padding:10px 0;border-top:1px solid var(--line)}
   .meta{font-size:12px;color:#6b7280;margin-top:2px}
   .snip{color:#374151;font-size:14px;margin:6px 0}
   .small{font-size:12px;color:#6b7280}
   .out{white-space:pre-wrap;min-height:160px;border:1px dashed var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fbfbff}
+
   a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
+
+  /* loading dots */
   .dots{display:inline-block;margin-left:6px;vertical-align:middle}
   .dots i{display:inline-block;width:6px;height:6px;background:#2563eb;border-radius:50%;margin:0 2px;animation:jump 1s infinite}
   .dots i:nth-child(2){animation-delay:.15s} .dots i:nth-child(3){animation-delay:.3s}
   @keyframes jump{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+
+  /* alerta */
   .alert-big{font-size:28px;font-weight:900;color:#b91c1c;text-align:center;margin-top:14px}
   .alert-resp{font-size:14px;font-weight:600;color:#334155;text-align:center;margin-top:6px;text-transform:lowercase}
 
-  /* ===== MODAIS ===== */
+  /* modais */
   .modal{position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000}
   .modal.show{display:flex}
   .modal-box{width:min(560px,92vw);border-radius:16px;padding:18px 16px;color:#0b1220;background:#fff;box-shadow:0 18px 64px #00000040}
@@ -92,23 +106,21 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- ===== HEADER ÚNICO ===== -->
-    <header class="hero">
-      <!-- LOGO à esquerda (GitHub com fallback Google Drive) -->
-      <img
-        class="logo"
-        src="https://raw.githubusercontent.com/HD-TECH-hash/supplies/main/logo.png"
-        onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1rKFdNQjrm1zcjUf5tUHrD23AbS9PXRRN';"
-        alt="Logo">
-      <h1 class="title">RIC AI CRION</h1>
-      <div class="badge">Desenvolvido por Alexandre Cavalcante V3.0</div>
-    </header>
+    <!-- HERO ÚNICO -->
+    <div class="hero-wrap">
+      <div class="hero">
+        <img class="logo"
+             src="https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon.png"
+             alt="Logo">
+        <h1>RIC AI CRION</h1>
+        <div class="badge">Desenvolvido por Alexandre Cavalcante V3.0</div>
+      </div>
+    </div>
 
-    <!-- ===== GRID ===== -->
     <div class="grid">
       <!-- ALERTA -->
       <section class="card">
-        <div class="tag">ALERTA</div>
+        <div class="tag alert">ALERTA</div>
         <h2>Controle de alerta</h2>
         <div class="row">
           <button id="btnAlert" class="btn">Pesquisar</button>
@@ -120,7 +132,7 @@
 
       <!-- SITES OFICIAIS -->
       <section class="card">
-        <div class="tag">SITES OFICIAIS</div>
+        <div class="tag sites">SITES OFICIAIS</div>
         <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
         <div class="row" style="margin-top:10px">
           <input id="qSites" class="input" placeholder="Ex.: vencimento Hapvida, cancelamento Affix, inclusão de RN">
@@ -131,7 +143,7 @@
 
       <!-- PDFs -->
       <section class="card">
-        <div class="tag">PDFs</div>
+        <div class="tag pdf">PDFs</div>
         <h2>Manuais do Corretor (Sharepoint)</h2>
         <p class="small">Busca rápida no texto extraído dos PDFs (indexados).</p>
         <div class="row">
@@ -144,7 +156,7 @@
 
       <!-- CRION -->
       <section class="card">
-        <div class="tag">PROCEDIMENTOS CRION</div>
+        <div class="tag crion">PROCEDIMENTOS CRION</div>
         <h2>Procedimentos</h2>
         <p class="small">Material de Treinamento, Quiz, Alertas &gt; 30 dias e demais informações.</p>
         <div class="row">
@@ -158,7 +170,7 @@
     </div>
   </div>
 
-  <!-- ===== MODAIS ALERTA ===== -->
+  <!-- Modais ALERTA -->
   <div id="modal1" class="modal"><div class="modal-box" style="border:1px solid #cfe1ff">
     <h3 class="modal-title">ALERTA DA OPERAÇÃO</h3>
     <input id="m1text" class="input" placeholder="Digite o texto do alerta">
@@ -186,7 +198,7 @@
   </div></div>
 
 <script>
-/* Helpers */
+/* helpers */
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
@@ -197,19 +209,14 @@ function setLoading(btn, on, label, loadingLabel){
   else { btn.disabled=false; btn.innerHTML=btn.dataset.label||label; }
 }
 
-/* Rodando no GitHub Pages? */
-const HAS_GS = !!(window.google && google.script && google.script.run);
-const WARN = 'Funções dinâmicas disponíveis apenas na versão Apps Script.';
-
 /* ALERTA (exibir) */
 const elMsg  = document.getElementById('alertMsg');
 const elResp = document.getElementById('alertResp');
 document.getElementById('btnAlert').addEventListener('click', ()=>{
   const btn=document.getElementById('btnAlert');
   elMsg.style.display='none'; elResp.style.display='none';
-  if(!HAS_GS){ elMsg.textContent=WARN; elMsg.style.display='block'; return; }
-
   setLoading(btn,true,"Pesquisar",dots("Consultando"));
+  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); elMsg.textContent="(Somente funcional na versão Apps Script)"; elMsg.style.display='block'; return; }
   google.script.run.withSuccessHandler(res=>{
     setLoading(btn,false,"Pesquisar");
     if(!res || res.ok===false){ elMsg.textContent="Falha ao consultar."; elMsg.style.display='block'; return; }
@@ -232,12 +239,7 @@ let _newAlert = "", _newResp = "";
 function openM(id){ document.getElementById('modal'+id).classList.add('show'); }
 function closeM(id){ document.getElementById('modal'+id).classList.remove('show'); }
 function backM1(){ closeM(2); openM(1); }
-document.getElementById('btnAdjust').addEventListener('click', ()=>{
-  if(!HAS_GS){ alert(WARN); return; }
-  _newAlert=""; _newResp="";
-  document.getElementById('m1text').value=""; document.getElementById('m2text').value="";
-  openM(1);
-});
+document.getElementById('btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; document.getElementById('m1text').value=""; document.getElementById('m2text').value=""; openM(1); });
 function goM2(){
   const btn = document.getElementById('m1ok');
   _newAlert = (document.getElementById('m1text').value||"").trim();
@@ -250,6 +252,7 @@ function saveAlert(){
   const btn = document.getElementById('m2ok');
   _newResp = (document.getElementById('m2text').value||"").trim();
   setLoading(btn,true,"Salvar",dots("Gravando"));
+  if(!google||!google.script){ setLoading(btn,false,"Salvar"); closeM(2); alert("(Somente funcional na versão Apps Script)"); return; }
   google.script.run.withSuccessHandler(_=>{
     setLoading(btn,false,"Salvar"); closeM(2); openM(3);
   }).withFailureHandler(e=>{
@@ -258,15 +261,14 @@ function saveAlert(){
   }).apiAdjustAlert(_newAlert,_newResp);
 }
 
-/* SITES (resposta longa + fontes) */
+/* SITES (texto longo + fontes) — sem token */
 document.getElementById('btnSites').addEventListener('click', ()=>{
   const q=(document.getElementById('qSites').value||'').trim();
+  if(!q){ document.getElementById('outSites').textContent='Digite a pergunta.'; return; }
   const out=document.getElementById('outSites'); const btn=document.getElementById('btnSites');
-  if(!q){ out.textContent='Digite a pergunta.'; return; }
-  if(!HAS_GS){ out.textContent=WARN; return; }
-
   setLoading(btn,true,"Pesquisar",dots("Pensando")); out.innerHTML=dots("Processando");
   const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final.";
+  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); out.textContent="(Somente funcional na versão Apps Script)"; return; }
   google.script.run.withSuccessHandler(txt=>{
     setLoading(btn,false,"Pesquisar");
     const html = String(txt||'—').replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
@@ -286,12 +288,10 @@ function doPDF(){
   const btn=document.getElementById('btnPDF');
   const st=document.getElementById('pdfStatus');
   const ul=document.getElementById('pdfList');
-  ul.innerHTML="";
-  if(!q){ st.textContent='Digite um termo.'; return;}
-  if(!HAS_GS){ st.textContent=WARN; return; }
-
+  ul.innerHTML=""; if(!q){ st.textContent='Digite um termo.'; return;}
   setLoading(btn,true,"Pesquisar",dots("Pesquisando"));
   st.innerHTML=dots("Listando arquivos");
+  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); st.textContent="(Somente funcional na versão Apps Script)"; return; }
   google.script.run.withSuccessHandler(res=>{
     setLoading(btn,false,"Pesquisar");
     if(!res || res.ok===false){ st.textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
@@ -329,9 +329,8 @@ function doPDF(){
 document.getElementById('btnCRION').addEventListener('click', doCRION);
 document.getElementById('qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
 document.getElementById('btnReIdxCRION').addEventListener('click', ()=>{
-  const s=document.getElementById('crionStatus');
-  if(!HAS_GS){ s.textContent=WARN; return; }
-  s.innerHTML=dots("Reindexando CRION");
+  const s=document.getElementById('crionStatus'); s.innerHTML=dots("Reindexando CRION");
+  if(!google||!google.script){ s.textContent="(Somente funcional na versão Apps Script)"; return; }
   google.script.run.withSuccessHandler(r=>{
     s.textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou");
   }).withFailureHandler(e=>{ s.textContent="Erro: "+(e&&e.message?e.message:String(e)); }).apiReindexCrion();
@@ -341,12 +340,10 @@ function doCRION(){
   const btn=document.getElementById('btnCRION');
   const st=document.getElementById('crionStatus');
   const ul=document.getElementById('crionList');
-  ul.innerHTML="";
-  if(!q){ st.textContent='Digite um termo.'; return;}
-  if(!HAS_GS){ st.textContent=WARN; return; }
-
+  ul.innerHTML=""; if(!q){ st.textContent='Digite um termo.'; return;}
   setLoading(btn,true,"Pesquisar",dots("Pesquisando"));
   st.innerHTML=dots("Listando arquivos");
+  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); st.textContent="(Somente funcional na versão Apps Script)"; return; }
   google.script.run.withSuccessHandler(res=>{
     setLoading(btn,false,"Pesquisar");
     if(!res || res.ok===false){ st.textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
