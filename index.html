@@ -5,325 +5,359 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RIC AI — CRION</title>
 <style>
-  :root{
-    --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
-    --primary:#2343d5; --primary-2:#2e61ff;
-    --lime:#a3e635; --danger:#ef4444;
-    --shadow-purple:0 16px 36px #7C3AED40,0 2px 6px #7C3AED40;
-    --border-purple:#e2d6ff;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-       background:radial-gradient(1200px 600px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%);}
-  .wrap{max-width:1240px;margin:0 auto;padding:24px}
+:root{
+  --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
+  --primary:#2343d5; --primary-2:#2e61ff; --danger:#ef4444; --lime:#22c55e;
+  --shadow-purple:0 24px 56px #7c3aed33,0 6px 14px #7c3aed26;
+  --card-shadow:0 16px 36px #7C3AED40,0 2px 6px #7C3AED40;
+  --border-purple:#e2d6ff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  background:radial-gradient(1200px 600px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%);
+  color:var(--ink);
+}
+.wrap{max-width:1240px;margin:0 auto;padding:22px}
 
-  /* Header com logos nas pontas e título central */
-  .hero{
-    background:linear-gradient(135deg,var(--primary),var(--primary-2));
-    color:#fff;border-radius:28px;padding:18px 24px;margin-bottom:22px;
-    display:grid;grid-template-columns:120px 1fr 120px;align-items:center;
-    box-shadow:0 24px 56px rgba(124,58,237,.12),0 2px 8px rgba(124,58,237,.18);
-  }
-  .hero h1{margin:0;font-size:30px;letter-spacing:.5px;text-align:center}
-  .logo{height:40px;width:auto;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.18))}
-  .logo.left{justify-self:start}
-  .logo.right{justify-self:end}
+/* HERO */
+.hero{
+  position:sticky; top:0; z-index:2; margin-bottom:22px;
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  color:#fff; border-radius:28px; padding:18px 24px;
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  box-shadow:var(--shadow-purple); backdrop-filter:saturate(1.2) blur(4px)
+}
+.hero .left, .hero .right{position:absolute; top:50%; transform:translateY(-50%);}
+.hero .left{left:28px} .hero .right{right:28px}
+.logo{height:36px; width:auto; display:block; border-radius:999px; background:#fff; padding:4px; box-shadow:0 6px 16px #0002}
+.hero h1{margin:0; font-size:32px; letter-spacing:.5px; font-weight:900}
 
-  /* Grid e cards */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-  @media (max-width:980px){ .grid{grid-template-columns:1fr} }
-  .card{background:#fff;border:1px solid var(--border-purple);border-radius:16px;padding:16px;box-shadow:var(--shadow-purple)}
-  h2{margin:0 0 10px;font-size:18px;color:var(--ink)}
-  .tag{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:13px;margin-bottom:10px;border:1px solid #dacfff;background:#f1eaff;color:#5b21b6}
-  .tag.alert{background:#fff1e6;border-color:#ffdaba;color:#b45309}
-  .tag.crion{background:#eefcf6;border-color:#cbf5e1;color:#065f46}
+/* FOOTER BADGE */
+.footer{display:flex; justify-content:center; margin:28px 0 6px}
+.badge{
+  background:#fff; color:#111; border:1px solid #ffffffa8;
+  border-radius:999px; padding:8px 14px; font-size:12px;
+  box-shadow:0 10px 22px #7c3aed26, 0 2px 6px #7c3aed1a;
+}
 
-  .row{display:flex;gap:10px;align-items:center}
-  .input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;background:#fbfbff}
-  .input::placeholder{color:#9aa3b2}
-  .btn{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;color:#fff;background:var(--primary);
-       box-shadow:0 8px 18px rgba(35,67,213,.28);transition:transform .02s ease, filter .1s}
-  .btn:active{transform:translateY(1px)}
-  .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
-  .btn-danger{background:var(--danger); color:#fff; box-shadow:0 8px 18px #EF44443A}
-  .btn-small{padding:8px 12px;border-radius:10px;font-weight:800}
+/* GRID + CARDS */
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+@media (max-width:980px){ .grid{grid-template-columns:1fr} }
 
-  .list{margin:10px 0 0;padding:0;list-style:none}
-  .item{padding:10px 0;border-top:1px solid var(--line)}
-  .meta{font-size:12px;color:#6b7280;margin-top:2px}
-  .snip{color:#374151;font-size:14px;margin:6px 0}
-  .small{font-size:12px;color:#6b7280}
-  .out{white-space:pre-wrap;min-height:160px;border:1px dashed var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fbfbff}
-  a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
-  .dots{display:inline-block;margin-left:6px;vertical-align:middle}
-  .dots i{display:inline-block;width:6px;height:6px;background:#2563eb;border-radius:50%;margin:0 2px;animation:jump 1s infinite}
-  .dots i:nth-child(2){animation-delay:.15s} .dots i:nth-child(3){animation-delay:.3s}
-  @keyframes jump{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-  .alert-big{font-size:28px;font-weight:900;color:#b91c1c;text-align:center;margin-top:14px}
-  .alert-resp{font-size:14px;font-weight:600;color:#334155;text-align:center;margin-top:6px;text-transform:lowercase}
+.card{
+  position:relative; background:#fff; border:1px solid var(--border-purple);
+  border-radius:16px; padding:16px; box-shadow:var(--card-shadow);
+}
+h2{margin:0 0 10px; font-size:19px}
+.tag{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:140px; height:34px; padding:0 14px; border-radius:999px;
+  font-weight:800; letter-spacing:.2px; border:1px solid #e8e8ff; background:#f4f3ff; color:#4338ca;
+  margin-bottom:12px
+}
+.row{display:flex; gap:10px; align-items:center}
+.input{width:100%; border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:15px; background:#fbfbff}
+.input::placeholder{color:#9aa3b2}
+.btn{
+  appearance:none; border:0; border-radius:12px; padding:12px 16px; font-weight:800; cursor:pointer;
+  color:#fff; background:var(--primary); box-shadow:0 8px 18px rgba(35,67,213,.28);
+  transition:transform .02s ease, filter .1s, opacity .2s
+}
+.btn:active{transform:translateY(1px)} .btn[disabled]{opacity:.65; cursor:not-allowed}
+.btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
+.btn-danger{background:var(--danger)} .btn-small{padding:8px 12px; border-radius:10px}
 
-  /* Rodapé com badge */
-  footer{display:flex;justify-content:center;margin:30px 0 10px}
-  .badge{font-size:12px;color:#0f172a;background:#fff;border:1px solid #ffffff80;border-radius:999px;padding:8px 14px;
-         box-shadow:0 10px 22px rgba(124,58,237,.14), 0 2px 6px rgba(124,58,237,.10)}
+/* OUTPUTS */
+.out{white-space:pre-wrap; min-height:160px; border:1px dashed var(--line); border-radius:12px; padding:12px; margin-top:10px; background:#fbfbff}
+.meta{font-size:12px; color:#6b7280; margin-top:2px}
+.list{margin:10px 0 0; padding:0; list-style:none}
+.item{padding:10px 0; border-top:1px solid var(--line)}
+a{color:#2563eb; text-decoration:none} a:hover{text-decoration:underline}
+
+/* ALERTA */
+.alert-big{font-size:34px; font-weight:900; color:#b91c1c; text-align:center; margin:16px 0 0}
+.alert-big .siren{display:inline-block; margin-right:6px; filter:drop-shadow(0 6px 14px #f8717144)}
+.alert-resp{font-size:13px; font-weight:700; color:#334155; text-align:center; margin-top:6px; text-transform:capitalize}
+
+/* MODALS */
+.modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:#0006; z-index:50}
+.modal.show{display:flex}
+.mbox{width:min(560px,92vw); border-radius:16px; background:#fff; padding:18px; box-shadow:0 22px 66px #00000044}
+.mtitle{margin:0 0 10px; font:600 18px/1.3 ui-sans-serif}
+.mactions{display:flex; gap:10px; justify-content:flex-end; margin-top:14px}
+.mbox .input{background:#fff}
+.mbox.step1 .input{border-color:#fecaca; box-shadow:0 0 0 3px #fee2e2 inset}
+.mbox.step2 .input{text-align:center; font-size:13px}
+
+/* PROGRESS OVERLAY (para os 4 cards) */
+.loading{
+  position:absolute; inset:0; display:none; align-items:center; justify-content:center;
+  background:linear-gradient(180deg,#ffffffaa,#ffffffe8); border-radius:16px; z-index:5
+}
+.loading.show{display:flex}
+.spinner{display:flex; flex-direction:column; align-items:center; gap:10px; font-weight:800; color:#374151}
+.bar{width:min(420px,70%); height:8px; border-radius:999px; background:#eef2ff; overflow:hidden; box-shadow:0 2px 10px #7c3aed30 inset}
+.fill{width:8%; height:100%; background:linear-gradient(90deg,#8b5cf6,#6366f1); border-radius:999px; animation:load 1.2s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-20%)} 50%{transform:translateX(60%)} 100%{transform:translateX(120%)}}
+.small{font-size:12px; color:#6b7280}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <img class="logo left" src="./icon.png"
-           onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon.png';" alt="Logo">
-      <h1>RIC AI CRION</h1>
-      <img class="logo right" src="./icon2.png"
-           onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon2.png';" alt="Logo 2">
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="left">
+      <img class="logo" src="icon.png"
+           onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon.png'">
     </div>
-
-    <div class="grid">
-      <!-- ALERTA -->
-      <section class="card">
-        <div class="tag alert">ALERTA</div>
-        <h2>Controle de alerta</h2>
-        <div class="row">
-          <button id="btnAlert" class="btn">Pesquisar</button>
-          <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
-        </div>
-        <div id="alertMsg"  class="alert-big"   style="display:none">—</div>
-        <div id="alertResp" class="alert-resp" style="display:none">—</div>
-      </section>
-
-      <!-- SITES OFICIAIS -->
-      <section class="card">
-        <div class="tag">SITES OFICIAIS</div>
-        <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
-        <div class="row" style="margin-top:10px">
-          <input id="qSites" class="input" placeholder="Ex.: vencimento Hapvida, cancelamento Affix, inclusão de RN">
-          <button id="btnSites" class="btn">Pesquisar</button>
-        </div>
-        <div id="outSites" class="out">Digite sua pergunta — responderemos com TEXTO longo + fontes oficiais.</div>
-      </section>
-
-      <!-- PDFs -->
-      <section class="card">
-        <div class="tag">PDFs</div>
-        <h2>Manuais do Corretor (Sharepoint)</h2>
-        <p class="small">Busca rápida no texto extraído dos PDFs (indexados).</p>
-        <div class="row">
-          <input id="qPDF" class="input" placeholder="Ex.: Affix, Coparticipação, Carência 30 dias">
-          <button id="btnPDF" class="btn" style="min-width:126px">Pesquisar</button>
-        </div>
-        <div id="pdfStatus" class="small" style="margin-top:6px">—</div>
-        <ul id="pdfList" class="list"></ul>
-      </section>
-
-      <!-- CRION -->
-      <section class="card">
-        <div class="tag crion">PROCEDIMENTOS CRION</div>
-        <h2>Procedimentos</h2>
-        <p class="small">Material de Treinamento, Quiz, Alertas &gt; 30 dias e demais informações.</p>
-        <div class="row">
-          <input id="qCRION" class="input" placeholder="Ex.: Onboarding, Retenção, URA, Script de Cobrança, Affix">
-          <button id="btnCRION" class="btn" style="min-width:126px">Pesquisar</button>
-          <button id="btnReIdxCRION" class="btn btn-danger btn-small" title="Atualiza o índice do CRION">Reindexar</button>
-        </div>
-        <div id="crionStatus" class="small" style="margin-top:6px">—</div>
-        <ul id="crionList" class="list"></ul>
-      </section>
+    <h1>RIC AI CRION</h1>
+    <div class="right">
+      <img class="logo" src="icon2.png"
+           onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon2.png'">
     </div>
   </div>
 
-  <!-- Modais ALERTA -->
-  <div id="modal1" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
-    <div class="modal-box" style="width:min(560px,92vw);border-radius:16px;padding:18px 16px;color:#0b1220;background:#fff;box-shadow:0 18px 64px #00000040;border:1px solid #cfe1ff">
-      <h3 class="modal-title" style="margin:0 0 10px;font-size:18px;font-weight:900">ALERTA DA OPERAÇÃO</h3>
-      <input id="m1text" class="input" placeholder="Digite o texto do alerta">
-      <div class="row" style="justify-content:flex-end;margin-top:14px">
-        <button class="btn btn-plain btn-small" onclick="closeM(1)">Cancelar</button>
-        <button id="m1ok" class="btn btn-small" onclick="goM2()">Continuar</button>
+  <div class="grid">
+
+    <!-- ALERTA -->
+    <section class="card" id="card-alerta">
+      <div class="loading"><div class="spinner"><div>Pesquisando…</div><div class="bar"><div class="fill"></div></div><div class="small">ALERTA</div></div></div>
+      <div class="tag">ALERTA</div>
+      <h2>Controle de alerta</h2>
+      <div class="row">
+        <button id="btnAlert" class="btn">Pesquisar</button>
+        <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
       </div>
-    </div>
-  </div>
+      <div id="alertMsg" class="alert-big" style="display:none"><span class="siren">🚨</span>—</div>
+      <div id="alertResp" class="alert-resp" style="display:none">—</div>
+    </section>
 
-  <div id="modal2" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
-    <div class="modal-box" style="width:min(560px,92vw);border-radius:16px;padding:18px 16px;color:#0b1220;background:#fff;box-shadow:0 18px 64px #00000040;border:1px solid #ffdaba">
-      <h3 class="modal-title" style="margin:0 0 10px;font-size:18px;font-weight:900">nome do responsável</h3>
-      <input id="m2text" class="input" placeholder="digite apenas o nome (caixa baixa)" style="font-size:13px;text-transform:lowercase">
-      <div class="row" style="justify-content:flex-end;margin-top:14px">
-        <button class="btn btn-plain btn-small" onclick="backM1()">Voltar</button>
-        <button id="m2ok" class="btn btn-small" onclick="saveAlert()">Salvar</button>
+    <!-- SITES -->
+    <section class="card" id="card-sites">
+      <div class="loading"><div class="spinner"><div>Pesquisando…</div><div class="bar"><div class="fill"></div></div><div class="small">SITES OFICIAIS</div></div></div>
+      <div class="tag">SITES OFICIAIS</div>
+      <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
+      <div class="row" style="margin-top:10px">
+        <input id="qSites" class="input" placeholder="Digite sua pergunta .....">
+        <button id="btnSites" class="btn">Pesquisar</button>
       </div>
-    </div>
-  </div>
+      <div id="outSites" class="out">—</div>
+    </section>
 
-  <div id="modal3" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
-    <div class="modal-box" style="width:min(560px,92vw);border-radius:16px;padding:18px 16px;color:#0b1220;background:#fff;box-shadow:0 18px 64px #00000040;border:1px solid #d9f7b8;text-align:center">
-      <h3 class="modal-title" style="margin:0 0 10px;font-size:18px;font-weight:900">ALERTA AJUSTADO</h3>
-      <div style="margin:8px 0">✔️</div>
-      <div class="row" style="justify-content:center;margin-top:14px">
-        <button class="btn btn-small" onclick="closeM(3)">OK</button>
+    <!-- PDFs -->
+    <section class="card" id="card-pdf">
+      <div class="loading"><div class="spinner"><div>Pesquisando…</div><div class="bar"><div class="fill"></div></div><div class="small">PDFs</div></div></div>
+      <div class="tag">PDFs</div>
+      <h2>Manuais do Corretor (Sharepoint)</h2>
+      <p class="small">Busca rápida no texto extraído dos PDFs (indexados).</p>
+      <div class="row">
+        <input id="qPDF" class="input" placeholder="Ex.: Affix, Coparticipação, Carência 30 dias">
+        <button id="btnPDF" class="btn" style="min-width:126px">Pesquisar</button>
       </div>
-    </div>
+      <div id="pdfStatus" class="small" style="margin-top:6px">—</div>
+      <ul id="pdfList" class="list"></ul>
+    </section>
+
+    <!-- CRION -->
+    <section class="card" id="card-crion">
+      <div class="loading"><div class="spinner"><div>Pesquisando…</div><div class="bar"><div class="fill"></div></div><div class="small">PROCEDIMENTOS CRION</div></div></div>
+      <div class="tag">PROCEDIMENTOS CRION</div>
+      <h2>Procedimentos</h2>
+      <p class="small">Material de Treinamento, Quiz, Alertas &gt; 30 dias e demais informações.</p>
+      <div class="row">
+        <input id="qCRION" class="input" placeholder="Ex.: Onboarding, Retenção, URA, Script de Cobrança, Affix">
+        <button id="btnCRION" class="btn" style="min-width:126px">Pesquisar</button>
+        <button id="btnReIdxCRION" class="btn btn-danger btn-small" title="Atualiza o índice do CRION">Reindexar</button>
+      </div>
+      <div id="crionStatus" class="small" style="margin-top:6px">—</div>
+      <ul id="crionList" class="list"></ul>
+    </section>
   </div>
 
-  <footer><div class="badge">Desenvolvido por Alexandre Cavalcante V3.0</div></footer>
+  <div class="footer"><div class="badge">Desenvolvido por Alexandre Cavalcante V3.0</div></div>
+</div>
+
+<!-- MODAIS (AJUSTE ALERTA) -->
+<div id="m1" class="modal"><div class="mbox step1">
+  <h3 class="mtitle" style="color:#991b1b">Texto do alerta</h3>
+  <input id="m1text" class="input" placeholder="Escreva o alerta (vermelho claro)">
+  <div class="mactions">
+    <button class="btn btn-plain btn-small" onclick="closeM('m1')">Cancelar</button>
+    <button class="btn btn-small" onclick="nextM()">Continuar</button>
+  </div>
+</div></div>
+
+<div id="m2" class="modal"><div class="mbox step2">
+  <h3 class="mtitle">Responsável</h3>
+  <input id="m2text" class="input" placeholder="Ex.: Alexandre">
+  <div class="mactions">
+    <button class="btn btn-plain btn-small" onclick="backM()">Voltar</button>
+    <button id="m2ok" class="btn btn-small" onclick="saveAlert()">Salvar</button>
+  </div>
+</div></div>
 
 <script>
-/* ======================== CONFIG ======================== */
-const APP_URL = "https://script.google.com/macros/s/AKfycbyCxPQtobvKtI_aEQIeINrDUYEIq98zSChnAlMUxRYZfMcYdplJP2Z1eypBXdpDE_Q-Dg/exec";
-/* ======================================================== */
+/* =================== CONFIG =================== */
+const APP_URL = "PASTE_YOUR_GAS_EXEC_URL_HERE"; // <- cole aqui a URL /exec do seu Web App GAS
+const UA = navigator.userAgent;
 
-const $ = (id)=>document.getElementById(id);
-function dots(txt){ return `${txt} <span class="dots"><i></i><i></i><i></i></span>`; }
-function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
-function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
+/* =========== HELPERS / UI =========== */
+const $ = (q,root=document)=>root.querySelector(q);
+function showLoading(cardId, on=true){
+  const el = document.querySelector('#'+cardId+' .loading');
+  if(!el) return; el.classList.toggle('show', !!on);
+}
+function capFirst(s){ s = String(s||'').trim().toLowerCase(); return s? s[0].toUpperCase()+s.slice(1):""; }
+function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
-function setLoading(btn,on,label,loadingLabel){ if(!btn) return; if(on){ btn.disabled=true; btn.dataset.label=label; btn.innerHTML=loadingLabel||dots("Processando"); } else { btn.disabled=false; btn.innerHTML=btn.dataset.label||label; } }
-function openM(id){ $(`modal${id}`).style.display='flex'; }
-function closeM(id){ $(`modal${id}`).style.display='none'; }
+function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){b/=1024;i++} return b.toFixed(1)+" "+u[i]; }
 
-/* POST helper (CORS no GAS) */
-async function post(action, payload={}){
-  const res = await fetch(APP_URL, {
-    method:'POST', mode:'cors',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ action, ...payload })
+/* =========== API (fetch -> GAS) =========== */
+async function api(fn, payload={}){
+  const res = await fetch(APP_URL + "?fn=" + encodeURIComponent(fn), {
+    method:"POST",
+    mode:"cors",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ ...payload, ua: UA })
   });
-  if(!res.ok) throw new Error(`HTTP ${res.status}`);
-  const ct = res.headers.get('content-type')||'';
-  return ct.includes('application/json') ? res.json() : res.text();
+  if(!res.ok) throw new Error(res.status+" "+res.statusText);
+  return res.json();
 }
 
-/* LOG helper */
-function logQuery(module, q){
-  return post('apiLogQuery', { module, q, ts: new Date().toISOString(), source:'site' }).catch(()=>{});
-}
+/* =========== ALERTA =========== */
+const elMsg  = $('#alertMsg');
+const elResp = $('#alertResp');
 
-/* ALERTA (exibir) */
-const elMsg  = $('alertMsg'); const elResp = $('alertResp');
-$('btnAlert').addEventListener('click', async ()=>{
-  const btn=$('btnAlert'); elMsg.style.display='none'; elResp.style.display='none';
-  setLoading(btn,true,"Pesquisar",dots("Consultando"));
+$('#btnAlert').addEventListener('click', async ()=>{
+  showLoading('card-alerta', true);
+  elMsg.style.display='none'; elResp.style.display='none';
   try{
-    await logQuery('alert', 'consultar');
-    const res = await post('apiGetAlert');
-    setLoading(btn,false,"Pesquisar");
-    if(!res || res.ok===false){ elMsg.textContent="Falha ao consultar."; elMsg.style.display='block'; return; }
-    if(!res.found){ elMsg.textContent="Sem recado no momento."; elMsg.style.display='block'; return; }
-    elMsg.textContent = "🚨 " + (res.mensagem||"—").toUpperCase(); elMsg.style.display='block';
-    if(res.responsavel){ elResp.textContent=(res.responsavel||"").toLowerCase(); elResp.style.display='block'; }
+    const r = await api('getAlert');
+    if(!r || r.ok===false || !r.found){ elMsg.innerHTML='<span class="siren">🚨</span>Sem recado no momento.'; elMsg.style.display='block'; return; }
+    elMsg.innerHTML = `<span class="siren">🚨</span>${esc(String(r.mensagem||"").toUpperCase())}`;
+    elMsg.style.display='block';
+    if(r.responsavel){ elResp.textContent = capFirst(r.responsavel); elResp.style.display='block'; }
   }catch(e){
-    setLoading(btn,false,"Pesquisar");
-    elMsg.textContent='Erro: '+e.message; elMsg.style.display='block';
-  }
+    elMsg.innerHTML = `<span class="siren">🚨</span>Erro: ${esc(e.message)}`; elMsg.style.display='block';
+  }finally{ showLoading('card-alerta', false); }
 });
 
-/* ALERTA (ajuste) */
 let _newAlert="", _newResp="";
-$('btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; $('m1text').value=""; $('m2text').value=""; openM(1); });
-function goM2(){ const btn=$('m1ok'); _newAlert=($('m1text').value||"").trim(); if(!_newAlert){ $('m1text').focus(); return; }
-  setLoading(btn,true,"Continuar",dots("Pensando")); setTimeout(()=>{ setLoading(btn,false,"Continuar"); closeM(1); openM(2); },250); }
-$('m2text').addEventListener('input', e=>{ e.target.value=(e.target.value||'').toLowerCase(); });
+$('#btnAdjust').addEventListener('click', ()=>{ _newAlert=_newResp=""; $('#m1text').value=""; $('#m2text').value=""; openM('m1'); });
+function openM(id){ $('#'+id).classList.add('show'); } function closeM(id){ $('#'+id).classList.remove('show'); }
+function nextM(){ _newAlert = ($('#m1text').value||"").trim(); if(!_newAlert){ $('#m1text').focus(); return; } closeM('m1'); openM('m2'); }
+function backM(){ closeM('m2'); openM('m1'); }
+$('#m2text').addEventListener('input', e=>{ e.target.value = capFirst(e.target.value); });
 async function saveAlert(){
-  const btn=$('m2ok'); _newResp=($('m2text').value||"").trim(); setLoading(btn,true,"Salvar",dots("Gravando"));
+  const btn = $('#m2ok'); btn.disabled = true; btn.textContent = 'Pesquisando...';
   try{
-    await post('apiAdjustAlert',{ mensagem:_newAlert, responsavel:_newResp }); await logQuery('alert-adjust', _newAlert);
-    setLoading(btn,false,"Salvar"); closeM(2); openM(3);
-  }catch(e){ setLoading(btn,false,"Salvar"); closeM(2); alert("Falha ao ajustar: "+e.message); }
+    _newResp = capFirst($('#m2text').value||"");
+    await api('adjustAlert', {mensagem:_newAlert, responsavel:_newResp});
+    closeM('m2');
+    // feedback imediato
+    elMsg.innerHTML = `<span class="siren">🚨</span>${esc(String(_newAlert||"").toUpperCase())}`;
+    elMsg.style.display='block';
+    elResp.textContent = _newResp; elResp.style.display='block';
+  }catch(e){ alert("Falha ao ajustar: "+e.message); }
+  finally{ btn.disabled=false; btn.textContent='Salvar'; }
 }
 
-/* SITES (resposta longa + fontes) */
-$('btnSites').addEventListener('click', async ()=>{
-  const q=($('qSites').value||'').trim(); if(!q){ $('outSites').textContent='Digite a pergunta.'; return; }
-  const out=$('outSites'); const btn=$('btnSites');
-  setLoading(btn,true,"Pesquisar",dots("Pensando")); out.innerHTML=dots("Processando");
-  const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final.";
+/* =========== SITES (texto longo + fontes) =========== */
+$('#btnSites').addEventListener('click', async ()=>{
+  const q = ($('#qSites').value||'').trim(); if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
+  const out = $('#outSites'); showLoading('card-sites', true); out.textContent=""; 
   try{
-    await logQuery('sites', q);
-    const res = await post('chatServer',{ q:qRich });
-    const txt = typeof res === 'string' ? res : (res.text||'—');
-    const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
-    out.innerHTML = html;
-  }catch(e){ out.textContent='Erro: '+e.message; }
-  finally{ setLoading(btn,false,"Pesquisar"); }
+    const r = await api('chat', {q});
+    // limpa "Observações:" se vier do seu backend e adiciona rodapé de fontes
+    let html = String(r && r.text ? r.text : '—').replace(/_?Observa[cç][oõ]es:_?[\s\S]*$/i,'').trim();
+    html += `\n\nFontes oficiais: Affix • Alter • Hapvida`;
+    html = html.replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
+    out.innerHTML = html || '—';
+    // loga pergunta
+    await api('logQuestion', {module:'sites', q});
+  }catch(e){ out.textContent = 'Erro: '+e.message; }
+  finally{ showLoading('card-sites', false); }
 });
 
-/* PDFs */
-$('btnPDF').addEventListener('click', doPDF);
-$('qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
-function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024 && i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
+/* =========== PDFs =========== */
+$('#btnPDF').addEventListener('click', doPDF);
+$('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
 async function doPDF(){
-  const q=($('qPDF').value||'').trim(); const btn=$('btnPDF'); const st=$('pdfStatus'); const ul=$('pdfList');
-  ul.innerHTML=""; if(!q){ st.textContent='Digite um termo.'; return;}
-  setLoading(btn,true,"Pesquisar",dots("Pesquisando")); st.innerHTML=dots("Listando arquivos");
+  const q = ($('#qPDF').value||'').trim(); const st=$('#pdfStatus'); const ul=$('#pdfList'); ul.innerHTML="";
+  if(!q){ st.textContent='Digite um termo.'; return; }
+  showLoading('card-pdf', true); st.textContent='Listando arquivos…';
   try{
-    await logQuery('pdf', q);
-    const res = await post('apiSearchIndexed',{ q });
-    if(!res || res.ok===false){ st.textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
-    const items=res.items||[]; st.textContent=`Resultados: ${items.length}`;
+    const res = await api('searchIndexed', {q});
+    const items = res.items||[]; st.textContent = `Resultados: ${items.length}`;
     const frag=document.createDocumentFragment();
     items.forEach((it,idx)=>{
       const li=document.createElement('li'); li.className='item'; li.id='pdf_'+idx;
-      const meta = `<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
-      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
-                    <div class="small" id="snip_pdf_${idx}">${dots('Carregando prévias')}</div>`;
+      const meta=`<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+      li.innerHTML=`<div><b>${esc(it.name||'Arquivo')}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                    <div class="small" id="snip_pdf_${idx}">Carregando prévias…</div>`;
       frag.appendChild(li);
     });
     ul.appendChild(frag);
     if(items.length){
       let from=0;
-      const tick = async ()=>{
-        const r = await post('apiFetchIndexedSnippets',{ sessionId:res.sessionId, from, take:6 });
+      while(from < items.length){
+        const r = await api('fetchIndexedSnippets', {sessionId: res.sessionId, from, limit:6});
         (r.items||[]).forEach(row=>{
-          const el=$('snip_pdf_'+row.index);
-          el.innerHTML=(row.snippets && row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="small">—</span>';
+          const el=$('#snip_pdf_'+row.index);
+          el.innerHTML=(row.snippets&&row.snippets.length)? row.snippets.map(s=>`<div>${esc(s)}</div>`).join("") : '<span class="small">—</span>';
         });
-        from=r.to; if(from < items.length) setTimeout(tick,60); else st.innerHTML += " • prévias completas";
-      };
-      tick();
+        from = r.to;
+        await new Promise(s=>setTimeout(s,60));
+      }
+      st.textContent += " • prévias completas";
     }
+    await api('logQuestion', {module:'pdfs', q});
   }catch(e){ st.textContent='Erro: '+e.message; }
-  finally{ setLoading(btn,false,"Pesquisar"); }
+  finally{ showLoading('card-pdf', false); }
 }
 
-/* CRION */
-$('btnCRION').addEventListener('click', doCRION);
-$('qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
-$('btnReIdxCRION').addEventListener('click', async ()=>{
-  const s=$('crionStatus'); s.innerHTML=dots("Reindexando CRION");
-  try{ const r=await post('apiReindexCrion'); s.textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou"); }
-  catch(e){ s.textContent="Erro: "+e.message; }
+/* =========== CRION =========== */
+$('#btnCRION').addEventListener('click', doCRION);
+$('#qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
+$('#btnReIdxCRION').addEventListener('click', async ()=>{
+  const s=$('#crionStatus'); s.textContent='Reindexando CRION…';
+  try{ const r=await api('reindexCrion'); s.textContent='Index CRION: '+(r && r.ok ? 'OK':'Falhou'); }
+  catch(e){ s.textContent='Erro: '+e.message; }
 });
 async function doCRION(){
-  const q=($('qCRION').value||'').trim(); const btn=$('btnCRION'); const st=$('crionStatus'); const ul=$('crionList');
-  ul.innerHTML=""; if(!q){ st.textContent='Digite um termo.'; return;}
-  setLoading(btn,true,"Pesquisar",dots("Pesquisando")); st.innerHTML=dots("Listando arquivos");
+  const q = ($('#qCRION').value||'').trim(); const st=$('#crionStatus'); const ul=$('#crionList'); ul.innerHTML="";
+  if(!q){ st.textContent='Digite um termo.'; return; }
+  showLoading('card-crion', true); st.textContent='Listando arquivos…';
   try{
-    await logQuery('crion', q);
-    const res = await post('apiSearchCrion',{ q });
-    if(!res || res.ok===false){ st.textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
-    const items=res.items||[]; st.textContent=`Resultados: ${items.length}`;
+    const res = await api('searchCrion', {q});
+    const items = res.items||[]; st.textContent=`Resultados: ${items.length}`;
     const frag=document.createDocumentFragment();
     items.forEach((it,idx)=>{
       const li=document.createElement('li'); li.className='item'; li.id='crion_'+idx;
-      const meta  = `<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
-      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
-                    <div class="small" id="snip_crion_${idx}">${dots('Carregando prévias')}</div>`;
+      const meta=`<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+      li.innerHTML=`<div><b>${esc(it.name||'Documento')}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                    <div class="small" id="snip_crion_${idx}">Carregando prévias…</div>`;
       frag.appendChild(li);
     });
     ul.appendChild(frag);
     if(items.length){
       let from=0;
-      const tick = async ()=>{
-        const r = await post('apiFetchCrionSnippets',{ sessionId:res.sessionId, from, take:6 });
+      while(from < items.length){
+        const r = await api('fetchCrionSnippets', {sessionId: res.sessionId, from, limit:6});
         (r.items||[]).forEach(row=>{
-          const el=$('snip_crion_'+row.index);
-          el.innerHTML=(row.snippets && row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="small">—</span>';
+          const el=$('#snip_crion_'+row.index);
+          el.innerHTML=(row.snippets&&row.snippets.length)? row.snippets.map(s=>`<div>${esc(s)}</div>`).join("") : '<span class="small">—</span>';
         });
-        from=r.to; if(from < items.length) setTimeout(tick,60); else st.innerHTML += " • prévias completas";
-      };
-      tick();
+        from = r.to;
+        await new Promise(s=>setTimeout(s,60));
+      }
+      st.textContent += " • prévias completas";
     }
+    await api('logQuestion', {module:'crion', q});
   }catch(e){ st.textContent='Erro: '+e.message; }
-  finally{ setLoading(btn,false,"Pesquisar"); }
+  finally{ showLoading('card-crion', false); }
 }
 </script>
 </body>
