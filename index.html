@@ -9,9 +9,9 @@
     --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
     --primary:#2343d5; --primary-2:#2e61ff;
     --lime:#a3e635; --danger:#ef4444;
-    /* sombras */
-    --shadow-purple:0 16px 36px #7C3AED40,0 2px 6px #7C3AED40;
-    /* bordas */
+    /* sombra roxo claro */
+    --hero-shadow: 0 24px 56px rgba(124,58,237,.22), 0 6px 18px rgba(124,58,237,.16);
+    --card-shadow: 0 16px 36px rgba(124,58,237,.25), 0 2px 6px rgba(124,58,237,.22);
     --border-purple:#e2d6ff;
   }
   *{box-sizing:border-box}
@@ -19,29 +19,24 @@
     margin:0;
     font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
     background:radial-gradient(1200px 600px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%);
+    color:var(--ink);
   }
   .wrap{max-width:1240px;margin:0 auto;padding:24px}
 
-  /* HERO (barra azul) */
+  /* HERO */
   .hero-wrap{position:relative;margin-bottom:22px}
   .hero{
     position:relative;
     background:linear-gradient(135deg,var(--primary),var(--primary-2));
     color:#fff;border-radius:28px;padding:22px 24px;
     display:flex;align-items:center;justify-content:center;
-    box-shadow:0 24px 56px rgba(46,97,255,.15),0 2px 8px rgba(46,97,255,.18);
+    box-shadow:var(--hero-shadow);
   }
   .hero h1{margin:0;font-size:32px;letter-spacing:.5px;text-align:center}
   .logo{
     position:absolute; left:28px; top:50%; transform:translateY(-50%);
-    height:36px; width:auto; object-fit:contain;
+    height:40px; width:auto; object-fit:contain;
     filter: drop-shadow(0 4px 10px rgba(0,0,0,.25));
-  }
-  .badge{
-    position:absolute; right:28px; top:50%; transform:translateY(-50%);
-    font-size:12px;color:#111;background:#fff;
-    border:1px solid #E5E7EB;padding:8px 14px;border-radius:999px;
-    box-shadow:0 10px 24px #0001,0 2px 6px #0001; white-space:nowrap;
   }
 
   /* GRID */
@@ -51,9 +46,9 @@
   /* CARDS (todas com roxo) */
   .card{
     background:#fff;border:1px solid var(--border-purple);
-    border-radius:16px;padding:16px; box-shadow:var(--shadow-purple);
+    border-radius:16px;padding:16px; box-shadow:var(--card-shadow);
   }
-  .card h2{margin:0 0 10px;font-size:18px;color:var(--ink)}
+  .card h2{margin:0 0 10px;font-size:18px}
 
   /* etiquetas */
   .tag{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:13px;margin-bottom:10px;border:1px solid}
@@ -81,7 +76,6 @@
   .snip{color:#374151;font-size:14px;margin:6px 0}
   .small{font-size:12px;color:#6b7280}
   .out{white-space:pre-wrap;min-height:160px;border:1px dashed var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fbfbff}
-
   a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
 
   /* loading dots */
@@ -94,26 +88,24 @@
   .alert-big{font-size:28px;font-weight:900;color:#b91c1c;text-align:center;margin-top:14px}
   .alert-resp{font-size:14px;font-weight:600;color:#334155;text-align:center;margin-top:6px;text-transform:lowercase}
 
-  /* modais */
-  .modal{position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000}
-  .modal.show{display:flex}
-  .modal-box{width:min(560px,92vw);border-radius:16px;padding:18px 16px;color:#0b1220;background:#fff;box-shadow:0 18px 64px #00000040}
-  .modal-title{font-weight:900;font-size:18px;margin:0 0 10px}
-  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
-  .modal .input{background:#fff}
-  #m2text{font-size:13px;text-transform:lowercase}
+  /* rodapé */
+  footer{max-width:1240px;margin:28px auto 22px;padding:0 24px}
+  .foot{
+    background:#fff;border:1px solid #E5E7EB;border-radius:999px;
+    padding:10px 16px; display:inline-block; box-shadow:0 10px 24px #0001,0 2px 6px #0001;
+    font-size:12px;color:#111
+  }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- HERO ÚNICO -->
+    <!-- HERO -->
     <div class="hero-wrap">
       <div class="hero">
         <img class="logo"
              src="https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon.png"
              alt="Logo">
         <h1>RIC AI CRION</h1>
-        <div class="badge">Desenvolvido por Alexandre Cavalcante V3.0</div>
       </div>
     </div>
 
@@ -170,129 +162,103 @@
     </div>
   </div>
 
-  <!-- Modais ALERTA -->
-  <div id="modal1" class="modal"><div class="modal-box" style="border:1px solid #cfe1ff">
-    <h3 class="modal-title">ALERTA DA OPERAÇÃO</h3>
-    <input id="m1text" class="input" placeholder="Digite o texto do alerta">
-    <div class="modal-actions">
-      <button class="btn btn-plain btn-small" onclick="closeM(1)">Cancelar</button>
-      <button id="m1ok" class="btn btn-small" onclick="goM2()">Continuar</button>
-    </div>
-  </div></div>
-
-  <div id="modal2" class="modal"><div class="modal-box" style="border:1px solid #ffdaba">
-    <h3 class="modal-title">nome do responsável</h3>
-    <input id="m2text" class="input" placeholder="digite apenas o nome (caixa baixa)">
-    <div class="modal-actions">
-      <button class="btn btn-plain btn-small" onclick="backM1()">Voltar</button>
-      <button id="m2ok" class="btn btn-small" onclick="saveAlert()">Salvar</button>
-    </div>
-  </div></div>
-
-  <div id="modal3" class="modal"><div class="modal-box" style="border:1px solid #d9f7b8">
-    <h3 class="modal-title" style="text-align:center">ALERTA AJUSTADO</h3>
-    <div style="text-align:center;margin-top:8px" id="m3ok">✔️</div>
-    <div class="modal-actions" style="justify-content:center">
-      <button class="btn btn-small" onclick="closeM(3)">OK</button>
-    </div>
-  </div></div>
+  <!-- RODAPÉ -->
+  <footer>
+    <span class="foot">Desenvolvido por Alexandre Cavalcante V3.0</span>
+  </footer>
 
 <script>
-/* helpers */
+/* ========= CONFIG ========= */
+const APP_URL = "https://script.google.com/macros/s/AKfycbyCxPQtobvKtI_aEQIeINrDUYEIq98zSChnAlMUxRYZfMcYdplJP2Z1eypBXdpDE_Q-Dg/exec";
+
+/* ========= HELPERS ========= */
+const $ = sel => document.querySelector(sel);
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
 function dots(txt){ return `${txt} <span class="dots"><i></i><i></i><i></i></span>`; }
 function setLoading(btn, on, label, loadingLabel){
-  if(!btn) return;
-  if(on){ btn.disabled=true; btn.dataset.label=label; btn.innerHTML=loadingLabel||dots("Processando"); }
+  if(!btn) return; if(on){ btn.disabled=true; btn.dataset.label=label; btn.innerHTML=loadingLabel||dots("Processando"); }
   else { btn.disabled=false; btn.innerHTML=btn.dataset.label||label; }
 }
+function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024 && i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
 
-/* ALERTA (exibir) */
-const elMsg  = document.getElementById('alertMsg');
-const elResp = document.getElementById('alertResp');
-document.getElementById('btnAlert').addEventListener('click', ()=>{
-  const btn=document.getElementById('btnAlert');
-  elMsg.style.display='none'; elResp.style.display='none';
+/* ========= API (via fetch GET / POST text/plain p/ evitar preflight) ========= */
+async function apiGet(action, params={}){
+  const url = new URL(APP_URL);
+  url.searchParams.set("api", action);
+  for(const k in params) url.searchParams.set(k, String(params[k]));
+  const r = await fetch(url.toString(), { method:"GET", mode:"cors", cache:"no-store" });
+  return r.json();
+}
+async function apiPost(action, bodyObj={}){
+  const url = new URL(APP_URL);
+  url.searchParams.set("api", action);
+  const r = await fetch(url.toString(), {
+    method:"POST", mode:"cors",
+    headers:{ "Content-Type":"text/plain;charset=utf-8" }, // simples, sem preflight
+    body: JSON.stringify(bodyObj)
+  });
+  return r.json();
+}
+
+/* ========= ALERTA ========= */
+const elMsg  = $('#alertMsg');
+const elResp = $('#alertResp');
+$('#btnAlert').addEventListener('click', async ()=>{
+  const btn=$('#btnAlert'); elMsg.style.display='none'; elResp.style.display='none';
   setLoading(btn,true,"Pesquisar",dots("Consultando"));
-  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); elMsg.textContent="(Somente funcional na versão Apps Script)"; elMsg.style.display='block'; return; }
-  google.script.run.withSuccessHandler(res=>{
+  try{
+    const res = await apiGet("alert.get");
     setLoading(btn,false,"Pesquisar");
     if(!res || res.ok===false){ elMsg.textContent="Falha ao consultar."; elMsg.style.display='block'; return; }
     if(!res.found){ elMsg.textContent="Sem recado no momento."; elMsg.style.display='block'; return; }
-    elMsg.textContent="🚨 " + (res.mensagem||"—").toUpperCase();
-    elMsg.style.display='block';
-    if(res.responsavel){
-      elResp.textContent=String(res.responsavel||"").toLowerCase();
-      elResp.style.display='block';
-    }
-  }).withFailureHandler(e=>{
-    setLoading(btn,false,"Pesquisar");
-    elMsg.textContent='Erro: '+(e && e.message ? e.message : String(e));
-    elMsg.style.display='block'; elResp.style.display='none';
-  }).apiGetAlert();
+    elMsg.textContent="🚨 " + (res.mensagem||"—").toUpperCase(); elMsg.style.display='block';
+    if(res.responsavel){ elResp.textContent=String(res.responsavel||"").toLowerCase(); elResp.style.display='block'; }
+  }catch(e){
+    setLoading(btn,false,"Pesquisar"); elMsg.textContent='Erro: '+e; elMsg.style.display='block';
+  }
+});
+let _newAlert="",_newResp="";
+$('#btnAdjust').addEventListener('click', async ()=>{
+  _newAlert = prompt("Digite o texto do alerta:")||"";
+  if(!_newAlert.trim()) return;
+  _newResp = (prompt("Nome do responsável (caixa baixa):")||"").toLowerCase().trim();
+  const btn = $('#btnAdjust'); setLoading(btn,true,"Ajustar",dots("Gravando"));
+  try{
+    const r = await apiPost("alert.set", { mensagem:_newAlert, responsavel:_newResp });
+    setLoading(btn,false,"Ajustar");
+    alert(r && r.ok ? "Alerta ajustado!" : "Falha ao ajustar.");
+  }catch(e){ setLoading(btn,false,"Ajustar"); alert("Erro: "+e); }
 });
 
-/* ALERTA (ajuste) */
-let _newAlert = "", _newResp = "";
-function openM(id){ document.getElementById('modal'+id).classList.add('show'); }
-function closeM(id){ document.getElementById('modal'+id).classList.remove('show'); }
-function backM1(){ closeM(2); openM(1); }
-document.getElementById('btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; document.getElementById('m1text').value=""; document.getElementById('m2text').value=""; openM(1); });
-function goM2(){
-  const btn = document.getElementById('m1ok');
-  _newAlert = (document.getElementById('m1text').value||"").trim();
-  if(!_newAlert){ document.getElementById('m1text').focus(); return; }
-  setLoading(btn,true,"Continuar",dots("Pensando"));
-  setTimeout(()=>{ setLoading(btn,false,"Continuar"); closeM(1); openM(2); }, 250);
-}
-document.getElementById('m2text').addEventListener('input', (e)=>{ e.target.value = (e.target.value||'').toLowerCase(); });
-function saveAlert(){
-  const btn = document.getElementById('m2ok');
-  _newResp = (document.getElementById('m2text').value||"").trim();
-  setLoading(btn,true,"Salvar",dots("Gravando"));
-  if(!google||!google.script){ setLoading(btn,false,"Salvar"); closeM(2); alert("(Somente funcional na versão Apps Script)"); return; }
-  google.script.run.withSuccessHandler(_=>{
-    setLoading(btn,false,"Salvar"); closeM(2); openM(3);
-  }).withFailureHandler(e=>{
-    setLoading(btn,false,"Salvar"); closeM(2);
-    alert("Falha ao ajustar: "+(e && e.message ? e.message : String(e)));
-  }).apiAdjustAlert(_newAlert,_newResp);
-}
-
-/* SITES (texto longo + fontes) — sem token */
-document.getElementById('btnSites').addEventListener('click', ()=>{
-  const q=(document.getElementById('qSites').value||'').trim();
-  if(!q){ document.getElementById('outSites').textContent='Digite a pergunta.'; return; }
-  const out=document.getElementById('outSites'); const btn=document.getElementById('btnSites');
+/* ========= SITES (chat) ========= */
+$('#btnSites').addEventListener('click', async ()=>{
+  const q=($('#qSites').value||'').trim();
+  if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
+  const out=$('#outSites'); const btn=$('#btnSites');
   setLoading(btn,true,"Pesquisar",dots("Pensando")); out.innerHTML=dots("Processando");
-  const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final.";
-  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); out.textContent="(Somente funcional na versão Apps Script)"; return; }
-  google.script.run.withSuccessHandler(txt=>{
-    setLoading(btn,false,"Pesquisar");
-    const html = String(txt||'—').replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
+  try{
+    const r = await apiGet("sites.chat", { q: q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final." });
+    const txt = (r && r.text) ? r.text : "—";
+    const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
     out.innerHTML = html;
-  }).withFailureHandler(e=>{
-    setLoading(btn,false,"Pesquisar");
-    out.textContent='Erro: '+(e && e.message ? e.message : String(e));
-  }).chatServer(qRich);
+  }catch(e){
+    out.textContent='Erro: '+e;
+  }finally{ setLoading(btn,false,"Pesquisar"); }
 });
 
-/* PDFs */
-document.getElementById('btnPDF').addEventListener('click', doPDF);
-document.getElementById('qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
-function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024 && i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
-function doPDF(){
-  const q=(document.getElementById('qPDF').value||'').trim();
-  const btn=document.getElementById('btnPDF');
-  const st=document.getElementById('pdfStatus');
-  const ul=document.getElementById('pdfList');
+/* ========= PDFs ========= */
+$('#btnPDF').addEventListener('click', doPDF);
+$('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
+async function doPDF(){
+  const q=($('#qPDF').value||'').trim();
+  const btn=$('#btnPDF'); const st=$('#pdfStatus'); const ul=$('#pdfList');
   ul.innerHTML=""; if(!q){ st.textContent='Digite um termo.'; return;}
   setLoading(btn,true,"Pesquisar",dots("Pesquisando"));
   st.innerHTML=dots("Listando arquivos");
-  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); st.textContent="(Somente funcional na versão Apps Script)"; return; }
-  google.script.run.withSuccessHandler(res=>{
+  try{
+    const res = await apiGet("pdf.search", { q });
     setLoading(btn,false,"Pesquisar");
     if(!res || res.ok===false){ st.textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
     const items=res.items||[]; st.textContent=`Resultados: ${items.length}`;
@@ -307,44 +273,37 @@ function doPDF(){
     ul.appendChild(frag);
     if(items.length){
       let from=0;
-      const tick=()=>google.script.run.withSuccessHandler(r=>{
-        if(!r || r.ok===false){ st.textContent='Falha nas prévias: '+(r&&r.message?r.message:''); return; }
+      async function tick(){
+        const r = await apiGet("pdf.snippets", { sessionId:res.sessionId, start:from, count:6 });
+        if(!r || r.ok===false){ st.textContent='Falha nas prévias.'; return; }
         (r.items||[]).forEach(row=>{
           const el=document.getElementById('snip_pdf_'+row.index);
           el.innerHTML=(row.snippets && row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="small">—</span>';
         });
         from=r.to;
-        if(from < items.length) setTimeout(tick, 60);
-        else st.innerHTML += " • prévias completas";
-      }).apiFetchIndexedSnippets(res.sessionId, from, 6);
+        if(from < items.length) setTimeout(tick, 60); else st.innerHTML += " • prévias completas";
+      }
       tick();
     }
-  }).withFailureHandler(e=>{
-    setLoading(btn,false,"Pesquisar");
-    st.textContent='Erro: '+(e && e.message ? e.message : String(e));
-  }).apiSearchIndexed(q);
+  }catch(e){ setLoading(btn,false,"Pesquisar"); st.textContent='Erro: '+e; }
 }
 
-/* CRION */
-document.getElementById('btnCRION').addEventListener('click', doCRION);
-document.getElementById('qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
-document.getElementById('btnReIdxCRION').addEventListener('click', ()=>{
-  const s=document.getElementById('crionStatus'); s.innerHTML=dots("Reindexando CRION");
-  if(!google||!google.script){ s.textContent="(Somente funcional na versão Apps Script)"; return; }
-  google.script.run.withSuccessHandler(r=>{
-    s.textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou");
-  }).withFailureHandler(e=>{ s.textContent="Erro: "+(e&&e.message?e.message:String(e)); }).apiReindexCrion();
+/* ========= CRION ========= */
+$('#btnCRION').addEventListener('click', doCRION);
+$('#qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
+$('#btnReIdxCRION').addEventListener('click', async ()=>{
+  const s=$('#crionStatus'); s.innerHTML=dots("Reindexando CRION");
+  try{ const r=await apiGet("crion.reindex"); s.textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou"); }
+  catch(e){ s.textContent="Erro: "+e; }
 });
-function doCRION(){
-  const q=(document.getElementById('qCRION').value||'').trim();
-  const btn=document.getElementById('btnCRION');
-  const st=document.getElementById('crionStatus');
-  const ul=document.getElementById('crionList');
+async function doCRION(){
+  const q=($('#qCRION').value||'').trim();
+  const btn=$('#btnCRION'); const st=$('#crionStatus'); const ul=$('#crionList');
   ul.innerHTML=""; if(!q){ st.textContent='Digite um termo.'; return;}
   setLoading(btn,true,"Pesquisar",dots("Pesquisando"));
   st.innerHTML=dots("Listando arquivos");
-  if(!google||!google.script){ setLoading(btn,false,"Pesquisar"); st.textContent="(Somente funcional na versão Apps Script)"; return; }
-  google.script.run.withSuccessHandler(res=>{
+  try{
+    const res = await apiGet("crion.search", { q });
     setLoading(btn,false,"Pesquisar");
     if(!res || res.ok===false){ st.textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
     const items=res.items||[]; st.textContent=`Resultados: ${items.length}`;
@@ -359,22 +318,19 @@ function doCRION(){
     ul.appendChild(frag);
     if(items.length){
       let from=0;
-      const tick=()=>google.script.run.withSuccessHandler(r=>{
-        if(!r || r.ok===false){ st.textContent='Falha nas prévias: '+(r&&r.message?r.message:''); return; }
+      async function tick(){
+        const r = await apiGet("crion.snippets", { sessionId:res.sessionId, start:from, count:6 });
+        if(!r || r.ok===false){ st.textContent='Falha nas prévias.'; return; }
         (r.items||[]).forEach(row=>{
           const el=document.getElementById('snip_crion_'+row.index);
           el.innerHTML=(row.snippets && row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="small">—</span>';
         });
         from=r.to;
-        if(from < items.length) setTimeout(tick, 60);
-        else st.innerHTML += " • prévias completas";
-      }).apiFetchCrionSnippets(res.sessionId, from, 6);
+        if(from < items.length) setTimeout(tick, 60); else st.innerHTML += " • prévias completas";
+      }
       tick();
     }
-  }).withFailureHandler(e=>{
-    setLoading(btn,false,"Pesquisar");
-    st.textContent='Erro: '+(e && e.message ? e.message : String(e));
-  }).apiSearchCrion(q);
+  }catch(e){ setLoading(btn,false,"Pesquisar"); st.textContent='Erro: '+e; }
 }
 </script>
 </body>
