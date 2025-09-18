@@ -1,26 +1,170 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RIC AI — CRION</title>
 <style>
-  :root{ --line:#E7EAF3; }
-  *{box-sizing:border-box} body{margin:0;background:radial-gradient(1200px 600px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%)}
-  .wrap{max-width:1240px;margin:0 auto;padding:20px}
-  .frame{background:#fff;border:1px solid var(--line);border-radius:18px;
-         box-shadow:0 22px 54px rgba(124,58,237,.22),0 2px 10px rgba(124,58,237,.16)}
-  iframe{width:100%;height:90vh;border:0;border-radius:18px}
-  @media (max-width:720px){ iframe{height:85vh} }
+  :root{
+    --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
+    --primary:#2343d5; --primary-2:#2e61ff;
+    --lime:#a3e635; --danger:#ef4444;
+    --shadow-blue:0 16px 36px #3B82F640,0 2px 6px #3B82F640;
+    --shadow-purple:0 16px 36px #7C3AED40,0 2px 6px #7C3AED40;
+    --shadow-orange:0 16px 36px #F9731640,0 2px 6px #F9731640;
+    --shadow-lime:0 16px 36px #84CC1647,0 2px 6px #84CC1647;
+    --border-blue:#cfe1ff; --border-purple:#e2d6ff; --border-orange:#ffd9bf; --border-lime:#d9f7b8;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    background:radial-gradient(1200px 600px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%);
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:24px}
+
+  /* ======= BARRA DO TOPO (única) ======= */
+  .sitebar{
+    background:linear-gradient(135deg,var(--primary),var(--primary-2));
+    color:#fff;border-radius:28px;padding:14px 22px;margin:24px auto 18px;
+    display:flex;align-items:center;gap:14px;justify-content:center;
+    box-shadow:0 24px 56px rgba(46,97,255,.15),0 2px 8px rgba(46,97,255,.18);
+    position:relative;
+  }
+  .sitebar h1{margin:0;font-size:28px;letter-spacing:.5px}
+  .sitebar .logo{height:28px;width:auto;display:block}
+  .sitebar .badge{
+    position:absolute;right:24px;top:50%;transform:translateY(-50%);
+    font-size:12px;color:#111;background:#fff;border:1px solid #E5E7EB;
+    padding:6px 12px;border-radius:999px;box-shadow:0 10px 24px #0001,0 2px 6px #0001;
+    white-space:nowrap;
+  }
+
+  /* ======= GRID + CARDS ======= */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:980px){ .grid{grid-template-columns:1fr} }
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;
+    box-shadow:var(--shadow-purple) !important;   /* roxo em todos */
+  }
+  .card.blue{border-color:var(--border-blue)}
+  .card.purple{border-color:var(--border-purple)}
+  .card.orange{border-color:var(--border-orange)}
+  .card.lime{border-color:var(--border-lime)}
+  h2{margin:0 0 10px;font-size:18px;color:var(--ink)}
+  .tag{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:13px;margin-bottom:10px;border:1px solid}
+  .tag.sites{background:#ebf5ff;border-color:#cfe8ff;color:#1e40af}
+  .tag.pdf{background:#f1eaff;border-color:#dacfff;color:#5b21b6}
+  .tag.crion{background:#eefcf6;border-color:#cbf5e1;color:#065f46}
+  .tag.alert{background:#fff1e6;border-color:#ffdaba;color:#b45309}
+  .row{display:flex;gap:10px;align-items:center}
+  .input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;background:#fbfbff}
+  .input::placeholder{color:#9aa3b2}
+  .btn{
+    appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;
+    color:#fff;background:var(--primary);
+    box-shadow:0 8px 18px rgba(35,67,213,.28);transition:transform .02s ease, filter .1s
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn[disabled]{filter:saturate(.2);opacity:.6;cursor:not-allowed}
+  .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
+  .btn-danger{background:var(--danger); color:#fff; box-shadow:0 8px 18px #EF44443A}
+  .btn-small{padding:8px 12px;border-radius:10px;font-weight:800}
+  .list{margin:10px 0 0;padding:0;list-style:none}
+  .item{padding:10px 0;border-top:1px solid var(--line)}
+  .meta{font-size:12px;color:#6b7280;margin-top:2px}
+  .snip{color:#374151;font-size:14px;margin:6px 0}
+  .small{font-size:12px;color:#6b7280}
+  .out{white-space:pre-wrap;min-height:160px;border:1px dashed var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fbfbff}
+  a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
+  .dots{display:inline-block;margin-left:6px;vertical-align:middle}
+  .dots i{display:inline-block;width:6px;height:6px;background:#2563eb;border-radius:50%;margin:0 2px;animation:jump 1s infinite}
+  .dots i:nth-child(2){animation-delay:.15s} .dots i:nth-child(3){animation-delay:.3s}
+  @keyframes jump{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+  .alert-big{font-size:28px;font-weight:900;color:#b91c1c;text-align:center;margin-top:14px}
+  .alert-resp{font-size:14px;font-weight:600;color:#334155;text-align:center;margin-top:6px;text-transform:lowercase}
+
+  /* Modais */
+  .modal{position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000}
+  .modal.show{display:flex}
+  .modal-box{width:min(560px,92vw);border-radius:16px;padding:18px 16px;color:#0b1220;background:#fff;box-shadow:0 18px 64px #00000040}
+  .modal-title{font-weight:900;font-size:18px;margin:0 0 10px}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+  .modal .input{background:#fff}
+  #m2text{font-size:13px;text-transform:lowercase}
 </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="frame">
-      <iframe
-        src="https://script.google.com/a/macros/headsetbrasil.com/s/AKfycbzxmHn1tdZFqpxY3Ku-SERQSgXUzUvWYb4hK152W0u3twFLXIgNbyOZSCqwRiTllvJLAg/exec"
-        allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- CABEÇALHO ÚNICO -->
+    <div class="sitebar">
+      <img class="logo" src="https://drive.google.com/uc?export=view&id=1rKFdNQjrm1zcjUf5tUHrD23AbS9PXRRN" alt="Logo">
+      <h1>RIC AI CRION</h1>
+      <div class="badge">Desenvolvido por Alexandre Cavalcante V3.0</div>
+    </div>
+
+    <div class="grid">
+      <!-- ALERTA -->
+      <section class="card orange">
+        <div class="tag alert">ALERTA</div>
+        <h2>Controle de alerta</h2>
+        <div class="row">
+          <button id="btnAlert" class="btn">Pesquisar</button>
+          <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
+        </div>
+        <div id="alertMsg"  class="alert-big"   style="display:none">—</div>
+        <div id="alertResp" class="alert-resp" style="display:none">—</div>
+      </section>
+
+      <!-- SITES OFICIAIS (sem token) -->
+      <section class="card blue">
+        <div class="tag sites">SITES OFICIAIS</div>
+        <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
+        <div class="row" style="margin-top:10px">
+          <input id="qSites" class="input" placeholder="Ex.: vencimento Hapvida, cancelamento Affix, inclusão de RN">
+          <button id="btnSites" class="btn">Pesquisar</button>
+        </div>
+        <div id="outSites" class="out">Digite sua pergunta — responderemos com TEXTO longo + fontes oficiais.</div>
+      </section>
+
+      <!-- PDFs -->
+      <section class="card purple">
+        <div class="tag pdf">PDFs</div>
+        <h2>Manuais do Corretor (Sharepoint)</h2>
+        <p class="small">Busca rápida no texto extraído dos PDFs (indexados).</p>
+        <div class="row">
+          <input id="qPDF" class="input" placeholder="Ex.: Affix, Coparticipação, Carência 30 dias">
+          <button id="btnPDF" class="btn" style="min-width:126px">Pesquisar</button>
+        </div>
+        <div id="pdfStatus" class="small" style="margin-top:6px">—</div>
+        <ul id="pdfList" class="list"></ul>
+      </section>
+
+      <!-- CRION -->
+      <section class="card lime">
+        <div class="tag crion">PROCEDIMENTOS CRION</div>
+        <h2>Procedimentos</h2>
+        <p class="small">Material de Treinamento, Quiz, Alertas &gt; 30 dias e demais informações.</p>
+        <div class="row">
+          <input id="qCRION" class="input" placeholder="Ex.: Onboarding, Retenção, URA, Script de Cobrança, Affix">
+          <button id="btnCRION" class="btn" style="min-width:126px">Pesquisar</button>
+          <button id="btnReIdxCRION" class="btn btn-danger btn-small" title="Atualiza o índice do CRION">Reindexar</button>
+        </div>
+        <div id="crionStatus" class="small" style="margin-top:6px">—</div>
+        <ul id="crionList" class="list"></ul>
+      </section>
     </div>
   </div>
-</body>
-</html>
+
+  <!-- Modais ALERTA -->
+  <div id="modal1" class="modal"><div class="modal-box" style="border:1px solid #cfe1ff">
+    <h3 class="modal-title">ALERTA DA OPERAÇÃO</h3>
+    <input id="m1text" class="input" placeholder="Digite o texto do alerta">
+    <div class="modal-actions">
+      <button class="btn btn-plain btn-small" onclick="closeM(1)">Cancelar</button>
+      <button id="m1ok" class="btn btn-small" onclick="goM2()">Continuar</button>
+    </div>
+  </div></div>
+
+  <div id="modal2" class="modal"><div class="modal-box" style="border:1px solid #ffdaba">
+    <h3 class="modal-title">nome do responsável</h3>
+    <input id="m2text" class
