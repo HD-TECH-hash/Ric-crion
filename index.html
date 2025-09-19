@@ -6,70 +6,35 @@
 <title>RIC AI — CRION</title>
 <meta name="theme-color" content="#2882bb"/>
 <style>
-  :root{
-    --brand:#2882bb; --brand2:#2a8fcf; --bg:#f6f9ff;
-    --ink:#0f172a; --line:#e6eef6; --shadow:0 16px 36px rgba(40,130,187,.18);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial}
-  .wrap{max-width:1280px;margin:0 auto;padding:18px}
-
-  /* Top bar */
-  .hero{
-    position:relative; display:flex; align-items:center; justify-content:space-between;
-    background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff;
-    border-radius:18px; padding:12px 16px; box-shadow:var(--shadow);
-  }
-  .hero-left{flex:0 0 auto}
-  .hero-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
-  .hero-right{flex:0 0 auto}
-  .left-brand{height:52px;object-fit:contain;filter:drop-shadow(0 2px 6px #0002)}
-  .center-logo{height:52px;object-fit:contain;filter:drop-shadow(0 2px 6px #0002)}
-  .right-brand{height:46px;object-fit:contain;filter:drop-shadow(0 2px 6px #0002)}
-  @media (max-width:980px){ .right-brand{display:none} }
-
-  /* Frame area */
-  .frame-box{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
-  iframe{display:block;width:100%;height:80vh;border:0}
-  .fallback{display:none;padding:28px;text-align:center}
-  .btn{appearance:none;border:0;border-radius:12px;padding:14px 18px;font-weight:800;cursor:pointer}
-  .btn-go{background:linear-gradient(135deg,#22c55e,#a3e635);color:#053;box-shadow:0 10px 22px rgba(34,197,94,.28)}
-  .note{margin-top:10px;color:#667085;font-size:14px}
-  footer{margin:18px 0 8px;text-align:center;color:#8a97a8;font-size:12px}
+  :root{ --bg:#f6f9ff; --line:#e6eef6; --shadow:0 16px 36px rgba(40,130,187,.18); }
+  *{ box-sizing:border-box }
+  html,body{ height:100% }
+  body{ margin:0; background:var(--bg); font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial; color:#0f172a }
+  .wrap{ max-width:1280px; margin:0 auto; padding:18px }
+  .frame-box{ background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow) }
+  iframe{ display:block; width:100%; height:86vh; border:0 }
+  .fallback{ display:none; padding:32px; text-align:center }
+  .btn{ appearance:none; border:0; border-radius:12px; padding:14px 18px; font-weight:800; cursor:pointer }
+  .btn-go{ background:linear-gradient(135deg,#22c55e,#a3e635); color:#053; box-shadow:0 10px 22px rgba(34,197,94,.28) }
+  .note{ margin-top:10px; color:#667085; font-size:14px }
+  footer{ margin:18px 0 8px; text-align:center; color:#8a97a8; font-size:12px }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- Header (logos nas pontas, RIC AI central) -->
-    <div class="hero">
-      <div class="hero-left">
-        <img class="left-brand" src="./icon.png"
-             onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon.png'">
-      </div>
-      <div class="hero-center">
-        <img class="center-logo" src="./RICai.png"
-             onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/RICai.png'">
-      </div>
-      <div class="hero-right">
-        <img class="right-brand" src="./icon2.png"
-             onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon2.png'">
-      </div>
-    </div>
-
-    <!-- Área do app (iframe + fallback automático) -->
+    <!-- SOMENTE O APP DO GAS AQUI (sem cabeçalho para evitar duplicidade) -->
     <div class="frame-box">
       <iframe id="appFrame"
-              src="https://script.google.com/macros/s/AKfycbwqJJX9UYJBU8Ej0Hk4d4doaX7UL3dTidU7hJfVAieUszBqwNnUQYLyKvQNW47Nny1NLA/exec"
-              referrerpolicy="no-referrer-when-downgrade"
-              allow="clipboard-write; clipboard-read">
+        src="https://script.google.com/macros/s/AKfycbwqJJX9UYJBU8Ej0Hk4d4doaX7UL3dTidU7hJfVAieUszBqwNnUQYLyKvQNW47Nny1NLA/exec"
+        referrerpolicy="no-referrer-when-downgrade"
+        allow="clipboard-write; clipboard-read">
       </iframe>
 
       <div id="fallback" class="fallback">
         <h3>Não foi possível incorporar aqui.</h3>
         <p>Clique para abrir o aplicativo em uma nova aba.</p>
         <p><a class="btn btn-go" id="openBtn" target="_blank" rel="noopener">Abrir app</a></p>
-        <p class="note">Se quiser incorporar dentro desta página, ative <code>ALLOWALL</code> no Apps Script (veja abaixo).</p>
+        <p class="note">Para permitir incorporação direta, ative <code>ALLOWALL</code> no Apps Script.</p>
       </div>
     </div>
 
@@ -77,16 +42,14 @@
   </div>
 
 <script>
-  // URL do seu GAS (mantida aqui para ficar fácil trocar futuramente)
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwqJJX9UYJBU8Ej0Hk4d4doaX7UL3dTidU7hJfVAieUszBqwNnUQYLyKvQNW47Nny1NLA/exec";
   document.getElementById('openBtn').href = GAS_URL;
 
-  // Se o iframe não carregar (bloqueio de X-Frame-Options), mostramos o fallback
+  // Se o iframe não carregar (bloqueio X-Frame-Options), mostra o fallback
   const frame = document.getElementById('appFrame');
-  const showFallback = () => { document.getElementById('fallback').style.display = 'block'; };
   let loaded = false;
   frame.addEventListener('load', () => { loaded = true; });
-  setTimeout(() => { if(!loaded) showFallback(); }, 2200);
+  setTimeout(() => { if (!loaded) document.getElementById('fallback').style.display = 'block'; }, 2200);
 </script>
 </body>
 </html>
