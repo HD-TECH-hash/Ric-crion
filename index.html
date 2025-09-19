@@ -8,45 +8,60 @@
   :root{
     --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
     --primary:#2343d5; --primary-2:#2e61ff; --danger:#ef4444;
-    --tag:#EDE9FE; --tag-ink:#6D28D9; /* roxo clarinho */
+    --tag:#EDE9FE; --tag-ink:#6D28D9; /* roxo bem clarinho */
     --shadow-card:0 20px 40px rgba(99,102,241,.18), 0 6px 14px rgba(99,102,241,.12);
   }
-  *{box-sizing:border-box} body{margin:0;font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:radial-gradient(1100px 520px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%); color:var(--ink)}
-  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+       background:radial-gradient(1100px 520px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%); color:var(--ink)}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px} /* ~20% menor */
 
-  .hero{position:relative;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-radius:22px;padding:14px 20px;display:flex;align-items:center;justify-content:center;box-shadow:0 28px 60px rgba(46,97,255,.18)}
+  /* Header */
+  .hero{position:relative;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;
+        border-radius:22px;padding:14px 20px;display:flex;align-items:center;justify-content:center;
+        box-shadow:0 28px 60px rgba(46,97,255,.18)}
   .hero h1{margin:0;font-size:28px;letter-spacing:.5px}
   .logo{width:132px;height:auto;object-fit:contain;filter:drop-shadow(0 2px 6px #0002)}
-  .left{position:absolute;left:18px;top:50%;transform:translateY(-50%)} .right{position:absolute;right:18px;top:50%;transform:translateY(-50%)}
+  .left{position:absolute;left:18px;top:50%;transform:translateY(-50%)}
+  .right{position:absolute;right:18px;top:50%;transform:translateY(-50%)}
 
+  /* Grid / Cards */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
   @media (max-width:980px){ .grid{grid-template-columns:1fr} .right{display:none} }
-
   .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow-card)}
-  .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);border:1px solid #e9d7ff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:12px;letter-spacing:.3px}
+
+  .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);
+       border:1px solid #e9d7ff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:12px;letter-spacing:.3px}
   h2{margin:8px 0 10px 0;font-size:18px}
   .row{display:flex;gap:10px;align-items:center}
   .input{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px;background:#fbfbff}
-  .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;color:#fff;background:var(--primary);box-shadow:0 8px 18px rgba(35,67,213,.28)} .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
+  .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;color:#fff;background:var(--primary);box-shadow:0 8px 18px rgba(35,67,213,.28)}
+  .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
   .btn-danger{background:var(--danger);box-shadow:0 8px 18px rgba(239,68,68,.28)}
   .hint{font-size:12px;color:#6b7280;margin-top:6px}
   .out{white-space:pre-wrap;min-height:130px;border:1px dashed var(--line);border-radius:12px;padding:10px;margin-top:10px;background:#fbfbff}
-  .list{margin:10px 0 0;padding:0;list-style:none} .item{padding:10px 0;border-top:1px solid var(--line)}
+  .list{margin:10px 0 0;padding:0;list-style:none}
+  .item{padding:10px 0;border-top:1px solid var(--line)}
   .meta{font-size:12px;color:#6b7280;margin-top:2px}
-  .snip{color:#374151;font-size:14px;margin:6px 0}  a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
+  .snip{color:#374151;font-size:14px;margin:6px 0}
+  a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
 
+  /* Loaders */
   .busy{display:flex;align-items:center;gap:10px}
   .spinner{width:16px;height:16px;border-radius:50%;border:3px solid #ffffff66;border-top-color:#fff;animation:spin .9s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}} .bar{position:relative;height:8px;border-radius:999px;background:#e9e9ff;overflow:hidden}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bar{position:relative;height:8px;border-radius:999px;background:#e9e9ff;overflow:hidden}
   .bar:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#c7b8ff,#a78bfa,#93c5fd);animation:load 1.3s infinite}
   @keyframes load{0%{left:-100%;right:100%}50%{left:0;right:0}100%{left:100%;right:-100%}}
 
+  /* Footer */
   footer{margin:20px 0 6px;text-align:center}
-  .badge{display:inline-block;background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:8px 14px;color:#111;box-shadow:0 10px 22px rgba(124,58,237,.14), 0 2px 6px rgba(124,58,237,.10)}
+  .badge{display:inline-block;background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:8px 14px;color:#111;box-shadow:0 10px 22px rgba(124,58,237,.14),0 2px 6px rgba(124,58,237,.10)}
 </style>
 </head>
 <body>
   <div class="wrap">
+    <!-- HERO -->
     <div class="hero">
       <img class="logo left"  src="icon.png"  alt="Logo esquerdo">
       <h1>RIC AI CRION</h1>
@@ -63,13 +78,14 @@
           <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
         </div>
         <div class="hint" id="alertBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando alerta...</div></div><div class="bar" style="margin-top:8px"></div>
+          <div class="busy"><div class="spinner"></div><div>Pesquisando alerta...</div></div>
+          <div class="bar" style="margin-top:8px"></div>
         </div>
         <div id="alertMsg"  style="display:none;font-size:26px;font-weight:900;color:#b91c1c;text-align:center;margin-top:10px">—</div>
         <div id="alertResp" style="display:none;font-size:14px;font-weight:600;color:#334155;text-align:center;margin-top:4px;text-transform:lowercase">—</div>
       </section>
 
-      <!-- SITES -->
+      <!-- SITES OFICIAIS -->
       <section class="card">
         <div class="tag">SITES OFICIAIS</div>
         <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
@@ -78,7 +94,8 @@
           <button id="btnSites" class="btn">Pesquisar</button>
         </div>
         <div class="hint" id="sitesBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando...</div></div><div class="bar" style="margin-top:8px"></div>
+          <div class="busy"><div class="spinner"></div><div>Pesquisando...</div></div>
+          <div class="bar" style="margin-top:8px"></div>
         </div>
         <div id="outSites" class="out">—</div>
       </section>
@@ -93,7 +110,8 @@
           <button id="btnPDF" class="btn" style="min-width:120px">Pesquisar</button>
         </div>
         <div class="hint" id="pdfBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando arquivos...</div></div><div class="bar" style="margin-top:8px"></div>
+          <div class="busy"><div class="spinner"></div><div>Listando arquivos...</div></div>
+          <div class="bar" style="margin-top:8px"></div>
         </div>
         <div id="pdfStatus" class="hint" style="margin-top:6px">—</div>
         <ul id="pdfList" class="list"></ul>
@@ -110,7 +128,8 @@
           <button id="btnReIdxCRION" class="btn btn-danger" style="min-width:120px">Reindexar</button>
         </div>
         <div class="hint" id="crionBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando procedimentos...</div></div><div class="bar" style="margin-top:8px"></div>
+          <div class="busy"><div class="spinner"></div><div>Listando procedimentos...</div></div>
+          <div class="bar" style="margin-top:8px"></div>
         </div>
         <div id="crionStatus" class="hint" style="margin-top:6px">—</div>
         <ul id="crionList" class="list"></ul>
@@ -152,10 +171,10 @@
   </div>
 
 <script>
-/*** COLOQUE AQUI O /exec DO SEU WEB APP ***/
-const APP_URL = "PASTE_YOUR_GAS_EXEC_URL_HERE";
+/*** URL /exec do seu Web App (liberado p/ Anyone) ***/
+const APP_URL = "https://script.google.com/macros/s/AKfycbwpX28ScHUs0V_NR9HU0MfaArfmHXAsTHBWmjZpefaIguIB6AdIoM5jqTTAfwNwmCoz/exec";
 
-/*** UI helpers ***/
+/*** helpers ***/
 const $ = s => document.querySelector(s);
 const show = (el, on=true)=>{ if(!el) return; el.style.display = on? '' : 'none'; };
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
@@ -163,13 +182,11 @@ function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
 function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
 
-/*** Polyfill de chamada (GAS vs GitHub) ***/
+/*** Polyfill (GAS vs GitHub) ***/
 function call(endpoint, payload){
-  // GAS (google.script.run)
   if (window.google && google.script && google.script.run){
     return new Promise((resolve,reject)=>{
       const r = google.script.run.withSuccessHandler(res=>{
-        // normaliza retorno do chat
         if(endpoint==='chat' && typeof res==='string') resolve({ok:true, text:res});
         else resolve(res);
       }).withFailureHandler(err=>reject(err));
@@ -182,14 +199,12 @@ function call(endpoint, payload){
           case 'searchcrion': r.apiSearchCrion(payload.q); break;
           case 'fetchcrionsnippets': r.apiFetchCrionSnippets(payload.sessionId, payload.from, payload.limit); break;
           case 'reindexcrion': r.apiReindexCrion(); break;
-          case 'chat': r.chatServer(payload.q, payload.ua); break;
-          case 'logquestion': r.apiLogQuestion && r.apiLogQuestion(payload.module, payload.q, payload.ua, payload.origin); resolve({ok:true}); break;
+          case 'chat': r.chatServer(payload.q, navigator.userAgent||''); break;
           default: reject('endpoint não mapeado');
         }
       }catch(e){ reject(e); }
     });
   }
-  // GitHub (REST → /exec?fn=...)
   const url = APP_URL + "?fn=" + encodeURIComponent(endpoint);
   return fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(payload||{}) })
     .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
@@ -200,9 +215,10 @@ function openM(id){ $('#modal'+id).style.display='flex'; }
 function closeM(id){ $('#modal'+id).style.display='none'; }
 function backM1(){ closeM(2); openM(1); }
 
-/*** ALERTA (exibir) ***/
+/*** ALERTA ***/
 $('#btnAlert').addEventListener('click', async ()=>{
-  const msg=$('#alertMsg'), resp=$('#alertResp'); show(msg,false); show(resp,false); show($('#alertBusy'),true);
+  const msg=$('#alertMsg'), resp=$('#alertResp');
+  show(msg,false); show(resp,false); show($('#alertBusy'),true);
   try{
     const r = await call('getalert',{});
     if(!r || r.ok===false){ msg.textContent="Falha ao consultar."; show(msg,true); return; }
@@ -219,25 +235,26 @@ $('#btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; $('#m
 function goM2(){ _newAlert = ($('#m1text').value||"").trim(); if(!_newAlert){ $('#m1text').focus(); return; } closeM(1); openM(2); }
 $('#m2text').addEventListener('input', e=>{ const v=e.target.value; e.target.value = v? v[0].toUpperCase()+v.slice(1).toLowerCase():v; });
 async function saveAlert(){
-  _newResp = $('#m2text').value.trim(); try{
+  _newResp = $('#m2text').value.trim();
+  try{
     $('#m2ok').disabled=true; $('#m2ok').textContent='Salvando...';
-    await call('adjustalert',{mensagem:_newAlert, responsavel:_newResp}); closeM(2); openM(3);
+    await call('adjustalert',{mensagem:_newAlert, responsavel:_newResp});
+    closeM(2); openM(3);
   }catch(e){ closeM(2); alert("Falha ao ajustar: "+e.message);
   }finally{ $('#m2ok').disabled=false; $('#m2ok').textContent='Salvar'; }
 }
 
 /*** SITES ***/
 $('#btnSites').addEventListener('click', async ()=>{
-  const q=($('#qSites').value||'').trim(); if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
+  const q=($('#qSites').value||'').trim();
+  if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
   show($('#sitesBusy'),true); $('#outSites').textContent='—';
   try{
     const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final. Substitua qualquer nota genérica por: 'Fontes oficiais Affix, Alter, Hapvida'.";
-    const r = await call('chat',{q:qRich, ua:navigator.userAgent||''});
+    const r = await call('chat',{q:qRich});
     const txt = (r && r.text) ? r.text : '—';
     const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
     $('#outSites').innerHTML = html;
-    // registra pergunta (seguro contra duplicidade)
-    call('logquestion',{module:'sites', q, ua:navigator.userAgent||'', origin:'github'}).catch(()=>{});
   }catch(e){ $('#outSites').textContent='Erro: '+e.message;
   }finally{ show($('#sitesBusy'),false); }
 });
@@ -246,7 +263,8 @@ $('#btnSites').addEventListener('click', async ()=>{
 $('#btnPDF').addEventListener('click', doPDF);
 $('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
 async function doPDF(){
-  const q=($('#qPDF').value||'').trim(); if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
+  const q=($('#qPDF').value||'').trim();
+  if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
   show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos...'; $('#pdfList').innerHTML="";
   try{
     const res = await call('searchindexed',{q});
@@ -256,7 +274,8 @@ async function doPDF(){
     items.forEach((it,idx)=>{
       const li=document.createElement('li'); li.className='item'; li.id='pdf_'+idx;
       const meta = `<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
-      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}<div class="hint" id="snip_pdf_${idx}">Carregando prévias…</div>`;
+      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                    <div class="hint" id="snip_pdf_${idx}">Carregando prévias…</div>`;
       frag.appendChild(li);
     });
     $('#pdfList').appendChild(frag);
@@ -286,7 +305,8 @@ $('#btnReIdxCRION').addEventListener('click', async ()=>{
   finally{ show($('#crionBusy'),false); }
 });
 async function doCRION(){
-  const q=($('#qCRION').value||'').trim(); if(!q){ $('#crionStatus').textContent='Digite um termo.'; return; }
+  const q=($('#qCRION').value||'').trim();
+  if(!q){ $('#crionStatus').textContent='Digite um termo.'; return; }
   show($('#crionBusy'),true); $('#crionStatus').textContent='Listando arquivos…'; $('#crionList').innerHTML="";
   try{
     const res = await call('searchcrion',{q});
@@ -296,7 +316,8 @@ async function doCRION(){
     items.forEach((it,idx)=>{
       const li=document.createElement('li'); li.className='item'; li.id='crion_'+idx;
       const meta  = `<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
-      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}<div class="hint" id="snip_crion_${idx}">Carregando prévias…</div>`;
+      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                    <div class="hint" id="snip_crion_${idx}">Carregando prévias…</div>`;
       frag.appendChild(li);
     });
     $('#crionList').appendChild(frag);
