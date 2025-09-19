@@ -82,7 +82,7 @@
   .k.op{background:#fee2e2}
   .k.eq{background:#dcfce7}
 
-  /* alerta de integração */
+  /* aviso de integração */
   #err{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);background:#fff;border:1px solid #fecaca;
        box-shadow:0 10px 24px rgba(0,0,0,.12);padding:10px 12px;border-radius:12px;color:#991b1b;display:none;z-index:2000}
 </style>
@@ -227,37 +227,39 @@ function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&l
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
 function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
-function toast(msg){ const e=$("#err"); e.innerHTML = esc(msg); show(e,true); setTimeout(()=>show(e,false), 4500); }
+function toast(msg){ const e=$("#err"); e.textContent = String(msg); show(e,true); setTimeout(()=>show(e,false), 4500); }
 
-/* ===== POLYFILL (sem preflight) ===== */
+/* ===== POLYFILL compatível com seu GAS =====
+   POST 'text/plain' para APP_URL?fn=endpoint  (sem preflight/CORS) */
 async function call(endpoint, payload){
-  const body = new URLSearchParams();
-  body.set("fn", endpoint);
-  body.set("payload", JSON.stringify(payload||{}));
+  const url = APP_URL + "?fn=" + encodeURIComponent(endpoint) + "&t=" + Date.now();
   let res;
   try{
-    res = await fetch(APP_URL, {
+    res = await fetch(url, {
       method:"POST",
-      headers:{ "Content-Type":"application/x-www-form-urlencoded" },
-      body
+      headers:{ "Content-Type":"text/plain;charset=utf-8" },
+      body: JSON.stringify(payload||{})
     });
   }catch(e){
     toast("Falha de rede: "+e.message);
     throw e;
   }
-  if(!res.ok){ toast("HTTP "+res.status); throw new Error("HTTP "+res.status); }
-  const txt = await res.text();
-  try{ return JSON.parse(txt); }catch{ return {ok:false, message:"Resposta inválida do servidor", raw:txt}; }
+  const text = await res.text();
+  try{
+    return JSON.parse(text);
+  }catch(e){
+    toast("Resposta inválida do servidor");
+    throw new Error("Invalid JSON");
+  }
 }
 
 /* ===== HEADER ICONS ===== */
 $('#btnNotes').addEventListener('click', ()=>{ renderNotes(); show($('#modalNotes'),true); });
 $('#btnCloseNotes').addEventListener('click', ()=> show($('#modalNotes'),false));
-
 $('#btnCalc').addEventListener('click', ()=> toggleCalc());
 function toggleCalc(force){ const el=$('#calcWrap'); if(typeof force==='boolean'){show(el,force);return;} show(el, el.style.display==='none' || !el.style.display); }
 
-/* ===== CALC ===== */
+/* ===== CALCULADORA ===== */
 (function calc(){
   const scr = $('#calcScreen'); let a=null, op=null, cur='0';
   const draw=()=> scr.textContent=cur;
