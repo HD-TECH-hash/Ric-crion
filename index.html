@@ -6,7 +6,7 @@
 <title>RIC AI — CRION</title>
 <style>
   :root{
-    --base-font:12px;                  /* 15% menor para GH */
+    --base-font:12px;                  /* layout 15% menor p/ GH */
     --brand:#2882bb; --brand2:#2a8fcf; /* barra azul */
     --bg:#f7f8fc; --ink:#0f172a; --muted:#667085; --line:#E7EAF3;
     --lime:#22c55e; --lime2:#a3e635; --danger:#ef4444;
@@ -111,10 +111,13 @@
     </div>
 
     <!-- WIDGETS -->
-    <div id="noteWrap" class="widget note" style="position:fixed;right:18px;top:84px;z-index:50;display:none;width:220px;background:#fff3b0;border:1px solid #f5d565;border-radius:12px;box-shadow:0 14px 30px #0001;padding:10px">
-      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+    <div id="noteWrap" class="widget note" style="position:fixed;right:18px;top:84px;z-index:50;display:none;width:240px;background:#fff3b0;border:1px solid #f5d565;border-radius:12px;box-shadow:0 14px 30px #0001;padding:10px">
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:6px">
         <b>Post-it</b>
-        <button id="clearNote" type="button" class="btn btn-plain" style="padding:4px 8px">Limpar</button>
+        <div class="row" style="gap:6px">
+          <button id="clearNote" type="button" class="btn btn-plain" style="padding:4px 8px">Limpar</button>
+          <button id="closeNote" type="button" class="btn btn-plain" style="padding:4px 8px">Fechar</button>
+        </div>
       </div>
       <textarea id="noteArea" placeholder="Anote algo..." style="width:100%;height:120px;border:0;background:transparent;outline:none;font:14px/1.45 ui-sans-serif"></textarea>
     </div>
@@ -158,7 +161,6 @@
           <div class="bar" style="margin-top:6px"></div>
         </div>
 
-        <!-- Caixa do alerta -->
         <div id="alertBox" class="out out-alert" style="display:none">
           <div id="alertMsg">—</div>
           <div id="alertResp" class="hint">—</div>
@@ -301,13 +303,15 @@ function press(k){
 
 /* ======= INICIALIZAÇÃO ======= */
 document.addEventListener('DOMContentLoaded', () => {
-  /* widgets */
+  /* Post-it */
   const noteWrap = $('#noteWrap'), noteArea = $('#noteArea');
   $('#toggleNote').onclick = ()=>{ noteWrap.style.display = noteWrap.style.display ? "" : "block"; if(noteWrap.style.display) noteArea.focus(); };
   $('#clearNote').onclick = ()=>{ noteArea.value=""; localStorage.removeItem('ric_note'); };
+  $('#closeNote').onclick = ()=>{ noteWrap.style.display="none"; };
   noteArea.value = localStorage.getItem('ric_note') || "";
   noteArea.addEventListener('input', ()=> localStorage.setItem('ric_note', noteArea.value));
 
+  /* Calculadora */
   $('#toggleCalc').onclick = ()=>{ $('#calcWrap').style.display = $('#calcWrap').style.display? "" : "block"; refresh(); };
   $('#closeCalc').onclick = ()=>{ $('#calcWrap').style.display="none"; };
   $('#keys').addEventListener('click', e=>{ const k=e.target.dataset.k; if(k) press(k); });
