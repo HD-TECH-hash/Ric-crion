@@ -6,17 +6,17 @@
 <title>RIC AI — CRION</title>
 <style>
   :root{
-    /* 15% menor no GitHub */
+    /* 15% menor no GitHub (mantido) */
     --base-font:12px;
 
-    /* Cores */
-    --brand:#2882bb;             /* azul topo e rodapé */
+    /* Cores (mantidas) */
+    --brand:#2882bb;             
     --brand2:#2a8fcf;
     --bg:#f7f8fc; --ink:#0f172a; --muted:#667085; --line:#E7EAF3;
-    --lime:#22c55e; --lime2:#a3e635;  /* verde-limão nos botões Pesquisar */
+    --lime:#22c55e; --lime2:#a3e635;  
     --danger:#ef4444;
 
-    /* Tags roxo clarinho com leve drop azul */
+    /* Tags roxo clarinho */
     --tag:#F2E7FF; 
     --tag-ink:#6D28D9;
     --tag-shadow: 0 4px 10px rgba(40,130,187,.18);
@@ -31,7 +31,7 @@
     color:var(--ink);
     background:radial-gradient(1200px 520px at -10% -10%, #eaf4ff 0, #ffffff 60%, #f7faff 100%);
   }
-  .wrap{max-width:1035px;margin:0 auto;padding:16px} /* 1060 * .85 ≈ 900 */
+  .wrap{max-width:900px;margin:0 auto;padding:16px}
 
   /* ========= HEADER ========= */
   .hero{
@@ -47,7 +47,7 @@
   .left{position:absolute;left:14px;top:50%;transform:translateY(-50%)}
   .right-img{position:absolute;right:14px;top:50%;transform:translateY(-50%)}
 
-  /* Botões de ferramentas (não colidir com logo da direita) */
+  /* Ferramentas */
   .tools{
     position:absolute;right:148px;top:50%;transform:translateY(-50%);
     display:flex;gap:10px
@@ -80,8 +80,25 @@
   .btn-search{color:#053; background:linear-gradient(135deg,var(--lime),var(--lime2)); box-shadow:0 10px 22px rgba(34,197,94,.28)}
   .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line)}
   .btn-danger{background:var(--danger);color:#fff;box-shadow:0 10px 22px rgba(239,68,68,.24)}
+  /* 3) Reindexar ~30% menor e levemente mais alto */
+  .btn-reindex{padding:7px 10px;font-size:0.85rem;position:relative;top:-2px}
+
   .hint{font-size:12px;color:var(--muted);margin-top:6px}
-  .out{white-space:pre-wrap;min-height:120px;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:10px;background:#fbfbff}
+
+  /* 1) Caixinha mais escura (~10%) e contorno mais forte */
+  .out{
+    white-space:pre-wrap;
+    min-height:120px;
+    border:1px dashed #c9d5ea;        /* contorno um pouco mais escuro */
+    border-radius:12px;
+    padding:12px;
+    margin-top:10px;
+    background:#f3f6ff;                /* ~10% mais escuro que antes */
+    color:#0f172a;
+    box-shadow: inset 0 1px 0 #ffffffcc;
+  }
+  .out-alert{ min-height:80px; padding:14px; }
+
   .list{margin:8px 0 0;padding:0;list-style:none}
   .item{padding:10px 0;border-top:1px solid var(--line)}
   .snip{color:#374151;font-size:13px;margin:6px 0}
@@ -94,7 +111,7 @@
   .bar:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#c7b8ff,#a78bfa,#93c5fd);animation:load 1.2s infinite}
   @keyframes load{0%{left:-100%;right:100%}50%{left:0;right:0}100%{left:100%;right:-100%}}
 
-  /* ========= WIDGETS (post-it & calc) ========= */
+  /* ========= WIDGETS ========= */
   .widget{position:fixed;right:18px;top:84px;z-index:50;display:none}
   .note{width:220px;background:#fff3b0;border:1px solid #f5d565;border-radius:12px;box-shadow:0 14px 30px #0001;padding:10px}
   .note textarea{width:100%;height:120px;border:0;background:transparent;outline:none;font:14px/1.45 ui-sans-serif}
@@ -120,20 +137,18 @@
     <div class="hero">
       <img class="logo left"  src="icon.png"
            onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon.png';"  alt="Logo esquerdo">
-      <!-- ícone central (apenas o símbolo/PNG branco) -->
+
       <img class="center-logo" src="RICai.png"
            onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/RICai.png';" alt="RIC AI CRION">
-      <!-- ferramentas -->
+
       <div class="tools">
         <button id="toggleNote" class="iconbtn icon-note" title="Post-it">
-          <!-- sticky note -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
             <path d="M8 3h8a3 3 0 0 1 3 3v7l-7 7H8a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" stroke="#1f2937" stroke-width="2" fill="#fde68a"/>
             <path d="M19 13h-4a3 3 0 0 0-3 3v4" stroke="#1f2937" stroke-width="2"/>
           </svg>
         </button>
         <button id="toggleCalc" class="iconbtn icon-calc" title="Calculadora">
-          <!-- calculator -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
             <rect x="4" y="3" width="16" height="18" rx="2" stroke="#0b2555" stroke-width="2" fill="#dbeafe"/>
             <rect x="7" y="6" width="10" height="3" rx="1" fill="#0b2555"/>
@@ -141,6 +156,7 @@
           </svg>
         </button>
       </div>
+
       <img class="logo right-img" src="icon2.png"
            onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ric-crion/main/icon2.png';" alt="Logo direito">
     </div>
@@ -182,12 +198,17 @@
           <button id="btnAlert" class="btn btn-search">Pesquisar</button>
           <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
         </div>
+
         <div class="hint" id="alertBusy" style="display:none">
           <div class="busy"><div class="spinner"></div><div>Pesquisando alerta...</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
-        <div id="alertMsg"  style="display:none;font-size:22px;font-weight:900;color:#b91c1c;text-align:center;margin-top:8px">—</div>
-        <div id="alertResp" style="display:none;font-size:13px;font-weight:600;color:#334155;text-align:center;margin-top:4px;text-transform:lowercase">—</div>
+
+        <!-- 2) Caixinha do alerta -->
+        <div id="alertBox" class="out out-alert" style="display:none">
+          <div id="alertMsg"  style="font-size:20px;font-weight:900;color:#991b1b;margin:0 0 6px">—</div>
+          <div id="alertResp" class="hint" style="margin:0">—</div>
+        </div>
       </section>
 
       <!-- SITES OFICIAIS -->
@@ -218,8 +239,11 @@
           <div class="busy"><div class="spinner"></div><div>Listando arquivos...</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
-        <div id="pdfStatus" class="hint" style="margin-top:6px">—</div>
-        <ul id="pdfList" class="list"></ul>
+        <!-- Caixinha para status + lista -->
+        <div class="out" id="pdfBox">
+          <div id="pdfStatus" class="hint" style="margin-top:0">—</div>
+          <ul id="pdfList" class="list"></ul>
+        </div>
       </section>
 
       <!-- CRION -->
@@ -230,14 +254,17 @@
         <div class="row">
           <input id="qCRION" class="input" placeholder="Ex.: Onboarding, Retenção, URA, Script de Cobrança, Affix">
           <button id="btnCRION" class="btn btn-search" style="min-width:112px">Pesquisar</button>
-          <button id="btnReIdxCRION" class="btn btn-danger" style="min-width:112px">Reindexar</button>
+          <button id="btnReIdxCRION" class="btn btn-danger btn-reindex" style="min-width:112px">Reindexar</button>
         </div>
         <div class="hint" id="crionBusy" style="display:none">
           <div class="busy"><div class="spinner"></div><div>Listando procedimentos...</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
-        <div id="crionStatus" class="hint" style="margin-top:6px">—</div>
-        <ul id="crionList" class="list"></ul>
+        <!-- Caixinha para status + lista -->
+        <div class="out" id="crionBox">
+          <div id="crionStatus" class="hint" style="margin-top:0">—</div>
+          <ul id="crionList" class="list"></ul>
+        </div>
       </section>
     </div>
 
@@ -279,8 +306,7 @@
   </div>
 
 <script>
-/* ======= CONFIG ======= */
-/* Atualize com a URL /exec correta do seu GAS liberado para "Anyone": */
+/* ======= CONFIG (mantido) ======= */
 const APP_URL = "https://script.google.com/macros/s/AKfycbxnTEhSw1u5Ib0jCqJsURoZM30VfCpfeqKqKvYpXdKgJDUPrw8Q8hScbSzw4zVkI7u0rw/exec";
 
 /* ======= HELPERS ======= */
@@ -308,16 +334,34 @@ function backM1(){ closeM(2); openM(1); }
 
 /* ======= ALERTA ======= */
 $('#btnAlert').addEventListener('click', async ()=>{
-  const msg=$('#alertMsg'), resp=$('#alertResp');
-  show(msg,false); show(resp,false); show($('#alertBusy'),true);
+  const box=$('#alertBox'), msg=$('#alertMsg'), resp=$('#alertResp');
+  show(box,false); 
+  show($('#alertBusy'),true);
+
   try{
     const r = await call('getalert',{});
-    if(!r || r.ok===false){ msg.textContent="Falha ao consultar."; show(msg,true); return; }
-    if(!r.found){ msg.textContent="Sem recado no momento."; show(msg,true); return; }
-    msg.textContent = "🚨 " + String(r.mensagem||"—").toUpperCase(); show(msg,true);
-    if(r.responsavel){ resp.textContent = String(r.responsavel||"").toLowerCase(); show(resp,true); }
-  }catch(e){ msg.textContent="Erro: "+e.message; show(msg,true);
-  }finally{ show($('#alertBusy'),false); }
+    if(!r || r.ok===false){
+      msg.textContent="Falha ao consultar.";
+      resp.textContent="";
+      show(box,true);
+      return;
+    }
+    if(!r.found){
+      msg.textContent="Sem recado no momento.";
+      resp.textContent="";
+      show(box,true);
+      return;
+    }
+    msg.textContent = "🚨 " + String(r.mensagem||"—").toUpperCase();
+    resp.textContent = r.responsavel ? String(r.responsavel||"").toLowerCase() : "";
+    show(box,true);
+  }catch(e){
+    msg.textContent="Erro: "+e.message;
+    resp.textContent="";
+    show(box,true);
+  }finally{
+    show($('#alertBusy'),false);
+  }
 });
 
 let _newAlert="", _newResp="";
