@@ -2,86 +2,82 @@
 <html lang="pt-br">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>RIC AI — CRION</title>
-<meta name="description" content="RIC AI CRION • busca em sites oficiais, PDFs e procedimentos CRION">
+<meta name="color-scheme" content="light only">
 <style>
   :root{
-    --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
-    --brand:#2882bb;                 /* azul solicitado */
-    --brand-2:#4aa7e0;
-    --lime:#84cc16;                  /* verde-limão */
-    --green:#22c55e;
+    /* 10% menor vs. 16px → ~14px */
+    --base:14px;
+
+    --bg:#f6f8ff; --ink:#0f172a; --muted:#64748b; --line:#e7eaf3;
+    --header:#2882bb;             /* azul pedido */
+    --primary:#22c55e;            /* verde-limão para “Pesquisar” */
+    --primary-2:#65d46e;
     --danger:#ef4444;
-    --tag:#ede9fe;                   /* roxo bem clarinho p/ as tags */
-    --tag-ink:#6d28d9;
-    --glow:0 28px 60px rgba(40,130,187,.20), 0 6px 14px rgba(40,130,187,.22);
-    --shadow-card:0 18px 36px rgba(99,102,241,.10), 0 4px 12px rgba(99,102,241,.08);
-    --r:12px;
-    --pad:14px;
+    --tag:#efe7ff; --tag-ink:#6d28d9;  /* roxo claro */
+    --card-shadow:0 14px 36px rgba(40,130,187,.12), 0 2px 10px rgba(40,130,187,.10);
+    --radius:14px;
   }
   *{box-sizing:border-box}
   body{
-    margin:0; font:14px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    margin:0; font:var(--base)/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    background:
+      radial-gradient(900px 420px at -10% -10%, #eaf3ff 0, #ffffff 60%, #f7f9ff 100%);
     color:var(--ink);
-    background:radial-gradient(1200px 520px at -10% -10%, #eaf2ff 0, #ffffff 55%, #f6faff 100%);
   }
-  a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
 
   /* Wrap */
-  .wrap{max-width:1120px;margin:0 auto;padding:18px}
+  .wrap{max-width:1040px;margin:0 auto;padding:16px}
 
   /* Header */
   .hero{
-    position:relative;background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    color:#fff;border-radius:18px;padding:10px 80px;
-    display:flex;align-items:center;justify-content:center;min-height:70px;
-    box-shadow:var(--glow)
+    position:sticky; top:0; z-index:5;
+    background:linear-gradient(135deg,var(--header),#2aa8e0);
+    color:#fff;border-radius:18px;padding:10px 16px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 18px 40px rgba(40,130,187,.20);
+    margin-bottom:14px;
   }
-  .hero h1{margin:0;font-weight:900;letter-spacing:.2px;font-size:28px}
-  .logo{height:34px;object-fit:contain}
-  .left-wrap,.right-wrap{
-    position:absolute;top:50%;transform:translateY(-50%);display:flex;gap:10px;align-items:center
-  }
-  .left-wrap{left:14px}.right-wrap{right:14px}
-  .center-logo{height:36px}
+  .hero h1{margin:0;font-size:26px;letter-spacing:.3px}
+  .logo{height:32px;object-fit:contain}
+  .logo-left{position:absolute;left:16px;top:50%;transform:translateY(-50%);height:40px}
+  .logo-right{position:absolute;right:16px;top:50%;transform:translateY(-50%);height:36px}
+  .logo-center{height:34px;margin:0 10px}
 
-  /* Icon buttons (calculator & sticky) */
-  .iconbtn{
-    width:38px;height:38px;border-radius:12px;border:1px solid #ffffff33;
-    background:#ffffff22;display:inline-grid;place-items:center;cursor:pointer;
-    transition:transform .15s ease, background .15s ease;
+  /* Header actions (post-it & calculator) */
+  .h-actions{position:absolute;right:70px;top:50%;transform:translateY(-50%);display:flex;gap:10px}
+  .icon-btn{
+    width:38px;height:38px;border-radius:12px;border:1px solid #ffffff33;background:#ffffff22;
+    display:grid;place-items:center;cursor:pointer;transition:.18s;backdrop-filter:blur(2px)
   }
-  .iconbtn:hover{transform:translateY(-1px);background:#ffffff34}
-  .iconbtn svg{width:20px;height:20px;fill:#fff}
+  .icon-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+  .ico{width:22px;height:22px;display:block}
 
   /* Grid / Cards */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-  @media (max-width:980px){ .grid{grid-template-columns:1fr} .right-wrap{display:none} }
-  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);box-shadow:var(--shadow-card)}
-
-  .tag{
-    display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);
-    border:1px solid #e9d7ff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:12px;letter-spacing:.3px
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:980px){ .grid{grid-template-columns:1fr} .h-actions{right:62px} }
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px;
+    box-shadow:var(--card-shadow)
   }
-  h2{margin:10px 0 8px;font-size:18px}
-  .hint{font-size:12px;color:var(--muted);margin-top:6px}
-  .row{display:flex;gap:8px;align-items:center}
+  .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);
+       border:1px solid #e6d8ff;border-radius:999px;padding:5px 10px;font-weight:800;font-size:11px;letter-spacing:.3px}
+  h2{margin:6px 0 8px 0;font-size:17px}
+  .row{display:flex;gap:10px;align-items:center}
   .input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;background:#fbfdff}
-  .out{white-space:pre-wrap;min-height:120px;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:10px;background:#fbfdff}
-  .list{margin:9px 0 0;padding:0;list-style:none}
+  .btn{appearance:none;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;transition:.16s}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+  .btn-primary{color:#053; background:linear-gradient(180deg,var(--primary),var(--primary-2)); box-shadow:0 8px 18px rgba(34,197,94,.28)}
+  .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
+  .btn-danger{background:linear-gradient(180deg,#f87171,#ef4444);color:#fff;box-shadow:0 8px 18px rgba(239,68,68,.25)}
+  .hint{font-size:11px;color:var(--muted);margin-top:6px}
+  .out{white-space:pre-wrap;min-height:120px;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:10px;background:#fbfbff}
+  .list{margin:10px 0 0;padding:0;list-style:none}
   .item{padding:10px 0;border-top:1px solid var(--line)}
-  .meta{font-size:12px;color:#6b7280;margin-top:2px}
+  .meta{font-size:11px;color:var(--muted);margin-top:2px}
   .snip{color:#374151;font-size:13px;margin:6px 0}
-
-  /* Buttons */
-  .btn{appearance:none;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
-  .btn-primary{
-    color:#0f2a14;background:linear-gradient(180deg,var(--lime),var(--green));
-    box-shadow:0 8px 18px rgba(34,197,94,.28)
-  }
-  .btn-light{background:#f6f7fb;color:#111;border:1px solid var(--line)}
-  .btn-danger{background:linear-gradient(180deg,#fda4a4,#ef4444);color:#fff;box-shadow:0 8px 18px rgba(239,68,68,.28)}
+  a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
 
   /* Loaders */
   .busy{display:flex;align-items:center;gap:8px}
@@ -91,40 +87,56 @@
   .bar:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#c7b8ff,#a78bfa,#93c5fd);animation:load 1.3s infinite}
   @keyframes load{0%{left:-100%;right:100%}50%{left:0;right:0}100%{left:100%;right:-100%}}
 
-  /* Footer – discreto */
-  footer{margin:18px 0 6px;text-align:center}
+  /* Footer */
+  footer{margin:16px 0 4px;text-align:center}
   .footnote{font-size:11px;color:#94a3b8}
 
-  /* Simple modal */
-  .modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:1000}
-  .modal-box{width:min(520px,92vw);border-radius:14px;padding:16px;background:#fff;border:1px solid var(--line)}
+  /* Overlays (calculator / notes / modals) */
+  .overlay{position:fixed;inset:0;background:#0006;display:none;align-items:center;justify-content:center;z-index:50}
+  .sheet{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+  /* Calculator small */
+  .calc{width:320px}
+  .calc-header{display:flex;justify-content:flex-end;padding:6px 10px;border-bottom:1px solid var(--line)}
+  .calc-screen{padding:10px 12px;font:600 28px/1.2 ui-sans-serif,system-ui;background:#0b1b2b;color:#eafff6;border-radius:10px;margin:10px}
+  .pad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px}
+  .key{padding:12px;border-radius:10px;border:1px solid #e9eef6;background:#f8fafc;font:700 16px/1 ui-sans-serif;cursor:pointer}
+  .key.op{background:#e6fbef;border-color:#c7f7df}
+  .key.eq{background:#22c55e;color:#053;box-shadow:0 6px 16px rgba(34,197,94,.35)}
+  .key.wide{grid-column:span 2}
+  /* Notes */
+  .notes{width:min(680px,92vw)}
+  .notes-body{padding:12px}
+  .note-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:10px}
+  .ncard{background:#fff7cc;border:1px solid #f5e6a9;border-radius:12px;min-height:120px;padding:10px}
+  .ncard h4{margin:0 0 6px}
+  .nrow{display:flex;gap:8px;margin-top:8px}
+  .nrow input,.nrow textarea{width:100%;border:1px solid #e7e2b0;border-radius:8px;padding:8px;font-size:13px;background:#fffef4}
+  .nrow textarea{min-height:70px;resize:vertical}
+  .nbtn{border:0;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}
+  .nbtn.green{background:#22c55e;color:#053}
+  .nbtn.gray{background:#eef2f7}
 </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- HEADER -->
+    <!-- HERO -->
     <div class="hero">
-      <div class="left-wrap">
-        <img class="logo" src="icon.png" alt="Logo esquerdo" onerror="this.style.display='none'">
-      </div>
-
-      <img class="center-logo" src="RICai.png" alt="RIC AI CRION" onerror="this.remove();document.querySelector('#fallbackTitle').style.display='block'">
-      <h1 id="fallbackTitle" style="display:none">RIC AI CRION</h1>
-
-      <div class="right-wrap">
-        <!-- Post-it -->
-        <button class="iconbtn" id="openNotes" title="Post-it">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12a2 2 0 0 1 2 2v10l-6 6H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 18l4-4h-2a2 2 0 0 0-2 2v2zM7 7h10v2H7V7zm0 4h7v2H7v-2z"/></svg>
+      <img class="logo logo-left"  src="icon.png"  alt="Logo esquerdo">
+      <div class="h-actions">
+        <!-- Post-it (amarelo) -->
+        <button id="openNotes" class="icon-btn" title="Post-it">
+          <svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="#fde047"/><path d="M9 3v6h6" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <!-- Calculadora -->
-        <button class="iconbtn" id="openCalc" title="Calculadora">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm2 3h8v4H8V5zm0 6h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2zM8 15h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"/></svg>
+        <!-- Calculadora (cíano) -->
+        <button id="openCalc" class="icon-btn" title="Calculadora">
+          <svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="#5eead4"/><path d="M7 7h10M7 12h10M7 17h4" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
-        <img class="logo" src="icon2.png" alt="Logo direito" onerror="this.style.display='none'">
       </div>
+      <img class="logo logo-center" src="RICai.png" alt="RIC AI CRION">
+      <h1>RIC AI CRION</h1>
+      <img class="logo logo-right" src="icon2.png" alt="Logo direito">
     </div>
 
-    <!-- GRID -->
     <div class="grid">
       <!-- ALERTA -->
       <section class="card">
@@ -132,26 +144,26 @@
         <h2>Controle de alerta</h2>
         <div class="row">
           <button id="btnAlert" class="btn btn-primary">Pesquisar</button>
-          <button id="btnAdjust" class="btn btn-light">Ajustar</button>
+          <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
         </div>
         <div class="hint" id="alertBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando alerta...</div></div>
+          <div class="busy"><div class="spinner"></div><div>Pesquisando alerta…</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="alertMsg"  style="display:none;font-size:22px;font-weight:900;color:#b91c1c;text-align:center;margin-top:8px">—</div>
         <div id="alertResp" style="display:none;font-size:13px;font-weight:600;color:#334155;text-align:center;margin-top:4px;text-transform:lowercase">—</div>
       </section>
 
-      <!-- SITES -->
+      <!-- SITES OFICIAIS -->
       <section class="card">
         <div class="tag">SITES OFICIAIS</div>
         <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
         <div class="row" style="margin-top:6px">
-          <input id="qSites" class="input" placeholder="Digite sua pergunta .....">
+          <input id="qSites" class="input" placeholder="Digite sua pergunta …..">
           <button id="btnSites" class="btn btn-primary">Pesquisar</button>
         </div>
         <div class="hint" id="sitesBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando...</div></div>
+          <div class="busy"><div class="spinner"></div><div>Pesquisando…</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="outSites" class="out">—</div>
@@ -167,7 +179,7 @@
           <button id="btnPDF" class="btn btn-primary" style="min-width:120px">Pesquisar</button>
         </div>
         <div class="hint" id="pdfBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando arquivos...</div></div>
+          <div class="busy"><div class="spinner"></div><div>Listando arquivos…</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="pdfStatus" class="hint" style="margin-top:6px">—</div>
@@ -185,7 +197,7 @@
           <button id="btnReIdxCRION" class="btn btn-danger" style="min-width:120px">Reindexar</button>
         </div>
         <div class="hint" id="crionBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando procedimentos...</div></div>
+          <div class="busy"><div class="spinner"></div><div>Listando procedimentos…</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="crionStatus" class="hint" style="margin-top:6px">—</div>
@@ -196,85 +208,87 @@
     <footer><span class="footnote">Desenvolvido por Alexandre Cavalcante V3.0</span></footer>
   </div>
 
-  <!-- MODAIS ALERTA -->
-  <div id="modal1" class="modal">
-    <div class="modal-box" style="border:1px solid #ffd6d6">
+  <!-- Modais ALERTA -->
+  <div id="modal1" class="overlay" aria-hidden="true">
+    <div class="sheet" style="width:min(520px,92vw);padding:14px">
       <h3 style="margin:0 0 8px;color:#991b1b">ALERTA DA OPERAÇÃO</h3>
       <input id="m1text" class="input" placeholder="Digite o texto do alerta (vermelho)">
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn btn-light" onclick="closeM(1)">Cancelar</button>
+      <div class="row" style="justify-content:flex-end;margin-top:12px">
+        <button class="btn btn-plain" onclick="closeM(1)">Cancelar</button>
         <button id="m1ok" class="btn btn-primary" onclick="goM2()">Continuar</button>
       </div>
     </div>
   </div>
-  <div id="modal2" class="modal">
-    <div class="modal-box" style="border:1px solid #ffdaba">
+  <div id="modal2" class="overlay" aria-hidden="true">
+    <div class="sheet" style="width:min(520px,92vw);padding:14px">
       <h3 style="margin:0 0 8px">Responsável</h3>
       <input id="m2text" class="input" placeholder="Primeira letra maiúscula (ex.: Ale)">
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn btn-light" onclick="backM1()">Voltar</button>
+      <div class="row" style="justify-content:flex-end;margin-top:12px">
+        <button class="btn btn-plain" onclick="backM1()">Voltar</button>
         <button id="m2ok" class="btn btn-primary" onclick="saveAlert()">Salvar</button>
       </div>
     </div>
   </div>
-  <div id="modal3" class="modal">
-    <div class="modal-box" style="border:1px solid #d9f7b8;text-align:center">
+  <div id="modal3" class="overlay" aria-hidden="true">
+    <div class="sheet" style="width:min(380px,92vw);padding:14px;text-align:center">
       <h3 style="margin:0 0 8px">ALERTA AJUSTADO</h3>
       <div style="margin:6px 0">✔️</div>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:4px">
+      <div class="row" style="justify-content:center;margin-top:4px">
         <button class="btn btn-primary" onclick="closeM(3)">OK</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL STICKY NOTES -->
-  <div id="notesModal" class="modal">
-    <div class="modal-box">
-      <h3 style="margin:0 0 8px">Post-its rápidos</h3>
-      <div class="row">
-        <input id="noteText" class="input" placeholder="Digite e clique em +">
-        <button id="addNote" class="btn btn-primary" title="Adicionar">+ Adicionar</button>
-      </div>
-      <ul id="notesList" class="list"></ul>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-        <button class="btn btn-light" onclick="toggleNotes(false)">Fechar</button>
-        <button class="btn btn-danger" id="clearNotes">Limpar tudo</button>
+  <!-- Overlay: Calculadora -->
+  <div id="calcOverlay" class="overlay" aria-hidden="true">
+    <div class="sheet calc">
+      <div class="calc-header"><button class="btn btn-plain" onclick="toggleCalc(false)">Fechar</button></div>
+      <div id="calcScreen" class="calc-screen">0</div>
+      <div class="pad">
+        <button class="key" data-k="C">C</button>
+        <button class="key" data-k="±">±</button>
+        <button class="key" data-k="%">%</button>
+        <button class="key op" data-k="/">÷</button>
+
+        <button class="key" data-k="7">7</button>
+        <button class="key" data-k="8">8</button>
+        <button class="key" data-k="9">9</button>
+        <button class="key op" data-k="*">×</button>
+
+        <button class="key" data-k="4">4</button>
+        <button class="key" data-k="5">5</button>
+        <button class="key" data-k="6">6</button>
+        <button class="key op" data-k="-">−</button>
+
+        <button class="key" data-k="1">1</button>
+        <button class="key" data-k="2">2</button>
+        <button class="key" data-k="3">3</button>
+        <button class="key op" data-k="+">+</button>
+
+        <button class="key wide" data-k="0">0</button>
+        <button class="key" data-k=".">.</button>
+        <button class="key eq" data-k="=">=</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL CALCULATOR -->
-  <div id="calcModal" class="modal">
-    <div class="modal-box" style="width:min(380px,92vw)">
-      <h3 style="margin:0 0 10px">Calculadora</h3>
-      <input id="calcDisplay" class="input" readonly value="0" style="text-align:right;font-size:18px">
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px">
-        <button class="btn btn-light" data-k="C">C</button>
-        <button class="btn btn-light" data-k="±">±</button>
-        <button class="btn btn-light" data-k="%">%</button>
-        <button class="btn btn-danger" data-k="/">÷</button>
-
-        <button class="btn btn-light" data-k="7">7</button>
-        <button class="btn btn-light" data-k="8">8</button>
-        <button class="btn btn-light" data-k="9">9</button>
-        <button class="btn btn-danger" data-k="*">×</button>
-
-        <button class="btn btn-light" data-k="4">4</button>
-        <button class="btn btn-light" data-k="5">5</button>
-        <button class="btn btn-light" data-k="6">6</button>
-        <button class="btn btn-danger" data-k="-">−</button>
-
-        <button class="btn btn-light" data-k="1">1</button>
-        <button class="btn btn-light" data-k="2">2</button>
-        <button class="btn btn-light" data-k="3">3</button>
-        <button class="btn btn-danger" data-k="+">+</button>
-
-        <button class="btn btn-light" data-k="0" style="grid-column:span 2">0</button>
-        <button class="btn btn-light" data-k=".">.</button>
-        <button class="btn btn-primary" data-k="=">=</button>
+  <!-- Overlay: Post-its -->
+  <div id="notesOverlay" class="overlay" aria-hidden="true">
+    <div class="sheet notes">
+      <div class="calc-header" style="justify-content:space-between">
+        <strong style="padding-left:6px;color:#7c5e00">Post-its</strong>
+        <div>
+          <button class="nbtn gray" onclick="clearNotes()">Limpar</button>
+          <button class="btn btn-plain" onclick="toggleNotes(false)">Fechar</button>
+        </div>
       </div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
-        <button class="btn btn-light" onclick="toggleCalc(false)">Fechar</button>
+      <div class="notes-body">
+        <div class="nrow">
+          <input id="noteTitle" placeholder="Título">
+          <button class="nbtn green" onclick="addNote()">Adicionar</button>
+        </div>
+        <div class="nrow"><textarea id="noteText" placeholder="Escreva sua nota…"></textarea></div>
+        <div id="noteGrid" class="note-grid"></div>
       </div>
     </div>
   </div>
@@ -284,23 +298,48 @@
 const APP_URL = "https://script.google.com/macros/s/AKfycbw6uzRI4069YZmoizZFB0p8XmPqw1dw_IfxFaKGd33_3HQDF5RbBc-4_dHLj1YmCNGDgQ/exec";
 
 /*** helpers ***/
-const $ = s => document.querySelector(s);
-const show = (el, on=true)=>{ if(!el) return; el.style.display = on? '' : 'none'; };
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const show = (el, on=true)=>{ if(!el) return; el.style.display = on? (el.classList.contains('overlay')? 'flex' : '') : 'none'; };
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
 function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
 
-/*** Calls (GitHub Pages → sempre fetch) ***/
+/*** Polyfill (GAS vs GitHub) ***/
 function call(endpoint, payload){
+  if (window.google && google.script && google.script.run){
+    return new Promise((resolve,reject)=>{
+      const r = google.script.run.withSuccessHandler(res=>{
+        if(endpoint==='chat' && typeof res==='string') resolve({ok:true, text:res});
+        else resolve(res);
+      }).withFailureHandler(err=>reject(err));
+      try{
+        switch(endpoint){
+          case 'getalert': r.apiGetAlert(); break;
+          case 'adjustalert': r.apiAdjustAlert(payload.mensagem, payload.responsavel); break;
+          case 'searchindexed': r.apiSearchIndexed(payload.q); break;
+          case 'fetchindexedsnippets': r.apiFetchIndexedSnippets(payload.sessionId, payload.from, payload.limit); break;
+          case 'searchcrion': r.apiSearchCrion(payload.q); break;
+          case 'fetchcrionsnippets': r.apiFetchCrionSnippets(payload.sessionId, payload.from, payload.limit); break;
+          case 'reindexcrion': r.apiReindexCrion(); break;
+          case 'chat': r.chatServer(payload.q, navigator.userAgent||''); break;
+          default: reject('endpoint não mapeado');
+        }
+      }catch(e){ reject(e); }
+    });
+  }
   const url = APP_URL + "?fn=" + encodeURIComponent(endpoint);
-  return fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(payload||{}) })
-    .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
+  return fetch(url, {
+      method:"POST",
+      headers:{ "Content-Type":"text/plain" },
+      body: JSON.stringify(payload||{}),
+  }).then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
 }
 
-/*** Modais base ***/
-function openM(id){ $('#modal'+id).style.display='flex'; }
-function closeM(id){ $('#modal'+id).style.display='none'; }
+/*** Modais alerta ***/
+function openM(id){ show($('#modal'+id),true); }
+function closeM(id){ show($('#modal'+id),false); }
 function backM1(){ closeM(2); openM(1); }
 
 /*** ALERTA ***/
@@ -324,20 +363,20 @@ $('#m2text').addEventListener('input', e=>{ const v=e.target.value; e.target.val
 async function saveAlert(){
   _newResp = $('#m2text').value.trim();
   try{
-    $('#m2ok').disabled=true; $('#m2ok').textContent='Salvando...';
+    $('#m2ok').disabled=true; $('#m2ok').textContent='Salvando…';
     await call('adjustalert',{mensagem:_newAlert, responsavel:_newResp});
     closeM(2); openM(3);
   }catch(e){ closeM(2); alert("Falha ao ajustar: "+e.message);
   }finally{ $('#m2ok').disabled=false; $('#m2ok').textContent='Salvar'; }
 }
 
-/*** SITES ***/
+/*** SITES OFICIAIS (chat) ***/
 $('#btnSites').addEventListener('click', async ()=>{
   const q=($('#qSites').value||'').trim();
   if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
   show($('#sitesBusy'),true); $('#outSites').textContent='—';
   try{
-    const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final. Substitua notas por: 'Fontes oficiais: Affix • Alter • Hapvida'.";
+    const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final. Substitua qualquer nota genérica por: 'Fontes oficiais Affix, Alter, Hapvida'.";
     const r = await call('chat',{q:qRich});
     const txt = (r && r.text) ? r.text : '—';
     const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
@@ -352,7 +391,7 @@ $('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
 async function doPDF(){
   const q=($('#qPDF').value||'').trim();
   if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
-  show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos...'; $('#pdfList').innerHTML="";
+  show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos…'; $('#pdfList').innerHTML="";
   try{
     const res = await call('searchindexed',{q});
     if(!res || res.ok===false){ $('#pdfStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
@@ -397,4 +436,78 @@ async function doCRION(){
   show($('#crionBusy'),true); $('#crionStatus').textContent='Listando arquivos…'; $('#crionList').innerHTML="";
   try{
     const res = await call('searchcrion',{q});
-    if(!res || res.ok===false){ $('#crionStatus').textContent='Erro ao buscar: '+(res&&res.message?res
+    if(!res || res.ok===false){ $('#crionStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
+    const items=res.items||[]; $('#crionStatus').textContent=`Resultados: ${items.length}`;
+    const frag=document.createDocumentFragment();
+    items.forEach((it,idx)=>{
+      const li=document.createElement('li'); li.className='item'; li.id='crion_'+idx;
+      const meta  = `<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                    <div class="hint" id="snip_crion_${idx}">Carregando prévias…</div>`;
+      frag.appendChild(li);
+    });
+    $('#crionList').appendChild(frag);
+    if(items.length){
+      let from=0;
+      while(from < items.length){
+        const r = await call('fetchcrionsnippets',{sessionId:res.sessionId, from, limit:6});
+        (r.items||[]).forEach(row=>{
+          const el=$('#snip_crion_'+row.index);
+          el.innerHTML=(row.snippets && row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="hint">—</span>';
+        });
+        from = r.to;
+      }
+      $('#crionStatus').textContent += " • prévias completas";
+    }
+  }catch(e){ $('#crionStatus').textContent='Erro: '+e.message;
+  }finally{ show($('#crionBusy'),false); }
+}
+
+/*** CALCULADORA ***/
+let calcValue="0", pending=null, op=null;
+function renderCalc(){ $('#calcScreen').textContent = calcValue; }
+function inputCalc(k){
+  if(!isNaN(k)){ // número
+    calcValue = (calcValue==="0")? String(k) : calcValue + String(k);
+  }else if(k==="."){ if(!calcValue.includes(".")) calcValue += "."; }
+  else if(k==="C"){ calcValue="0"; pending=null; op=null; }
+  else if(k==="±"){ calcValue = String(-parseFloat(calcValue||"0")); }
+  else if(k==="%"){ calcValue = String(parseFloat(calcValue||"0")/100); }
+  else if(k==="="){ if(op){ const a=parseFloat(pending||"0"), b=parseFloat(calcValue||"0");
+    const r = op==="+"? a+b : op==="-"? a-b : op==="*" ? a*b : a/b; calcValue=String(r); pending=null; op=null; } }
+  else{ // operador
+    pending = calcValue; calcValue="0"; op=k;
+  }
+  renderCalc();
+}
+$('#openCalc').addEventListener('click', ()=>toggleCalc(true));
+function toggleCalc(on){ show($('#calcOverlay'),on); if(on) renderCalc(); }
+$$('.key').forEach(b=> b.addEventListener('click', ()=>inputCalc(b.dataset.k)));
+
+/*** NOTES (Post-it) ***/
+$('#openNotes').addEventListener('click', ()=>toggleNotes(true));
+function toggleNotes(on){ show($('#notesOverlay'),on); if(on) renderNotes(); }
+function notesStore(){ return JSON.parse(localStorage.getItem("ric_notes")||"[]"); }
+function saveNotes(arr){ localStorage.setItem("ric_notes", JSON.stringify(arr)); }
+function addNote(){
+  const t = $('#noteTitle').value.trim(); const x = $('#noteText').value.trim();
+  if(!t && !x) return;
+  const arr = notesStore(); arr.unshift({id:Date.now(), title:t||"Sem título", text:x||""});
+  saveNotes(arr); $('#noteTitle').value=""; $('#noteText').value=""; renderNotes();
+}
+function delNote(id){ const arr = notesStore().filter(n=>n.id!==id); saveNotes(arr); renderNotes(); }
+function clearNotes(){ if(confirm("Apagar todas as notas?")){ saveNotes([]); renderNotes(); } }
+function renderNotes(){
+  const grid=$('#noteGrid'); grid.innerHTML="";
+  notesStore().forEach(n=>{
+    const div=document.createElement('div'); div.className='ncard';
+    div.innerHTML=`<h4>${esc(n.title)}</h4><div style="white-space:pre-wrap">${esc(n.text)}</div>
+                   <div class="row" style="justify-content:flex-end;margin-top:8px">
+                     <button class="nbtn gray" onclick="delNote(${n.id})">Excluir</button>
+                   </div>`;
+    grid.appendChild(div);
+  });
+}
+</script>
+</body>
+</html>
