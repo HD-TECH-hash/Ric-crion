@@ -1,47 +1,49 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>RIC AI — CRION</title>
-<link rel="icon" href="RICai.png">
+<link rel="icon" href="RICai.png" />
 <style>
   :root{
-    /* 10% menor */
-    --base: 14px;
-    --bg: #f6f8ff; --ink:#0f172a; --muted:#6b7280; --line:#e7eaf3;
-    --brand:#2882bb;             /* header */
-    --primary:#22c55e;           /* verde */
-    --primary-2:#a3e635;         /* lima */
+    --base:14px;                /* 10% menor */
+    --bg:#f6f8ff; --ink:#0f172a; --muted:#6b7280; --line:#e7eaf3;
+    --brand:#2882bb;            /* header azul novo */
+    --green:#22c55e; --lime:#a3e635;
     --danger:#ef4444;
-    --tag-bg:#ede9fe; --tag-ink:#6d28d9; /* roxo clarinho */
-    --shadow: 0 18px 36px rgba(99,102,241,.16), 0 4px 12px rgba(99,102,241,.10);
+    --tag:#ede9fe; --tag-ink:#6d28d9;  /* roxo clarinho */
+    --shadow:0 18px 36px rgba(99,102,241,.16),0 4px 12px rgba(99,102,241,.10);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1200px 600px at -10% -10%, #eaf1ff 0, #fff 55%, #f6f8ff 100%);color:var(--ink);
-       font: var(--base)/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+  body{margin:0;background:radial-gradient(1200px 600px at -10% -10%,#eaf1ff 0,#fff 55%,#f6f8ff 100%);
+       color:var(--ink);font:var(--base)/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial}
   .wrap{max-width:1120px;margin:0 auto;padding:18px}
 
   /* HEADER */
-  .hero{background:var(--brand);color:#fff;border-radius:22px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 56px rgba(40,130,187,.22)}
+  .hero{background:var(--brand);color:#fff;border-radius:22px;padding:14px 18px;
+        display:flex;align-items:center;justify-content:space-between;
+        box-shadow:0 24px 56px rgba(40,130,187,.22)}
   .h-left,.h-right{display:flex;align-items:center;gap:16px}
   .h-center img{height:46px;display:block;filter:drop-shadow(0 2px 6px #0002)}
   .brand{height:42px;display:block}
-  .icon-btn{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#ffffff22;border:1px solid #ffffff55;backdrop-filter: blur(2px);cursor:pointer;transition:transform .15s ease, background .15s ease}
+  .icon-btn{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+            background:#ffffff22;border:1px solid #ffffff55;backdrop-filter:blur(2px);
+            cursor:pointer;transition:transform .15s ease,background .15s ease}
   .icon-btn:hover{transform:translateY(-2px);background:#ffffff33}
   .ico{display:block}
 
   /* GRID */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-  @media (max-width:980px){ .grid{grid-template-columns:1fr} .h-right .brand:last-child{display:none} }
+  @media (max-width:980px){.grid{grid-template-columns:1fr}.h-right .brand:last-child{display:none}}
   .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
-  .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag-bg);color:var(--tag-ink);border:1px solid #e9d7ff;border-radius:999px;padding:6px 11px;font-weight:800;font-size:12px;letter-spacing:.3px}
+  .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);
+       border:1px solid #e9d7ff;border-radius:999px;padding:6px 11px;font-weight:800;font-size:12px;letter-spacing:.3px}
   h2{margin:8px 0 10px;font-size:18px}
   .row{display:flex;gap:10px;align-items:center}
   .input{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;background:#fbfbff}
-  .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;color:#fff;box-shadow:0 6px 14px rgba(34,197,94,.24)}
-  .btn-green{background:linear-gradient(180deg,var(--primary),var(--primary-2))}
+  .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;cursor:pointer}
+  .btn-green{background:linear-gradient(180deg,var(--green),var(--lime));box-shadow:0 6px 14px rgba(34,197,94,.24)}
   .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
   .btn-danger{background:linear-gradient(180deg,#f87171,#ef4444);box-shadow:0 6px 14px rgba(239,68,68,.22)}
   .hint{font-size:12px;color:#6b7280;margin-top:6px}
@@ -64,13 +66,13 @@
   footer{margin:18px 0 6px;text-align:center}
   .foot{font-size:11px;color:#94a3b8}
 
-  /* MODALS base */
+  /* MODAL base */
   .modal{position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000}
   .modal-box{width:min(560px,92vw);border-radius:14px;padding:14px;background:#fff;border:1px solid #e7eaf3;box-shadow:0 18px 36px rgba(0,0,0,.18)}
   .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
   .pill{border-radius:999px;padding:8px 12px;border:1px solid #e7eaf3;background:#f8fafc}
 
-  /* CALCULADORA (flutuante, inicia oculta) */
+  /* CALCULADORA (flutuante, oculta) */
   #calcWrap{position:fixed;top:94px;right:18px;z-index:1200;display:none}
   .calc{width:300px;border-radius:16px;border:1px solid #e7eaf3;background:#fff;box-shadow:0 18px 36px rgba(2,6,23,.18)}
   .calc-head{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid #e7eaf3}
@@ -80,6 +82,9 @@
   .k.op{background:#fee2e2}
   .k.eq{background:#dcfce7}
 
+  /* alerta de integração */
+  #err{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);background:#fff;border:1px solid #fecaca;
+       box-shadow:0 10px 24px rgba(0,0,0,.12);padding:10px 12px;border-radius:12px;color:#991b1b;display:none;z-index:2000}
 </style>
 </head>
 <body>
@@ -87,39 +92,27 @@
 
   <!-- HEADER -->
   <div class="hero">
-    <div class="h-left">
-      <img class="brand" src="icon.png" alt="Logo esquerdo">
-    </div>
-
-    <div class="h-center">
-      <!-- SOMENTE O ÍCONE (sem texto) -->
-      <img src="RICai.png" alt="RIC AI">
-    </div>
-
+    <div class="h-left"><img class="brand" src="icon.png" alt="Logo esquerdo"></div>
+    <div class="h-center"><img src="RICai.png" alt="RIC AI"></div>
     <div class="h-right" style="gap:12px">
       <!-- POST-IT -->
       <button class="icon-btn" id="btnNotes" title="Post-its">
-        <!-- sticky note amarelo -->
         <svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="#ffd54f" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 3h12a2 2 0 0 1 2 2v9.6a2 2 0 0 1-.59 1.42l-3.39 3.39A2 2 0 0 1 14.6 20H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm8.6 15H17v-2.4L14.6 18Z" />
+          <path d="M6 3h12a2 2 0 0 1 2 2v9.6a2 2 0 0 1-.59 1.42l-3.39 3.39A2 2 0 0 1 14.6 20H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm8.6 15H17v-2.4L14.6 18Z"/>
         </svg>
       </button>
       <!-- CALCULADORA -->
       <button class="icon-btn" id="btnCalc" title="Calculadora">
-        <!-- calculator verde -->
         <svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="#22c55e" xmlns="http://www.w3.org/2000/svg">
           <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v4h10V5H7Zm0 6h3v3H7v-3Zm4 0h3v3h-3v-3Zm4 0h3v3h-3v-3ZM7 15h3v3H7v-3Zm4 0h3v3h-3v-3Zm4 0h3v3h-3v-3Z"/>
         </svg>
       </button>
-
       <img class="brand" src="icon2.png" alt="Logo direito">
     </div>
   </div>
 
   <!-- GRID -->
   <div class="grid">
-
-    <!-- ALERTA -->
     <section class="card">
       <div class="tag">ALERTA</div>
       <h2>Controle de alerta</h2>
@@ -135,7 +128,6 @@
       <div id="alertResp" style="display:none;font-size:13px;font-weight:600;color:#334155;text-align:center;margin-top:4px;text-transform:lowercase">—</div>
     </section>
 
-    <!-- SITES OFICIAIS -->
     <section class="card">
       <div class="tag">SITES OFICIAIS</div>
       <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
@@ -150,7 +142,6 @@
       <div id="outSites" class="out">—</div>
     </section>
 
-    <!-- PDFs -->
     <section class="card">
       <div class="tag">PDFs</div>
       <h2>Manuais do Corretor (Sharepoint)</h2>
@@ -167,7 +158,6 @@
       <ul id="pdfList" class="list"></ul>
     </section>
 
-    <!-- CRION -->
     <section class="card">
       <div class="tag">PROCEDIMENTOS CRION</div>
       <h2>Procedimentos</h2>
@@ -208,107 +198,214 @@
   </div>
 </div>
 
-<!-- CALCULADORA (toggle) -->
+<!-- CALCULADORA -->
 <div id="calcWrap">
   <div class="calc">
-    <div class="calc-head">
-      <strong>Calculadora</strong>
-      <button class="pill" onclick="toggleCalc(false)">Fechar</button>
-    </div>
+    <div class="calc-head"><strong>Calculadora</strong><button class="pill" onclick="toggleCalc(false)">Fechar</button></div>
     <div id="calcScreen" class="calc-screen">0</div>
     <div class="keys">
-      <button class="k" data-k="C">C</button>
-      <button class="k" data-k="±">±</button>
-      <button class="k" data-k="%">%</button>
-      <button class="k op" data-k="÷">÷</button>
-
-      <button class="k" data-k="7">7</button>
-      <button class="k" data-k="8">8</button>
-      <button class="k" data-k="9">9</button>
-      <button class="k op" data-k="×">×</button>
-
-      <button class="k" data-k="4">4</button>
-      <button class="k" data-k="5">5</button>
-      <button class="k" data-k="6">6</button>
-      <button class="k op" data-k="-">−</button>
-
-      <button class="k" data-k="1">1</button>
-      <button class="k" data-k="2">2</button>
-      <button class="k" data-k="3">3</button>
-      <button class="k op" data-k="+">+</button>
-
-      <button class="k" data-k="0" style="grid-column:span 2">0</button>
-      <button class="k" data-k=".">.</button>
-      <button class="k eq" data-k="=">=</button>
+      <button class="k" data-k="C">C</button><button class="k" data-k="±">±</button><button class="k" data-k="%">%</button><button class="k op" data-k="÷">÷</button>
+      <button class="k" data-k="7">7</button><button class="k" data-k="8">8</button><button class="k" data-k="9">9</button><button class="k op" data-k="×">×</button>
+      <button class="k" data-k="4">4</button><button class="k" data-k="5">5</button><button class="k" data-k="6">6</button><button class="k op" data-k="-">−</button>
+      <button class="k" data-k="1">1</button><button class="k" data-k="2">2</button><button class="k" data-k="3">3</button><button class="k op" data-k="+">+</button>
+      <button class="k" data-k="0" style="grid-column:span 2">0</button><button class="k" data-k=".">.</button><button class="k eq" data-k="=">=</button>
     </div>
   </div>
 </div>
 
+<!-- aviso de erro -->
+<div id="err"></div>
+
 <script>
-/* ========= CONFIG ========= */
+/* ===== CONFIG ===== */
 const APP_URL = "https://script.google.com/macros/s/AKfycbw6uzRI4069YZmoizZFB0p8XmPqw1dw_IfxFaKGd33_3HQDF5RbBc-4_dHLj1YmCNGDgQ/exec";
 
-/* ========= HELPERS ========= */
+/* ===== HELPERS ===== */
 const $ = s => document.querySelector(s);
 const show = (el, on=true)=>{ if(!el) return; el.style.display = on? '' : 'none'; };
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
 function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
+function toast(msg){ const e=$("#err"); e.innerHTML = esc(msg); show(e,true); setTimeout(()=>show(e,false), 4500); }
 
-/* ========= POLYFILL (GitHub) ========= */
-function call(endpoint, payload){
-  const url = APP_URL + "?fn=" + encodeURIComponent(endpoint);
-  return fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(payload||{}) })
-    .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
+/* ===== POLYFILL (sem preflight) ===== */
+async function call(endpoint, payload){
+  const body = new URLSearchParams();
+  body.set("fn", endpoint);
+  body.set("payload", JSON.stringify(payload||{}));
+  let res;
+  try{
+    res = await fetch(APP_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+      body
+    });
+  }catch(e){
+    toast("Falha de rede: "+e.message);
+    throw e;
+  }
+  if(!res.ok){ toast("HTTP "+res.status); throw new Error("HTTP "+res.status); }
+  const txt = await res.text();
+  try{ return JSON.parse(txt); }catch{ return {ok:false, message:"Resposta inválida do servidor", raw:txt}; }
 }
 
-/* ========= ALERTA ========= */
+/* ===== HEADER ICONS ===== */
+$('#btnNotes').addEventListener('click', ()=>{ renderNotes(); show($('#modalNotes'),true); });
+$('#btnCloseNotes').addEventListener('click', ()=> show($('#modalNotes'),false));
+
+$('#btnCalc').addEventListener('click', ()=> toggleCalc());
+function toggleCalc(force){ const el=$('#calcWrap'); if(typeof force==='boolean'){show(el,force);return;} show(el, el.style.display==='none' || !el.style.display); }
+
+/* ===== CALC ===== */
+(function calc(){
+  const scr = $('#calcScreen'); let a=null, op=null, cur='0';
+  const draw=()=> scr.textContent=cur;
+  const eq=()=>{ const x=a!==null?a:parseFloat(cur), y=parseFloat(cur); let r=y;
+    if(op==='+') r=x+y; else if(op==='−'||op==='-') r=x-y; else if(op==='×') r=x*y; else if(op==='÷') r=(y===0?0:x/y);
+    cur=String(r); a=null; op=null; draw(); };
+  document.querySelectorAll('.k').forEach(b=>b.addEventListener('click', ()=>{
+    const k=b.dataset.k;
+    if(/[0-9]/.test(k)){ cur=(cur==='0')?k:(cur+k); return draw(); }
+    if(k==='.'){ if(!cur.includes('.')) cur+='.'; return draw(); }
+    if(k==='C'){ a=null; op=null; cur='0'; return draw(); }
+    if(k==='±'){ cur=String(parseFloat(cur)*-1); return draw(); }
+    if(k==='%'){ cur=String(parseFloat(cur)/100); return draw(); }
+    if(k==='=') return eq();
+    a=parseFloat(cur); op=k; cur='0'; draw();
+  })); draw();
+})();
+
+/* ===== POST-ITS (localStorage) ===== */
+const LS="ric_notes";
+$('#btnClearNotes').addEventListener('click', ()=>{ localStorage.removeItem(LS); renderNotes(); });
+$('#btnAddNote').addEventListener('click', ()=>{
+  const title=($('#noteTitle').value||'').trim(); const text=($('#noteText').value||'').trim();
+  if(!text){ $('#noteText').focus(); return; }
+  const arr=JSON.parse(localStorage.getItem(LS)||"[]"); arr.unshift({title,text,at:Date.now()});
+  localStorage.setItem(LS, JSON.stringify(arr)); $('#noteTitle').value=""; $('#noteText').value=""; renderNotes();
+});
+function renderNotes(){
+  const box=$('#notesList'); box.innerHTML="";
+  const arr=JSON.parse(localStorage.getItem(LS)||"[]");
+  if(!arr.length){ box.innerHTML='<div class="hint">Sem post-its salvos.</div>'; return; }
+  const frag=document.createDocumentFragment();
+  arr.forEach((n,i)=>{
+    const div=document.createElement('div'); div.className='item';
+    div.innerHTML=`<div><b>${esc(n.title||'Sem título')}</b> <span class="meta">• ${new Date(n.at).toLocaleString()}</span></div>
+                   <div class="snip">${esc(n.text)}</div>
+                   <div class="row" style="justify-content:flex-end"><button class="pill" onclick="delNote(${i})">Excluir</button></div>`;
+    frag.appendChild(div);
+  }); box.appendChild(frag);
+}
+window.delNote=function(i){ const arr=JSON.parse(localStorage.getItem(LS)||"[]"); arr.splice(i,1); localStorage.setItem(LS,JSON.stringify(arr)); renderNotes(); };
+
+/* ===== AÇÕES ===== */
 $('#btnAlert').addEventListener('click', async ()=>{
   const msg=$('#alertMsg'), resp=$('#alertResp');
   show(msg,false); show(resp,false); show($('#alertBusy'),true);
   try{
-    const r = await call('getalert',{});
-    if(!r || r.ok===false){ msg.textContent="Falha ao consultar."; show(msg,true); return; }
+    const r=await call('getalert',{});
+    if(!r || r.ok===false){ msg.textContent="Falha ao consultar."; show(msg,true); if(r && r.message) toast(r.message); return; }
     if(!r.found){ msg.textContent="Sem recado no momento."; show(msg,true); return; }
-    msg.textContent = "🚨 " + String(r.mensagem||"—").toUpperCase(); show(msg,true);
-    if(r.responsavel){ resp.textContent = String(r.responsavel||"").toLowerCase(); show(resp,true); }
+    msg.textContent="🚨 "+String(r.mensagem||"—").toUpperCase(); show(msg,true);
+    if(r.responsavel){ resp.textContent=String(r.responsavel||"").toLowerCase(); show(resp,true); }
   }catch(e){ msg.textContent="Erro: "+e.message; show(msg,true);
   }finally{ show($('#alertBusy'),false); }
 });
 
-/* ========= AJUSTAR ALERTA (2 modais simples em sequência) ========= */
-let _newAlert="", _newResp="";
 $('#btnAdjust').addEventListener('click', async ()=>{
-  const t = prompt("Texto do alerta (vermelho):");
-  if(!t) return;
-  const r = prompt("Responsável (primeira letra maiúscula):");
-  if(!r) return;
-  try{ await call('adjustalert',{mensagem:t, responsavel:r}); alert("Alerta ajustado!"); }
-  catch(e){ alert("Falha ao ajustar: "+e.message); }
+  const t=prompt("Texto do alerta (vermelho):"); if(!t) return;
+  const r=prompt("Responsável (primeira letra maiúscula):"); if(!r) return;
+  try{ await call('adjustalert',{mensagem:t,responsavel:r}); alert("Alerta ajustado!"); }
+  catch(e){ toast("Falha ao ajustar: "+e.message); }
 });
 
-/* ========= SITES ========= */
 $('#btnSites').addEventListener('click', async ()=>{
   const q=($('#qSites').value||'').trim();
   if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
   show($('#sitesBusy'),true); $('#outSites').textContent='—';
   try{
-    const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final. Substitua qualquer nota genérica por: 'Fontes oficiais Affix, Alter, Hapvida'.";
-    const r = await call('chat',{q:qRich});
-    const txt = (r && r.text) ? r.text : '—';
-    const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
-    $('#outSites').innerHTML = html;
+    const qRich=q+" — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final. Substitua qualquer nota genérica por: 'Fontes oficiais Affix, Alter, Hapvida'.";
+    const r=await call('chat',{q:qRich});
+    const txt=(r && (r.text||r.answer))?(r.text||r.answer):'—';
+    const html=String(txt).replace(/(https?:\/\/[^\s]+)/g,m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
+    $('#outSites').innerHTML=html;
   }catch(e){ $('#outSites').textContent='Erro: '+e.message;
   }finally{ show($('#sitesBusy'),false); }
 });
 
-/* ========= PDFs ========= */
 $('#btnPDF').addEventListener('click', doPDF);
 $('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
 async function doPDF(){
-  const q=($('#qPDF').value||'').trim();
-  if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
+  const q=($('#qPDF').value||'').trim(); if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
   show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos...'; $('#pdfList').innerHTML="";
   try{
-    const res = await call('searchindexed
+    const res=await call('searchindexed',{q});
+    if(!res || res.ok===false){ $('#pdfStatus').textContent='Erro ao buscar'; if(res && res.message) toast(res.message); return; }
+    const items=res.items||[]; $('#pdfStatus').textContent=`Resultados: ${items.length}`;
+    const frag=document.createDocumentFragment();
+    items.forEach((it,idx)=>{
+      const li=document.createElement('li'); li.className='item'; li.id='pdf_'+idx;
+      const meta=`<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                    <div class="hint" id="snip_pdf_${idx}">Carregando prévias…</div>`;
+      frag.appendChild(li);
+    }); $('#pdfList').appendChild(frag);
+    if(items.length){
+      let from=0;
+      while(from < items.length){
+        const r=await call('fetchindexedsnippets',{sessionId:res.sessionId,from,limit:6});
+        (r.items||[]).forEach(row=>{
+          const el=$('#snip_pdf_'+row.index);
+          el.innerHTML=(row.snippets&&row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="hint">—</span>';
+        });
+        from=r.to;
+      }
+      $('#pdfStatus').textContent+=' • prévias completas';
+    }
+  }catch(e){ $('#pdfStatus').textContent='Erro: '+e.message;
+  }finally{ show($('#pdfBusy'),false); }
+}
+
+$('#btnCRION').addEventListener('click', doCRION);
+$('#qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
+$('#btnReIdxCRION').addEventListener('click', async ()=>{
+  $('#crionStatus').textContent='Reindexando CRION…'; show($('#crionBusy'),true);
+  try{ const r=await call('reindexcrion',{}); $('#crionStatus').textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou"); }
+  catch(e){ $('#crionStatus').textContent='Erro: '+e.message; }
+  finally{ show($('#crionBusy'),false); }
+});
+async function doCRION(){
+  const q=($('#qCRION').value||'').trim(); if(!q){ $('#crionStatus').textContent='Digite um termo.'; return; }
+  show($('#crionBusy'),true); $('#crionStatus').textContent='Listando arquivos…'; $('#crionList').innerHTML="";
+  try{
+    const res=await call('searchcrion',{q});
+    if(!res || res.ok===false){ $('#crionStatus').textContent='Erro ao buscar'; if(res && res.message) toast(res.message); return; }
+    const items=res.items||[]; $('#crionStatus').textContent=`Resultados: ${items.length}`;
+    const frag=document.createDocumentFragment();
+    items.forEach((it,idx)=>{
+      const li=document.createElement('li'); li.className='item'; li.id='crion_'+idx;
+      const meta=`<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+      li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                    <div class="hint" id="snip_crion_${idx}">Carregando prévias…</div>`;
+      frag.appendChild(li);
+    }); $('#crionList').appendChild(frag);
+    if(items.length){
+      let from=0;
+      while(from < items.length){
+        const r=await call('fetchcrionsnippets',{sessionId:res.sessionId,from,limit:6});
+        (r.items||[]).forEach(row=>{
+          const el=$('#snip_crion_'+row.index);
+          el.innerHTML=(row.snippets&&row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="hint">—</span>';
+        });
+        from=r.to;
+      }
+      $('#crionStatus').textContent+=' • prévias completas';
+    }
+  }catch(e){ $('#crionStatus').textContent='Erro: '+e.message;
+  }finally{ show($('#crionBusy'),false); }
+}
+</script>
+</body>
+</html>
