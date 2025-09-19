@@ -2,80 +2,65 @@
 <html lang="pt-br">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RIC AI — CRION</title>
-<meta name="color-scheme" content="light only">
 <style>
   :root{
-    /* 10% menor vs. 16px → ~14px */
-    --base:14px;
+    /* ~10% menor */
+    --base-font:13.5px;
 
-    --bg:#f6f8ff; --ink:#0f172a; --muted:#64748b; --line:#e7eaf3;
-    --header:#2882bb;             /* azul pedido */
-    --primary:#22c55e;            /* verde-limão para “Pesquisar” */
-    --primary-2:#65d46e;
+    /* cores */
+    --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
+    --primary:#2882bb;                    /* azul do topo */
+    --primary-2:#2aa6e6;
     --danger:#ef4444;
-    --tag:#efe7ff; --tag-ink:#6d28d9;  /* roxo claro */
-    --card-shadow:0 14px 36px rgba(40,130,187,.12), 0 2px 10px rgba(40,130,187,.10);
-    --radius:14px;
+    --tag:#EEE6FF; --tag-ink:#6D28D9;     /* roxo clarinho */
+    --ok:#22c55e; --ok-2:#a3e635;         /* verde/limao */
+    --shadow-card:0 18px 36px rgba(99,102,241,.16), 0 4px 12px rgba(99,102,241,.10);
   }
   *{box-sizing:border-box}
   body{
-    margin:0; font:var(--base)/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    background:
-      radial-gradient(900px 420px at -10% -10%, #eaf3ff 0, #ffffff 60%, #f7f9ff 100%);
-    color:var(--ink);
+    margin:0; font:var(--base-font)/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    background:radial-gradient(1100px 520px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%);
+    color:var(--ink)
   }
-
-  /* Wrap */
-  .wrap{max-width:1040px;margin:0 auto;padding:16px}
+  .wrap{max-width:1080px;margin:0 auto;padding:18px}
 
   /* Header */
   .hero{
-    position:sticky; top:0; z-index:5;
-    background:linear-gradient(135deg,var(--header),#2aa8e0);
-    color:#fff;border-radius:18px;padding:10px 16px;
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 18px 40px rgba(40,130,187,.20);
-    margin-bottom:14px;
+    position:relative;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;
+    border-radius:20px;padding:12px 16px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 24px 56px rgba(40,130,187,.22); min-height:72px
   }
-  .hero h1{margin:0;font-size:26px;letter-spacing:.3px}
-  .logo{height:32px;object-fit:contain}
-  .logo-left{position:absolute;left:16px;top:50%;transform:translateY(-50%);height:40px}
-  .logo-right{position:absolute;right:16px;top:50%;transform:translateY(-50%);height:36px}
-  .logo-center{height:34px;margin:0 10px}
-
-  /* Header actions (post-it & calculator) */
-  .h-actions{position:absolute;right:70px;top:50%;transform:translateY(-50%);display:flex;gap:10px}
-  .icon-btn{
-    width:38px;height:38px;border-radius:12px;border:1px solid #ffffff33;background:#ffffff22;
-    display:grid;place-items:center;cursor:pointer;transition:.18s;backdrop-filter:blur(2px)
+  .brand-left{position:absolute;left:16px;top:50%;transform:translateY(-50%);height:36px}
+  .brand-right{height:36px}
+  .center-logo{height:40px;object-fit:contain}
+  .right-group{position:absolute;right:16px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:14px}
+  .tool{
+    width:42px;height:42px;border-radius:12px;border:1px solid #ffffff40;background:#ffffff1a;
+    display:grid;place-items:center;backdrop-filter:blur(6px);cursor:pointer;transition:.2s;
+    box-shadow:inset 0 0 0 1px #ffffff26, 0 6px 14px #00000014
   }
-  .icon-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
-  .ico{width:22px;height:22px;display:block}
+  .tool:hover{transform:translateY(-1px);background:#ffffff2a}
+  .tool svg{width:24px;height:24px;display:block}
 
   /* Grid / Cards */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media (max-width:980px){ .grid{grid-template-columns:1fr} .h-actions{right:62px} }
-  .card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px;
-    box-shadow:var(--card-shadow)
-  }
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  @media (max-width:980px){ .grid{grid-template-columns:1fr} .brand-right{display:none} }
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:var(--shadow-card)}
   .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);
-       border:1px solid #e6d8ff;border-radius:999px;padding:5px 10px;font-weight:800;font-size:11px;letter-spacing:.3px}
-  h2{margin:6px 0 8px 0;font-size:17px}
+       border:1px solid #e9d7ff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:11px;letter-spacing:.3px}
+  h2{margin:8px 0 10px 0;font-size:18px}
   .row{display:flex;gap:10px;align-items:center}
-  .input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;background:#fbfdff}
-  .btn{appearance:none;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;transition:.16s}
-  .btn:disabled{opacity:.6;cursor:not-allowed}
-  .btn-primary{color:#053; background:linear-gradient(180deg,var(--primary),var(--primary-2)); box-shadow:0 8px 18px rgba(34,197,94,.28)}
+  .input{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;background:#fbfbff}
+  .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;color:#111;background:linear-gradient(180deg,var(--ok),var(--ok-2));box-shadow:0 6px 14px rgba(34,197,94,.28)}
   .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
-  .btn-danger{background:linear-gradient(180deg,#f87171,#ef4444);color:#fff;box-shadow:0 8px 18px rgba(239,68,68,.25)}
-  .hint{font-size:11px;color:var(--muted);margin-top:6px}
-  .out{white-space:pre-wrap;min-height:120px;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:10px;background:#fbfbff}
+  .btn-danger{color:#fff;background:linear-gradient(180deg,#f87171,#ef4444);box-shadow:0 6px 14px rgba(239,68,68,.22)}
+  .hint{font-size:11px;color:#6b7280;margin-top:6px}
+  .out{white-space:pre-wrap;min-height:120px;border:1px dashed var(--line);border-radius:12px;padding:10px;margin-top:10px;background:#fbfbff}
   .list{margin:10px 0 0;padding:0;list-style:none}
   .item{padding:10px 0;border-top:1px solid var(--line)}
-  .meta{font-size:11px;color:var(--muted);margin-top:2px}
+  .meta{font-size:11px;color:#6b7280;margin-top:2px}
   .snip{color:#374151;font-size:13px;margin:6px 0}
   a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
 
@@ -87,54 +72,41 @@
   .bar:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#c7b8ff,#a78bfa,#93c5fd);animation:load 1.3s infinite}
   @keyframes load{0%{left:-100%;right:100%}50%{left:0;right:0}100%{left:100%;right:-100%}}
 
-  /* Footer */
-  footer{margin:16px 0 4px;text-align:center}
+  /* Footer – discreto */
+  footer{margin:18px 0 4px;text-align:center}
   .footnote{font-size:11px;color:#94a3b8}
-
-  /* Overlays (calculator / notes / modals) */
-  .overlay{position:fixed;inset:0;background:#0006;display:none;align-items:center;justify-content:center;z-index:50}
-  .sheet{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.28)}
-  /* Calculator small */
-  .calc{width:320px}
-  .calc-header{display:flex;justify-content:flex-end;padding:6px 10px;border-bottom:1px solid var(--line)}
-  .calc-screen{padding:10px 12px;font:600 28px/1.2 ui-sans-serif,system-ui;background:#0b1b2b;color:#eafff6;border-radius:10px;margin:10px}
-  .pad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px}
-  .key{padding:12px;border-radius:10px;border:1px solid #e9eef6;background:#f8fafc;font:700 16px/1 ui-sans-serif;cursor:pointer}
-  .key.op{background:#e6fbef;border-color:#c7f7df}
-  .key.eq{background:#22c55e;color:#053;box-shadow:0 6px 16px rgba(34,197,94,.35)}
-  .key.wide{grid-column:span 2}
-  /* Notes */
-  .notes{width:min(680px,92vw)}
-  .notes-body{padding:12px}
-  .note-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:10px}
-  .ncard{background:#fff7cc;border:1px solid #f5e6a9;border-radius:12px;min-height:120px;padding:10px}
-  .ncard h4{margin:0 0 6px}
-  .nrow{display:flex;gap:8px;margin-top:8px}
-  .nrow input,.nrow textarea{width:100%;border:1px solid #e7e2b0;border-radius:8px;padding:8px;font-size:13px;background:#fffef4}
-  .nrow textarea{min-height:70px;resize:vertical}
-  .nbtn{border:0;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}
-  .nbtn.green{background:#22c55e;color:#053}
-  .nbtn.gray{background:#eef2f7}
 </style>
 </head>
 <body>
   <div class="wrap">
     <!-- HERO -->
     <div class="hero">
-      <img class="logo logo-left"  src="icon.png"  alt="Logo esquerdo">
-      <div class="h-actions">
-        <!-- Post-it (amarelo) -->
-        <button id="openNotes" class="icon-btn" title="Post-it">
-          <svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="#fde047"/><path d="M9 3v6h6" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <img class="brand-left" src="icon.png" alt="Logo esquerdo">
+      <!-- seu LOGO central (PNG branco) -->
+      <img class="center-logo" src="RICai.png" alt="RIC AI CRION">
+      <div class="right-group">
+        <!-- ícone Post-it (amarelo) -->
+        <button id="btnNote" class="tool" title="Post-it">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 3h9l6 6v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" fill="#fde047"/>
+            <path d="M15 3v6h6" fill="#fed7aa"/>
+            <path d="M8 11h8M8 15h5" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
         </button>
-        <!-- Calculadora (cíano) -->
-        <button id="openCalc" class="icon-btn" title="Calculadora">
-          <svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="#5eead4"/><path d="M7 7h10M7 12h10M7 17h4" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg>
+        <!-- ícone Calculadora (verde) -->
+        <button id="btnCalc" class="tool" title="Calculadora">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="2" width="16" height="20" rx="3" fill="#34d399"/>
+            <rect x="7" y="5" width="10" height="4" rx="1" fill="#065f46" opacity=".25"/>
+            <g stroke="#065f46" stroke-width="1.6" stroke-linecap="round">
+              <path d="M8.5 12h3M10 10.5v3"/>
+              <path d="M15.5 11.5h2.5M15.5 14.5h2.5"/>
+              <path d="M8.5 16h3M15.5 16h2.5"/>
+            </g>
+          </svg>
         </button>
+        <img class="brand-right" src="icon2.png" alt="Logo direito">
       </div>
-      <img class="logo logo-center" src="RICai.png" alt="RIC AI CRION">
-      <h1>RIC AI CRION</h1>
-      <img class="logo logo-right" src="icon2.png" alt="Logo direito">
     </div>
 
     <div class="grid">
@@ -143,11 +115,11 @@
         <div class="tag">ALERTA</div>
         <h2>Controle de alerta</h2>
         <div class="row">
-          <button id="btnAlert" class="btn btn-primary">Pesquisar</button>
+          <button id="btnAlert" class="btn">Pesquisar</button>
           <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
         </div>
         <div class="hint" id="alertBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando alerta…</div></div>
+          <div class="busy"><div class="spinner"></div><div>Pesquisando alerta...</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="alertMsg"  style="display:none;font-size:22px;font-weight:900;color:#b91c1c;text-align:center;margin-top:8px">—</div>
@@ -159,11 +131,11 @@
         <div class="tag">SITES OFICIAIS</div>
         <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
         <div class="row" style="margin-top:6px">
-          <input id="qSites" class="input" placeholder="Digite sua pergunta …..">
-          <button id="btnSites" class="btn btn-primary">Pesquisar</button>
+          <input id="qSites" class="input" placeholder="Digite sua pergunta .....">
+          <button id="btnSites" class="btn">Pesquisar</button>
         </div>
         <div class="hint" id="sitesBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando…</div></div>
+          <div class="busy"><div class="spinner"></div><div>Pesquisando...</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="outSites" class="out">—</div>
@@ -176,10 +148,10 @@
         <p class="hint">Busca rápida no texto extraído dos PDFs (indexados).</p>
         <div class="row">
           <input id="qPDF" class="input" placeholder="Ex.: Affix, Coparticipação, Carência 30 dias">
-          <button id="btnPDF" class="btn btn-primary" style="min-width:120px">Pesquisar</button>
+          <button id="btnPDF" class="btn" style="min-width:120px">Pesquisar</button>
         </div>
         <div class="hint" id="pdfBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando arquivos…</div></div>
+          <div class="busy"><div class="spinner"></div><div>Listando arquivos...</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="pdfStatus" class="hint" style="margin-top:6px">—</div>
@@ -193,11 +165,11 @@
         <p class="hint">Material de Treinamento, Quiz, Alertas &gt; 30 dias e demais informações.</p>
         <div class="row">
           <input id="qCRION" class="input" placeholder="Ex.: Onboarding, Retenção, URA, Script de Cobrança, Affix">
-          <button id="btnCRION" class="btn btn-primary" style="min-width:120px">Pesquisar</button>
+          <button id="btnCRION" class="btn" style="min-width:120px">Pesquisar</button>
           <button id="btnReIdxCRION" class="btn btn-danger" style="min-width:120px">Reindexar</button>
         </div>
         <div class="hint" id="crionBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando procedimentos…</div></div>
+          <div class="busy"><div class="spinner"></div><div>Listando procedimentos...</div></div>
           <div class="bar" style="margin-top:6px"></div>
         </div>
         <div id="crionStatus" class="hint" style="margin-top:6px">—</div>
@@ -209,98 +181,43 @@
   </div>
 
   <!-- Modais ALERTA -->
-  <div id="modal1" class="overlay" aria-hidden="true">
-    <div class="sheet" style="width:min(520px,92vw);padding:14px">
+  <div id="modal1" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
+    <div class="modal-box" style="width:min(520px,92vw);border-radius:14px;padding:14px;background:#fff;border:1px solid #ffd6d6">
       <h3 style="margin:0 0 8px;color:#991b1b">ALERTA DA OPERAÇÃO</h3>
       <input id="m1text" class="input" placeholder="Digite o texto do alerta (vermelho)">
-      <div class="row" style="justify-content:flex-end;margin-top:12px">
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
         <button class="btn btn-plain" onclick="closeM(1)">Cancelar</button>
-        <button id="m1ok" class="btn btn-primary" onclick="goM2()">Continuar</button>
+        <button id="m1ok" class="btn" onclick="goM2()">Continuar</button>
       </div>
     </div>
   </div>
-  <div id="modal2" class="overlay" aria-hidden="true">
-    <div class="sheet" style="width:min(520px,92vw);padding:14px">
+  <div id="modal2" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
+    <div class="modal-box" style="width:min(520px,92vw);border-radius:14px;padding:14px;background:#fff;border:1px solid #ffdaba">
       <h3 style="margin:0 0 8px">Responsável</h3>
       <input id="m2text" class="input" placeholder="Primeira letra maiúscula (ex.: Ale)">
-      <div class="row" style="justify-content:flex-end;margin-top:12px">
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
         <button class="btn btn-plain" onclick="backM1()">Voltar</button>
-        <button id="m2ok" class="btn btn-primary" onclick="saveAlert()">Salvar</button>
+        <button id="m2ok" class="btn" onclick="saveAlert()">Salvar</button>
       </div>
     </div>
   </div>
-  <div id="modal3" class="overlay" aria-hidden="true">
-    <div class="sheet" style="width:min(380px,92vw);padding:14px;text-align:center">
+  <div id="modal3" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
+    <div class="modal-box" style="width:min(380px,92vw);border-radius:14px;padding:14px;background:#fff;border:1px solid #d9f7b8;text-align:center">
       <h3 style="margin:0 0 8px">ALERTA AJUSTADO</h3>
       <div style="margin:6px 0">✔️</div>
-      <div class="row" style="justify-content:center;margin-top:4px">
-        <button class="btn btn-primary" onclick="closeM(3)">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Overlay: Calculadora -->
-  <div id="calcOverlay" class="overlay" aria-hidden="true">
-    <div class="sheet calc">
-      <div class="calc-header"><button class="btn btn-plain" onclick="toggleCalc(false)">Fechar</button></div>
-      <div id="calcScreen" class="calc-screen">0</div>
-      <div class="pad">
-        <button class="key" data-k="C">C</button>
-        <button class="key" data-k="±">±</button>
-        <button class="key" data-k="%">%</button>
-        <button class="key op" data-k="/">÷</button>
-
-        <button class="key" data-k="7">7</button>
-        <button class="key" data-k="8">8</button>
-        <button class="key" data-k="9">9</button>
-        <button class="key op" data-k="*">×</button>
-
-        <button class="key" data-k="4">4</button>
-        <button class="key" data-k="5">5</button>
-        <button class="key" data-k="6">6</button>
-        <button class="key op" data-k="-">−</button>
-
-        <button class="key" data-k="1">1</button>
-        <button class="key" data-k="2">2</button>
-        <button class="key" data-k="3">3</button>
-        <button class="key op" data-k="+">+</button>
-
-        <button class="key wide" data-k="0">0</button>
-        <button class="key" data-k=".">.</button>
-        <button class="key eq" data-k="=">=</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Overlay: Post-its -->
-  <div id="notesOverlay" class="overlay" aria-hidden="true">
-    <div class="sheet notes">
-      <div class="calc-header" style="justify-content:space-between">
-        <strong style="padding-left:6px;color:#7c5e00">Post-its</strong>
-        <div>
-          <button class="nbtn gray" onclick="clearNotes()">Limpar</button>
-          <button class="btn btn-plain" onclick="toggleNotes(false)">Fechar</button>
-        </div>
-      </div>
-      <div class="notes-body">
-        <div class="nrow">
-          <input id="noteTitle" placeholder="Título">
-          <button class="nbtn green" onclick="addNote()">Adicionar</button>
-        </div>
-        <div class="nrow"><textarea id="noteText" placeholder="Escreva sua nota…"></textarea></div>
-        <div id="noteGrid" class="note-grid"></div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:4px">
+        <button class="btn" onclick="closeM(3)">OK</button>
       </div>
     </div>
   </div>
 
 <script>
-/*** CONFIG ***/
+/*** URL /exec liberado para Anyone (GitHub) ***/
 const APP_URL = "https://script.google.com/macros/s/AKfycbw6uzRI4069YZmoizZFB0p8XmPqw1dw_IfxFaKGd33_3HQDF5RbBc-4_dHLj1YmCNGDgQ/exec";
 
 /*** helpers ***/
-const $  = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
-const show = (el, on=true)=>{ if(!el) return; el.style.display = on? (el.classList.contains('overlay')? 'flex' : '') : 'none'; };
+const $ = s => document.querySelector(s);
+const show = (el, on=true)=>{ if(!el) return; el.style.display = on? '' : 'none'; };
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
@@ -330,17 +247,27 @@ function call(endpoint, payload){
     });
   }
   const url = APP_URL + "?fn=" + encodeURIComponent(endpoint);
-  return fetch(url, {
-      method:"POST",
-      headers:{ "Content-Type":"text/plain" },
-      body: JSON.stringify(payload||{}),
-  }).then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
+  return fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(payload||{}) })
+    .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
 }
 
-/*** Modais alerta ***/
-function openM(id){ show($('#modal'+id),true); }
-function closeM(id){ show($('#modal'+id),false); }
+/*** Modais ***/
+function openM(id){ $('#modal'+id).style.display='flex'; }
+function closeM(id){ $('#modal'+id).style.display='none'; }
 function backM1(){ closeM(2); openM(1); }
+
+/*** Ferramentas do topo ***/
+document.getElementById('btnCalc').addEventListener('click', ()=>openCalculator());
+document.getElementById('btnNote').addEventListener('click', ()=>openNote());
+function openCalculator(){
+  alert('Calculadora rápida:\n\nUse a pesquisa do navegador (Shift+Cmd+Y no Mac / Win+S em Windows 11) ou cole uma expressão no campo de Sites e aperte Enter. (Se quiser, depois integro uma mini calculadora embutida.)');
+}
+function openNote(){
+  const t = prompt('Anote algo rápido (Post-it):');
+  if(!t) return;
+  localStorage.setItem('ric_postit', t);
+  alert('Salvo! Você pode colar em qualquer campo: ' + t);
+}
 
 /*** ALERTA ***/
 $('#btnAlert').addEventListener('click', async ()=>{
@@ -356,6 +283,7 @@ $('#btnAlert').addEventListener('click', async ()=>{
   }finally{ show($('#alertBusy'),false); }
 });
 
+/*** ALERTA (ajustar) ***/
 let _newAlert="", _newResp="";
 $('#btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; $('#m1text').value=""; $('#m2text').value=""; openM(1); });
 function goM2(){ _newAlert = ($('#m1text').value||"").trim(); if(!_newAlert){ $('#m1text').focus(); return; } closeM(1); openM(2); }
@@ -363,20 +291,20 @@ $('#m2text').addEventListener('input', e=>{ const v=e.target.value; e.target.val
 async function saveAlert(){
   _newResp = $('#m2text').value.trim();
   try{
-    $('#m2ok').disabled=true; $('#m2ok').textContent='Salvando…';
+    $('#m2ok').disabled=true; $('#m2ok').textContent='Salvando...';
     await call('adjustalert',{mensagem:_newAlert, responsavel:_newResp});
     closeM(2); openM(3);
   }catch(e){ closeM(2); alert("Falha ao ajustar: "+e.message);
   }finally{ $('#m2ok').disabled=false; $('#m2ok').textContent='Salvar'; }
 }
 
-/*** SITES OFICIAIS (chat) ***/
+/*** SITES ***/
 $('#btnSites').addEventListener('click', async ()=>{
   const q=($('#qSites').value||'').trim();
   if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
   show($('#sitesBusy'),true); $('#outSites').textContent='—';
   try{
-    const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final. Substitua qualquer nota genérica por: 'Fontes oficiais Affix, Alter, Hapvida'.";
+    const qRich = q + " — FORMATO: responda em português e liste as URLs oficiais no final. Substitua qualquer nota genérica por: 'Fontes oficiais Affix, Alter, Hapvida'.";
     const r = await call('chat',{q:qRich});
     const txt = (r && r.text) ? r.text : '—';
     const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
@@ -391,7 +319,7 @@ $('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
 async function doPDF(){
   const q=($('#qPDF').value||'').trim();
   if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
-  show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos…'; $('#pdfList').innerHTML="";
+  show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos...'; $('#pdfList').innerHTML="";
   try{
     const res = await call('searchindexed',{q});
     if(!res || res.ok===false){ $('#pdfStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
@@ -461,52 +389,6 @@ async function doCRION(){
     }
   }catch(e){ $('#crionStatus').textContent='Erro: '+e.message;
   }finally{ show($('#crionBusy'),false); }
-}
-
-/*** CALCULADORA ***/
-let calcValue="0", pending=null, op=null;
-function renderCalc(){ $('#calcScreen').textContent = calcValue; }
-function inputCalc(k){
-  if(!isNaN(k)){ // número
-    calcValue = (calcValue==="0")? String(k) : calcValue + String(k);
-  }else if(k==="."){ if(!calcValue.includes(".")) calcValue += "."; }
-  else if(k==="C"){ calcValue="0"; pending=null; op=null; }
-  else if(k==="±"){ calcValue = String(-parseFloat(calcValue||"0")); }
-  else if(k==="%"){ calcValue = String(parseFloat(calcValue||"0")/100); }
-  else if(k==="="){ if(op){ const a=parseFloat(pending||"0"), b=parseFloat(calcValue||"0");
-    const r = op==="+"? a+b : op==="-"? a-b : op==="*" ? a*b : a/b; calcValue=String(r); pending=null; op=null; } }
-  else{ // operador
-    pending = calcValue; calcValue="0"; op=k;
-  }
-  renderCalc();
-}
-$('#openCalc').addEventListener('click', ()=>toggleCalc(true));
-function toggleCalc(on){ show($('#calcOverlay'),on); if(on) renderCalc(); }
-$$('.key').forEach(b=> b.addEventListener('click', ()=>inputCalc(b.dataset.k)));
-
-/*** NOTES (Post-it) ***/
-$('#openNotes').addEventListener('click', ()=>toggleNotes(true));
-function toggleNotes(on){ show($('#notesOverlay'),on); if(on) renderNotes(); }
-function notesStore(){ return JSON.parse(localStorage.getItem("ric_notes")||"[]"); }
-function saveNotes(arr){ localStorage.setItem("ric_notes", JSON.stringify(arr)); }
-function addNote(){
-  const t = $('#noteTitle').value.trim(); const x = $('#noteText').value.trim();
-  if(!t && !x) return;
-  const arr = notesStore(); arr.unshift({id:Date.now(), title:t||"Sem título", text:x||""});
-  saveNotes(arr); $('#noteTitle').value=""; $('#noteText').value=""; renderNotes();
-}
-function delNote(id){ const arr = notesStore().filter(n=>n.id!==id); saveNotes(arr); renderNotes(); }
-function clearNotes(){ if(confirm("Apagar todas as notas?")){ saveNotes([]); renderNotes(); } }
-function renderNotes(){
-  const grid=$('#noteGrid'); grid.innerHTML="";
-  notesStore().forEach(n=>{
-    const div=document.createElement('div'); div.className='ncard';
-    div.innerHTML=`<h4>${esc(n.title)}</h4><div style="white-space:pre-wrap">${esc(n.text)}</div>
-                   <div class="row" style="justify-content:flex-end;margin-top:8px">
-                     <button class="nbtn gray" onclick="delNote(${n.id})">Excluir</button>
-                   </div>`;
-    grid.appendChild(div);
-  });
 }
 </script>
 </body>
