@@ -4,203 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RIC AI — CRION</title>
+<!-- (mesmos estilos do arquivo do GAS) -->
 <style>
-  :root{
-    /* reduzir tudo ~20% */
-    --scale:.8;
-
-    --bg:#f7f8fc; --ink:#0f172a; --muted:#6b7280; --line:#E7EAF3;
-    --primary:#2343d5; --primary-2:#2e61ff; --danger:#ef4444;
-
-    /* roxo clarinho + sombra azul nos "balõezinhos" */
-    --tag-bg:#F3E8FF;         /* roxo claro */
-    --tag-ink:#6B21A8;        /* roxo escuro */
-    --tag-border:#E9D5FF;
-    --tag-shadow:0 10px 20px rgba(37,99,235,.18); /* azul */
-
-    --shadow-card:0 18px 36px rgba(99,102,241,.16), 0 4px 12px rgba(99,102,241,.10);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font:14px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    background:radial-gradient(1100px 520px at -10% -10%, #eaf0ff 0, #ffffff 55%, #f6f8ff 100%);
-    color:var(--ink);
-  }
-  /* truque de escala: deixa tudo 20% menor mas preserva a largura visual */
-  .wrap{
-    max-width:1180px; margin:0 auto; padding:16px;
-    transform:scale(var(--scale)); transform-origin: top center;
-    width:calc(100%/var(--scale));
-  }
-
-  /* Header */
-  .hero{
-    position:relative;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;
-    border-radius:18px;padding:14px 18px;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 24px 56px rgba(46,97,255,.18)
-  }
-  .hero h1{margin:0;font-size:26px;letter-spacing:.4px}
-  .logo{width:120px;height:auto;object-fit:contain;filter:drop-shadow(0 2px 6px #0002)}
-  .left{position:absolute;left:16px;top:50%;transform:translateY(-50%)}
-  .right{position:absolute;right:16px;top:50%;transform:translateY(-50%)}
-
-  /* Grid / Cards */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-  @media (max-width:980px){ .grid{grid-template-columns:1fr} .right{display:none} }
-  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--shadow-card)}
-
-  /* TAGs – roxo claro dentro do balão + drop azul */
-  .tag{
-    display:inline-flex;align-items:center;gap:8px;
-    background:var(--tag-bg); color:var(--tag-ink);
-    border:1px solid var(--tag-border); border-radius:999px;
-    padding:6px 12px; font-weight:800; font-size:12px; letter-spacing:.3px;
-    box-shadow:var(--tag-shadow);
-  }
-
-  h2{margin:8px 0 10px 0;font-size:17px}
-  .row{display:flex;gap:8px;align-items:center}
-  .input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;background:#fbfbff}
-  .btn{appearance:none;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;color:#fff;background:var(--primary);box-shadow:0 6px 14px rgba(35,67,213,.24)}
-  .btn-plain{background:#f7f7fb;color:#111;border:1px solid var(--line);box-shadow:none}
-  .btn-danger{background:var(--danger);box-shadow:0 6px 14px rgba(239,68,68,.22)}
-  .hint{font-size:12px;color:#6b7280;margin-top:6px}
-  .out{white-space:pre-wrap;min-height:120px;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:10px;background:#fbfbff}
-  .list{margin:10px 0 0;padding:0;list-style:none}
-  .item{padding:10px 0;border-top:1px solid var(--line)}
-  .meta{font-size:12px;color:#6b7280;margin-top:2px}
-  .snip{color:#374151;font-size:14px;margin:6px 0}
-  a{color:#2563eb;text-decoration:none} a:hover{text-decoration:underline}
-
-  /* Loaders */
-  .busy{display:flex;align-items:center;gap:8px}
-  .spinner{width:14px;height:14px;border-radius:50%;border:3px solid #ffffff66;border-top-color:#fff;animation:spin .9s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .bar{position:relative;height:6px;border-radius:999px;background:#e9e9ff;overflow:hidden}
-  .bar:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#c7b8ff,#a78bfa,#93c5fd);animation:load 1.3s infinite}
-  @keyframes load{0%{left:-100%;right:100%}50%{left:0;right:0}100%{left:100%;right:-100%}}
-
-  /* Footer – discreto, cinza e pequeno */
-  footer{margin:18px 0 6px;text-align:center}
-  .footnote{font-size:12px;color:#94a3b8}
+/* …identico ao do GAS… (copie exatamente o <style> acima) */
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- HERO -->
-    <div class="hero">
-      <img class="logo left"  src="icon.png"  alt="Logo esquerdo">
-      <h1>RIC AI CRION</h1>
-      <img class="logo right" src="icon2.png" alt="Logo direito">
-    </div>
+  <!-- (mesma marcação HTML do GAS, copie exatamente o <body> até antes do <script>) -->
 
-    <div class="grid">
-      <!-- ALERTA -->
-      <section class="card">
-        <div class="tag">ALERTA</div>
-        <h2>Controle de alerta</h2>
-        <div class="row">
-          <button id="btnAlert" class="btn">Pesquisar</button>
-          <button id="btnAdjust" class="btn btn-plain">Ajustar</button>
-        </div>
-        <div class="hint" id="alertBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando alerta...</div></div>
-          <div class="bar" style="margin-top:6px"></div>
-        </div>
-        <div id="alertMsg"  style="display:none;font-size:22px;font-weight:900;color:#b91c1c;text-align:center;margin-top:8px">—</div>
-        <div id="alertResp" style="display:none;font-size:13px;font-weight:600;color:#334155;text-align:center;margin-top:4px;text-transform:lowercase">—</div>
-      </section>
-
-      <!-- SITES OFICIAIS -->
-      <section class="card">
-        <div class="tag">SITES OFICIAIS</div>
-        <h2>CRION COMERCIAL (AFFIX, ALTER e CONECTA PLAN)</h2>
-        <div class="row" style="margin-top:6px">
-          <input id="qSites" class="input" placeholder="Digite sua pergunta .....">
-          <button id="btnSites" class="btn">Pesquisar</button>
-        </div>
-        <div class="hint" id="sitesBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Pesquisando...</div></div>
-          <div class="bar" style="margin-top:6px"></div>
-        </div>
-        <div id="outSites" class="out">—</div>
-      </section>
-
-      <!-- PDFs -->
-      <section class="card">
-        <div class="tag">PDFs</div>
-        <h2>Manuais do Corretor (Sharepoint)</h2>
-        <p class="hint">Busca rápida no texto extraído dos PDFs (indexados).</p>
-        <div class="row">
-          <input id="qPDF" class="input" placeholder="Ex.: Affix, Coparticipação, Carência 30 dias">
-          <button id="btnPDF" class="btn" style="min-width:112px">Pesquisar</button>
-        </div>
-        <div class="hint" id="pdfBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando arquivos...</div></div>
-          <div class="bar" style="margin-top:6px"></div>
-        </div>
-        <div id="pdfStatus" class="hint" style="margin-top:6px">—</div>
-        <ul id="pdfList" class="list"></ul>
-      </section>
-
-      <!-- CRION -->
-      <section class="card">
-        <div class="tag">PROCEDIMENTOS CRION</div>
-        <h2>Procedimentos</h2>
-        <p class="hint">Material de Treinamento, Quiz, Alertas &gt; 30 dias e demais informações.</p>
-        <div class="row">
-          <input id="qCRION" class="input" placeholder="Ex.: Onboarding, Retenção, URA, Script de Cobrança, Affix">
-          <button id="btnCRION" class="btn" style="min-width:112px">Pesquisar</button>
-          <button id="btnReIdxCRION" class="btn btn-danger" style="min-width:112px">Reindexar</button>
-        </div>
-        <div class="hint" id="crionBusy" style="display:none">
-          <div class="busy"><div class="spinner"></div><div>Listando procedimentos...</div></div>
-          <div class="bar" style="margin-top:6px"></div>
-        </div>
-        <div id="crionStatus" class="hint" style="margin-top:6px">—</div>
-        <ul id="crionList" class="list"></ul>
-      </section>
-    </div>
-
-    <footer><span class="footnote">Desenvolvido por Alexandre Cavalcante V3.0</span></footer>
-  </div>
-
-  <!-- Modais ALERTA -->
-  <div id="modal1" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
-    <div class="modal-box" style="width:min(520px,92vw);border-radius:14px;padding:14px;background:#fff;border:1px solid #ffd6d6">
-      <h3 style="margin:0 0 8px;color:#991b1b">ALERTA DA OPERAÇÃO</h3>
-      <input id="m1text" class="input" placeholder="Digite o texto do alerta (vermelho)">
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn btn-plain" onclick="closeM(1)">Cancelar</button>
-        <button id="m1ok" class="btn" onclick="goM2()">Continuar</button>
-      </div>
-    </div>
-  </div>
-  <div id="modal2" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
-    <div class="modal-box" style="width:min(520px,92vw);border-radius:14px;padding:14px;background:#fff;border:1px solid #ffdaba">
-      <h3 style="margin:0 0 8px">Responsável</h3>
-      <input id="m2text" class="input" placeholder="Primeira letra maiúscula (ex.: Ale)">
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn btn-plain" onclick="backM1()">Voltar</button>
-        <button id="m2ok" class="btn" onclick="saveAlert()">Salvar</button>
-      </div>
-    </div>
-  </div>
-  <div id="modal3" class="modal" style="position:fixed;inset:0;background:#00000059;display:none;align-items:center;justify-content:center;z-index:1000">
-    <div class="modal-box" style="width:min(380px,92vw);border-radius:14px;padding:14px;background:#fff;border:1px solid #d9f7b8;text-align:center">
-      <h3 style="margin:0 0 8px">ALERTA AJUSTADO</h3>
-      <div style="margin:6px 0">✔️</div>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:4px">
-        <button class="btn" onclick="closeM(3)">OK</button>
-      </div>
-    </div>
-  </div>
+  <!-- …copie a MESMA marcação do GAS… -->
 
 <script>
-/*** URL /exec (publicado para Anyone) ***/
-const APP_URL = "https://script.google.com/macros/s/AKfycbwpX28ScHUs0V_NR9HU0MfaArfmHXAsTHBWmjZpefaIguIB6AdIoM5jqTTAfwNwmCoz/exec";
+/*** CONFIG: sua URL do Web App GAS (deploy “Anyone”) ***/
+const APP_URL = "https://script.google.com/macros/s/SEU_ID/exec";
 
-/*** helpers ***/
+/*** helpers iguais ***/
 const $ = s => document.querySelector(s);
 const show = (el, on=true)=>{ if(!el) return; el.style.display = on? '' : 'none'; };
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
@@ -208,159 +26,170 @@ function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
 function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
 
-/*** Polyfill (GAS vs GitHub) ***/
+/*** Polyfill — chama seu APP_URL ***/
 function call(endpoint, payload){
-  if (window.google && google.script && google.script.run){
-    return new Promise((resolve,reject)=>{
-      const r = google.script.run.withSuccessHandler(res=>{
-        if(endpoint==='chat' && typeof res==='string') resolve({ok:true, text:res});
-        else resolve(res);
-      }).withFailureHandler(err=>reject(err));
-      try{
-        switch(endpoint){
-          case 'getalert': r.apiGetAlert(); break;
-          case 'adjustalert': r.apiAdjustAlert(payload.mensagem, payload.responsavel); break;
-          case 'searchindexed': r.apiSearchIndexed(payload.q); break;
-          case 'fetchindexedsnippets': r.apiFetchIndexedSnippets(payload.sessionId, payload.from, payload.limit); break;
-          case 'searchcrion': r.apiSearchCrion(payload.q); break;
-          case 'fetchcrionsnippets': r.apiFetchCrionSnippets(payload.sessionId, payload.from, payload.limit); break;
-          case 'reindexcrion': r.apiReindexCrion(); break;
-          case 'chat': r.chatServer(payload.q, navigator.userAgent||''); break;
-          default: reject('endpoint não mapeado');
-        }
-      }catch(e){ reject(e); }
-    });
-  }
   const url = APP_URL + "?fn=" + encodeURIComponent(endpoint);
   return fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(payload||{}) })
     .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
 }
 
-/*** Modais ***/
-function openM(id){ $('#modal'+id).style.display='flex'; }
-function closeM(id){ $('#modal'+id).style.display='none'; }
+/*** (o restante do JS é o mesmo comportamento, só trocando google.script.run → call) ***/
+/*** Draggable, Notes, Calculator — iguais ao GAS ***/
+function makeDraggable(win, head){
+  let x=0,y=0,ix=0,iy=0,drag=false;
+  head.onmousedown = e=>{ drag=true; ix=e.clientX; iy=e.clientY; document.onmouseup=stop; document.onmousemove=move; };
+  function move(e){ if(!drag) return; x += e.clientX-ix; y += e.clientY-iy; ix=e.clientX; iy=e.clientY; win.style.transform=`translate(${x}px,${y}px)`; }
+  function stop(){ drag=false; document.onmouseup=null; document.onmousemove=null; }
+}
+const calcWrap = document.getElementById('calcWrap'), notesWrap = document.getElementById('notesWrap');
+document.getElementById('openCalc').onclick = ()=>toggleCalc(true);
+document.getElementById('openNotes').onclick = ()=>toggleNotes(true);
+function toggleCalc(on){ show(calcWrap,on); }
+function toggleNotes(on){ show(notesWrap,on); }
+makeDraggable(document.getElementById('calcWin'), document.getElementById('calcHead'));
+makeDraggable(document.getElementById('notesWin'), document.getElementById('notesHead'));
+
+const NOTE_KEY='RIC_NOTE_V1';
+const noteEl=document.getElementById('noteText');
+noteEl.value = localStorage.getItem(NOTE_KEY)||'';
+noteEl.addEventListener('input', ()=>localStorage.setItem(NOTE_KEY, noteEl.value));
+function clearNote(){ if(confirm('Limpar anotação?')){ noteEl.value=''; localStorage.removeItem(NOTE_KEY); }}
+
+/*** Calculator ***/
+let expr=''; const screen=document.getElementById('calcScreen');
+document.querySelectorAll('.calc-btn').forEach(b=>b.onclick=()=>{
+  const k=b.dataset.k;
+  if(k==='C'){ expr=''; screen.textContent='0'; return; }
+  if(k==='='){
+    try{
+      const safe = expr.replace(/×/g,'*').replace(/÷/g,'/').replace(/[^0-9+/*().\-]/g,'');
+      const res = Function('return ('+safe+')')();
+      screen.textContent = String(res); expr = String(res);
+    }catch(_){ screen.textContent='Erro'; expr=''; }
+    return;
+  }
+  expr += k; screen.textContent = expr;
+});
+
+/*** Modais ALERTA (idênticos) ***/
+function openM(id){ document.getElementById('modal'+id).style.display='flex'; }
+function closeM(id){ document.getElementById('modal'+id).style.display='none'; }
 function backM1(){ closeM(2); openM(1); }
 
 /*** ALERTA ***/
-$('#btnAlert').addEventListener('click', async ()=>{
-  const msg=$('#alertMsg'), resp=$('#alertResp');
-  show(msg,false); show(resp,false); show($('#alertBusy'),true);
+document.getElementById('btnAlert').addEventListener('click', async ()=>{
+  const msg=document.getElementById('alertMsg'), resp=document.getElementById('alertResp');
+  show(msg,false); show(resp,false); show(document.getElementById('alertBusy'),true);
   try{
-    const r = await call('getalert',{});
-    if(!r || r.ok===false){ msg.textContent="Falha ao consultar."; show(msg,true); return; }
-    if(!r.found){ msg.textContent="Sem recado no momento."; show(msg,true); return; }
-    msg.textContent = "🚨 " + String(r.mensagem||"—").toUpperCase(); show(msg,true);
-    if(r.responsavel){ resp.textContent = String(r.responsavel||"").toLowerCase(); show(resp,true); }
-  }catch(e){ msg.textContent="Erro: "+e.message; show(msg,true);
-  }finally{ show($('#alertBusy'),false); }
+    const r=await call('getalert',{});
+    if(!r || r.ok===false){ msg.textContent="Falha ao consultar."; show(msg,true); }
+    else if(!r.found){ msg.textContent="Sem recado no momento."; show(msg,true); }
+    else{ msg.textContent="🚨 "+String(r.mensagem||"—").toUpperCase(); show(msg,true); if(r.responsavel){ resp.textContent=String(r.responsavel||"").toLowerCase(); show(resp,true);} }
+  }catch(e){ msg.textContent="Erro: "+e.message; show(msg,true); }
+  finally{ show(document.getElementById('alertBusy'),false); }
 });
 
-/*** ALERTA (ajustar) ***/
+/*** ALERTA (ajuste) ***/
 let _newAlert="", _newResp="";
-$('#btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; $('#m1text').value=""; $('#m2text').value=""; openM(1); });
-function goM2(){ _newAlert = ($('#m1text').value||"").trim(); if(!_newAlert){ $('#m1text').focus(); return; } closeM(1); openM(2); }
-$('#m2text').addEventListener('input', e=>{ const v=e.target.value; e.target.value = v? v[0].toUpperCase()+v.slice(1).toLowerCase():v; });
+document.getElementById('btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; document.getElementById('m1text').value=""; document.getElementById('m2text').value=""; openM(1); });
+function goM2(){ _newAlert=(document.getElementById('m1text').value||"").trim(); if(!_newAlert){ document.getElementById('m1text').focus(); return; } closeM(1); openM(2); }
+document.getElementById('m2text').addEventListener('input', e=>{ const v=e.target.value; e.target.value = v? v[0].toUpperCase()+v.slice(1).toLowerCase():v; });
 async function saveAlert(){
-  _newResp = $('#m2text').value.trim();
-  try{
-    $('#m2ok').disabled=true; $('#m2ok').textContent='Salvando...';
-    await call('adjustalert',{mensagem:_newAlert, responsavel:_newResp});
-    closeM(2); openM(3);
-  }catch(e){ closeM(2); alert("Falha ao ajustar: "+e.message);
-  }finally{ $('#m2ok').disabled=false; $('#m2ok').textContent='Salvar'; }
+  _newResp = document.getElementById('m2text').value.trim();
+  const btn=document.getElementById('m2ok'); btn.disabled=true; btn.textContent='Salvando...';
+  try{ await call('adjustalert',{mensagem:_newAlert,responsavel:_newResp}); closeM(2); openM(3); }
+  catch(e){ closeM(2); alert("Falha ao ajustar: "+e.message); }
+  finally{ btn.disabled=false; btn.textContent='Salvar'; }
 }
 
 /*** SITES ***/
-$('#btnSites').addEventListener('click', async ()=>{
-  const q=($('#qSites').value||'').trim();
-  if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
-  show($('#sitesBusy'),true); $('#outSites').textContent='—';
+document.getElementById('btnSites').addEventListener('click', async ()=>{
+  const q=(document.getElementById('qSites').value||'').trim();
+  if(!q){ document.getElementById('outSites').textContent='Digite a pergunta.'; return; }
+  show(document.getElementById('sitesBusy'),true); document.getElementById('outSites').textContent='—';
   try{
-    const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final. Substitua qualquer nota genérica por: 'Fontes oficiais Affix, Alter, Hapvida'.";
-    const r = await call('chat',{q:qRich});
-    const txt = (r && r.text) ? r.text : '—';
+    const qRich = q + " — FORMATO: responda em português com texto longo (50–90% do conteúdo relevante) e liste as URLs oficiais no final.";
+    const r = await call('chat',{q:qRich}); const txt = (r && r.text) ? r.text : '—';
     const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
-    $('#outSites').innerHTML = html;
-  }catch(e){ $('#outSites').textContent='Erro: '+e.message;
-  }finally{ show($('#sitesBusy'),false); }
+    document.getElementById('outSites').innerHTML=html;
+  }catch(e){ document.getElementById('outSites').textContent='Erro: '+e.message; }
+  finally{ show(document.getElementById('sitesBusy'),false); }
 });
 
 /*** PDFs ***/
-$('#btnPDF').addEventListener('click', doPDF);
-$('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
+document.getElementById('btnPDF').addEventListener('click', doPDF);
+document.getElementById('qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
 async function doPDF(){
-  const q=($('#qPDF').value||'').trim();
-  if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
-  show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos...'; $('#pdfList').innerHTML="";
+  const q=(document.getElementById('qPDF').value||'').trim();
+  if(!q){ document.getElementById('pdfStatus').textContent='Digite um termo.'; return; }
+  show(document.getElementById('pdfBusy'),true); document.getElementById('pdfStatus').textContent='Listando arquivos...'; document.getElementById('pdfList').innerHTML="";
   try{
-    const res = await call('searchindexed',{q});
-    if(!res || res.ok===false){ $('#pdfStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
-    const items=res.items||[]; $('#pdfStatus').textContent=`Resultados: ${items.length}`;
+    const res=await call('searchindexed',{q});
+    if(!res || res.ok===false){ document.getElementById('pdfStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
+    const items=res.items||[]; document.getElementById('pdfStatus').textContent=`Resultados: ${items.length}`;
     const frag=document.createDocumentFragment();
     items.forEach((it,idx)=>{
       const li=document.createElement('li'); li.className='item'; li.id='pdf_'+idx;
-      const meta = `<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+      const meta=`<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString():"—"}</div>`;
       li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
                     <div class="hint" id="snip_pdf_${idx}">Carregando prévias…</div>`;
       frag.appendChild(li);
-    });
-    $('#pdfList').appendChild(frag);
+    }); document.getElementById('pdfList').appendChild(frag);
     if(items.length){
       let from=0;
       while(from < items.length){
         const r = await call('fetchindexedsnippets',{sessionId:res.sessionId, from, limit:6});
         (r.items||[]).forEach(row=>{
-          const el=$('#snip_pdf_'+row.index);
-          el.innerHTML=(row.snippets && row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="hint">—</span>';
+          const el=document.getElementById('snip_pdf_'+row.index);
+          el.innerHTML=(row.snippets&&row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join(""):'<span class="hint">—</span>';
         });
-        from = r.to;
+        from=r.to;
       }
-      $('#pdfStatus').textContent += " • prévias completas";
+      document.getElementById('pdfStatus').textContent += " • prévias completas";
     }
-  }catch(e){ $('#pdfStatus').textContent='Erro: '+e.message;
-  }finally{ show($('#pdfBusy'),false); }
+  }catch(e){ document.getElementById('pdfStatus').textContent='Erro: '+e.message; }
+  finally{ show(document.getElementById('pdfBusy'),false); }
 }
 
 /*** CRION ***/
-$('#btnCRION').addEventListener('click', doCRION);
-$('#qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
-$('#btnReIdxCRION').addEventListener('click', async ()=>{
-  $('#crionStatus').textContent='Reindexando CRION…'; show($('#crionBusy'),true);
-  try{ const r=await call('reindexcrion',{}); $('#crionStatus').textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou"); }
-  catch(e){ $('#crionStatus').textContent='Erro: '+e.message; }
-  finally{ show($('#crionBusy'),false); }
+document.getElementById('btnCRION').addEventListener('click', doCRION);
+document.getElementById('qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
+document.getElementById('btnReIdxCRION').addEventListener('click', async ()=>{
+  document.getElementById('crionStatus').textContent='Reindexando CRION…'; show(document.getElementById('crionBusy'),true);
+  try{ const r=await call('reindexcrion',{}); document.getElementById('crionStatus').textContent="Index CRION: "+(r && r.ok ? "OK":"Falhou"); }
+  catch(e){ document.getElementById('crionStatus').textContent='Erro: '+e.message; }
+  finally{ show(document.getElementById('crionBusy'),false); }
 });
 async function doCRION(){
-  const q=($('#qCRION').value||'').trim();
-  if(!q){ $('#crionStatus').textContent='Digite um termo.'; return; }
-  show($('#crionBusy'),true); $('#crionStatus').textContent='Listando arquivos…'; $('#crionList').innerHTML="";
+  const q=(document.getElementById('qCRION').value||'').trim();
+  if(!q){ document.getElementById('crionStatus').textContent='Digite um termo.'; return; }
+  show(document.getElementById('crionBusy'),true); document.getElementById('crionStatus').textContent='Listando arquivos…'; document.getElementById('crionList').innerHTML="";
   try{
-    const res = await call('searchcrion',{q});
-    if(!res || res.ok===false){ $('#crionStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
-    const items=res.items||[]; $('#crionStatus').textContent=`Resultados: ${items.length}`;
+    const res=await call('searchcrion',{q});
+    if(!res || res.ok===false){ document.getElementById('crionStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
+    const items=res.items||[]; document.getElementById('crionStatus').textContent=`Resultados: ${items.length}`;
     const frag=document.createDocumentFragment();
     items.forEach((it,idx)=>{
       const li=document.createElement('li'); li.className='item'; li.id='crion_'+idx;
-      const meta  = `<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+      const meta=`<div class="meta">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString():"—"}</div>`;
       li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
                     <div class="hint" id="snip_crion_${idx}">Carregando prévias…</div>`;
       frag.appendChild(li);
-    });
-    $('#crionList').appendChild(frag);
+    }); document.getElementById('crionList').appendChild(frag);
     if(items.length){
       let from=0;
       while(from < items.length){
         const r = await call('fetchcrionsnippets',{sessionId:res.sessionId, from, limit:6});
         (r.items||[]).forEach(row=>{
-          const el=$('#snip_crion_'+row.index);
-          el.innerHTML=(row.snippets && row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("") : '<span class="hint">—</span>';
+          const el=document.getElementById('snip_crion_'+row.index);
+          el.innerHTML=(row.snippets&&row.snippets.length)? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join(""):'<span class="hint">—</span>';
         });
-        from = r.to;
+        from=r.to;
       }
-      $('#crionStatus').textContent += " • prévias completas";
+      document.getElementById('crionStatus').textContent += " • prévias completas";
     }
-  }catch(e){ $('#crionStatus').textContent='Erro: '+e.message;
-  }finally{ show($('#crionBusy'),false); }
+  }catch(e){ document.getElementById('crionStatus').textContent='Erro: '+e.message; }
+  finally{ show(document.getElementById('crionBusy'),false); }
 }
 </script>
 </body>
