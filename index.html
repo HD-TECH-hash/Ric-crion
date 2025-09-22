@@ -20,36 +20,40 @@
   }
   .wrap{max-width:1290px;margin:0 auto;padding:16px}
 
-  /* ====== HEADER ====== */
+  /* ====== HEADER (flex, sem sobreposição) ====== */
   .hero{
-    position:relative; min-height:78px; border-radius:18px; padding:12px 16px;
-    display:flex; align-items:center; justify-content:center; color:#fff;
+    display:flex; align-items:center; gap:12px;
+    border-radius:18px; padding:12px 16px; color:#fff;
     background:linear-gradient(135deg,var(--brand),var(--brand2));
     box-shadow:0 24px 56px rgba(40,130,187,.22);
+    min-height:78px;
   }
-  .header-logo{ height:44px; object-fit:contain; filter:drop-shadow(0 2px 4px #0002) }
-  .left-img  { position:absolute; left:14px;  top:50%; transform:translateY(-50%) }
+  .hero-left{display:flex; align-items:center; gap:10px}
+  .hero-center{flex:1}           /* vazio por requisito */
+  .hero-right{display:flex; align-items:center; gap:12px}
 
-  /* Direita: botões empilhados + logo HDS */
-  .right-side{ position:absolute; right:14px; top:50%; transform:translateY(-50%);
-               display:flex; align-items:center; gap:16px; }
-  .actions{ display:flex; flex-direction:column; gap:10px; }
+  .logo-left{height:44px; object-fit:contain; filter:drop-shadow(0 2px 6px #0002)}
+  .logo-hds{height:44px; object-fit:contain; filter:drop-shadow(0 2px 6px #0002)}
+
   .iconbtn{
-    width:36px;height:36px;border-radius:12px;border:1px solid #ffffff40; display:grid;place-items:center;
-    cursor:pointer;backdrop-filter:blur(4px); transition:.15s; box-shadow:0 6px 14px rgba(0,0,0,.15)
+    width:36px;height:36px;border-radius:12px;border:1px solid #ffffff40;
+    display:grid;place-items:center; cursor:pointer; backdrop-filter:blur(4px);
+    transition:.15s; box-shadow:0 6px 14px rgba(0,0,0,.15)
   }
   .iconbtn:hover{transform:translateY(-1px)}
-  .icon-note{background:#ffd95e} .icon-calc{background:#60a5fa}
+  .icon-note{background:#ffd95e}
+  .icon-calc{background:#60a5fa}
   .iconbtn svg{display:block}
+
+  @media (max-width:980px){
+    .logo-left{height:34px}
+    .logo-hds{height:34px}
+    .iconbtn{width:34px;height:34px}
+  }
 
   /* ====== GRID / CARDS ====== */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-  @media (max-width:980px){
-    .grid{grid-template-columns:1fr}
-    .right-side .header-logo{display:none}  /* esconde HDS no mobile para sobrar espaço */
-    .right-side{right:14px}
-    .header-logo{height:26px}
-  }
+  @media (max-width:980px){ .grid{grid-template-columns:1fr} }
 
   .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--card-shadow)}
   .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);
@@ -97,32 +101,33 @@
   <div class="wrap">
     <!-- HEADER -->
     <div class="hero">
-      <!-- esquerda: icon2 -->
-      <img class="header-logo left-img" src="icon2.png"
-           onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ricai-crion-operacao/main/icon2.png';"
-           alt="Logo esquerdo">
-      <!-- centro vazio -->
+      <div class="hero-left">
+        <img class="logo-left" src="icon2.png"
+             onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ricai-crion-operacao/main/icon2.png';"
+             alt="Logo esquerdo">
+      </div>
 
-      <!-- direita: botões empilhados + HDS -->
-      <div class="right-side">
-        <div class="actions" aria-label="atalhos">
-          <button id="toggleNote" type="button" class="iconbtn icon-note" title="Post-it">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M8 3h8a3 3 0 0 1 3 3v7l-7 7H8a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" stroke="#1f2937" stroke-width="2" fill="#fde68a"/>
-              <path d="M19 13h-4a3 3 0 0 0-3 3v4" stroke="#1f2937" stroke-width="2"/>
-            </svg>
-          </button>
-          <button id="toggleCalc" type="button" class="iconbtn icon-calc" title="Calculadora">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="4" y="3" width="16" height="18" rx="2" stroke="#0b2555" stroke-width="2" fill="#dbeafe"/>
-              <rect x="7" y="6" width="10" height="3" rx="1" fill="#0b2555"/>
-              <path d="M8 12h2M8 16h2M12 12h2M12 16h2M16 12h2M16 16h2" stroke="#0b2555" stroke-width="2"/>
-            </svg>
-          </button>
-        </div>
-        <img class="header-logo" src="HDS.png"
+      <div class="hero-center"></div> <!-- centro vazio -->
+
+      <div class="hero-right">
+        <button id="toggleNote" type="button" class="iconbtn icon-note" title="Post-it">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M8 3h8a3 3 0 0 1 3 3v7l-7 7H8a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" stroke="#1f2937" stroke-width="2" fill="#fde68a"/>
+            <path d="M19 13h-4a3 3 0 0 0-3 3v4" stroke="#1f2937" stroke-width="2"/>
+          </svg>
+        </button>
+
+        <button id="toggleCalc" type="button" class="iconbtn icon-calc" title="Calculadora">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="4" y="3" width="16" height="18" rx="2" stroke="#0b2555" stroke-width="2" fill="#dbeafe"/>
+            <rect x="7" y="6" width="10" height="3" rx="1" fill="#0b2555"/>
+            <path d="M8 12h2M8 16h2M12 12h2M12 16h2M16 12h2M16 16h2" stroke="#0b2555" stroke-width="2"/>
+          </svg>
+        </button>
+
+        <img class="logo-hds" src="HDS.png"
              onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/HD-TECH-hash/Ricai-crion-operacao/main/HDS.png';"
-             alt="HDS">
+             alt="HDSTEC">
       </div>
     </div>
 
@@ -277,26 +282,33 @@
   </div>
 
 <script>
+/* ======= CONFIG ======= */
 const APP_URL = "https://script.google.com/macros/s/AKfycbxnTEhSw1u5Ib0jCqJsURoZM30VfCpfeqKqKvYpXdKgJDUPrw8Q8hScbSzw4zVkI7u0rw/exec";
 
+/* ======= HELPERS ======= */
 const $ = s => document.querySelector(s);
 const show = (el, on=true)=>{ if(!el) return; el.style.display = on? '' : 'none'; };
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
 function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
+
+/* ======= CHAMADAS ======= */
 function call(endpoint, payload){
   const url = APP_URL + "?fn=" + encodeURIComponent(endpoint);
-  return fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(payload||{}) })
-         .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
+  return fetch(url, {
+    method:"POST",
+    headers:{ "Content-Type":"text/plain" },
+    body: JSON.stringify(payload || {})
+  }).then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
 }
 
-/* Modais */
+/* ======= MODAIS ======= */
 function openM(id){ $('#modal'+id).style.display='flex'; }
 function closeM(id){ $('#modal'+id).style.display='none'; }
 function backM1(){ closeM(2); openM(1); }
 
-/* Calc */
+/* ======= CALCULADORA ======= */
 const calc = { buf:"0", op:null, mem:0, fresh:true };
 function refresh(){ $('#scr').textContent = calc.buf; }
 function press(k){
@@ -308,12 +320,12 @@ function press(k){
   if(k==="%"){ calc.buf = String(parseFloat(calc.buf)/100); return refresh(); }
   if("+-*/".includes(k)){ calc.mem=parseFloat(calc.buf); calc.op=k; calc.fresh=true; return; }
   if(k==="=" && calc.op){ const a=calc.mem, b=parseFloat(calc.buf);
-    let v=0; switch(calc.op){case "+":v=a+b;break;case "-":v=a-b;break;case "*":v=a*b;break;case "/":v=b===0?"Erro":a/b;break;}
-    calc.buf=String(v); calc.op=null; calc.fresh=true; return refresh();
+    let v = 0; switch(calc.op){case "+":v=a+b;break;case "-":v=a-b;break;case "*":v=a*b;break;case "/":v=b===0? "Erro" : a/b;break;}
+    calc.buf = String(v); calc.op=null; calc.fresh=true; return refresh();
   }
 }
 
-/* App */
+/* ======= APP ======= */
 document.addEventListener('DOMContentLoaded', () => {
   /* Post-it */
   const noteWrap = $('#noteWrap'), noteArea = $('#noteArea');
@@ -323,12 +335,12 @@ document.addEventListener('DOMContentLoaded', () => {
   noteArea.value = localStorage.getItem('ric_note') || "";
   noteArea.addEventListener('input', ()=> localStorage.setItem('ric_note', noteArea.value));
 
-  /* Calc */
+  /* Calculadora */
   $('#toggleCalc').onclick = ()=>{ $('#calcWrap').style.display = $('#calcWrap').style.display? "" : "block"; refresh(); };
   $('#closeCalc').onclick = ()=>{ $('#calcWrap').style.display="none"; };
   $('#keys').addEventListener('click', e=>{ const k=e.target.dataset.k; if(k) press(k); });
 
-  /* Alerta */
+  /* ALERTA */
   $('#btnAlert').addEventListener('click', async ()=>{
     const box=$('#alertBox'), msg=$('#alertMsg'), resp=$('#alertResp');
     show(box,false); show($('#alertBusy'),true);
@@ -343,48 +355,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }finally{ show($('#alertBusy'),false); }
   });
 
+  /* Ajuste de alerta (modais) */
   let _newAlert="", _newResp="";
-  document.getElementById('btnAdjust')?.addEventListener('click', ()=>{ _newAlert=""; _newResp=""; document.getElementById('m1text').value=""; document.getElementById('m2text').value=""; openM(1); });
-  window.goM2 = function(){ _newAlert=(document.getElementById('m1text').value||"").trim(); if(!_newAlert){ document.getElementById('m1text').focus(); return; } closeM(1); openM(2); }
-  document.getElementById('m2text')?.addEventListener('input', e=>{ const v=e.target.value; e.target.value = v? v[0].toUpperCase()+v.slice(1).toLowerCase():v; });
+  $('#btnAdjust').addEventListener('click', ()=>{ _newAlert=""; _newResp=""; $('#m1text').value=""; $('#m2text').value=""; openM(1); });
+  window.goM2 = function(){ _newAlert = ($('#m1text').value||"").trim(); if(!_newAlert){ $('#m1text').focus(); return; } closeM(1); openM(2); }
+  $('#m2text').addEventListener('input', e=>{ const v=e.target.value; e.target.value = v? v[0].toUpperCase()+v.slice(1).toLowerCase():v; });
   window.saveAlert = async function(){
-    _newResp = document.getElementById('m2text').value.trim();
+    _newResp = $('#m2text').value.trim();
     try{
-      document.getElementById('m2ok').disabled=true; document.getElementById('m2ok').textContent='Salvando...';
+      $('#m2ok').disabled=true; $('#m2ok').textContent='Salvando...';
       await call('adjustalert',{mensagem:_newAlert, responsavel:_newResp});
       closeM(2); openM(3);
     }catch(e){ closeM(2); alert("Falha ao ajustar: "+e.message);
-    }finally{ document.getElementById('m2ok').disabled=false; document.getElementById('m2ok').textContent='Salvar'; }
+    }finally{ $('#m2ok').disabled=false; $('#m2ok').textContent='Salvar'; }
   }
 
-  /* Sites */
-  document.getElementById('btnSites')?.addEventListener('click', doSites);
-  document.getElementById('qSites')?.addEventListener('keydown', e=>{ if(e.key==='Enter') doSites(); });
+  /* SITES OFICIAIS */
+  $('#btnSites').addEventListener('click', doSites);
+  $('#qSites').addEventListener('keydown', e=>{ if(e.key==='Enter') doSites(); });
   async function doSites(){
-    const q=(document.getElementById('qSites').value||'').trim();
-    if(!q){ document.getElementById('outSites').textContent='Digite a pergunta.'; return; }
-    show(document.getElementById('sitesBusy'),true); document.getElementById('outSites').textContent='—';
+    const q=($('#qSites').value||'').trim();
+    if(!q){ $('#outSites').textContent='Digite a pergunta.'; return; }
+    show($('#sitesBusy'),true); $('#outSites').textContent='—';
     try{
       const qRich = q + " — FORMATO: responda em português com texto útil e liste as URLs oficiais no final. Substitua observações por: 'Fontes oficiais Affix, Alter, Hapvida'.";
       const r = await call('chat',{q:qRich});
       const txt = (r && r.text) ? r.text : '—';
       const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
-      document.getElementById('outSites').innerHTML = html;
-    }catch(e){ document.getElementById('outSites').textContent='Erro: '+e.message;
-    }finally{ show(document.getElementById('sitesBusy'),false); }
+      $('#outSites').innerHTML = html;
+    }catch(e){ $('#outSites').textContent='Erro: '+e.message;
+    }finally{ show($('#sitesBusy'),false); }
   }
 
   /* PDFs */
-  document.getElementById('btnPDF')?.addEventListener('click', doPDF);
-  document.getElementById('qPDF')?.addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
+  $('#btnPDF').addEventListener('click', doPDF);
+  $('#qPDF').addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
   async function doPDF(){
-    const q=(document.getElementById('qPDF').value||'').trim();
-    if(!q){ document.getElementById('pdfStatus').textContent='Digite um termo.'; return; }
-    show(document.getElementById('pdfBusy'),true); document.getElementById('pdfStatus').textContent='Listando arquivos...'; document.getElementById('pdfList').innerHTML="";
+    const q=($('#qPDF').value||'').trim();
+    if(!q){ $('#pdfStatus').textContent='Digite um termo.'; return; }
+    show($('#pdfBusy'),true); $('#pdfStatus').textContent='Listando arquivos...'; $('#pdfList').innerHTML="";
     try{
       const res = await call('searchindexed',{q});
-      if(!res || res.ok===false){ document.getElementById('pdfStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
-      const items=res.items||[]; document.getElementById('pdfStatus').textContent=`Resultados: ${items.length}`;
+      if(!res || res.ok===false){ $('#pdfStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
+      const items=res.items||[]; $('#pdfStatus').textContent=`Resultados: ${items.length}`;
       const frag=document.createDocumentFragment();
       items.forEach((it,idx)=>{
         const li=document.createElement('li'); li.className='item'; li.id='pdf_'+idx;
@@ -393,42 +406,42 @@ document.addEventListener('DOMContentLoaded', () => {
                       <div class="hint" id="snip_pdf_${idx}">Carregando prévias…</div>`;
         frag.appendChild(li);
       });
-      document.getElementById('pdfList').appendChild(frag);
+      $('#pdfList').appendChild(frag);
       if(items.length){
         let from=0;
         while(from < items.length){
           const r = await call('fetchindexedsnippets',{sessionId:res.sessionId, from, limit:6});
           (r.items||[]).forEach(row=>{
-            const el=document.getElementById('snip_pdf_'+row.index);
-            if(el) el.innerHTML=(row.snippets && row.snippets.length)
+            const el=$('#snip_pdf_'+row.index);
+            el.innerHTML=(row.snippets && row.snippets.length)
               ? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("")
               : '<span class="hint">—</span>';
           });
           from = r.to;
         }
-        document.getElementById('pdfStatus').textContent += " • prévias completas";
+        $('#pdfStatus').textContent += " • prévias completas";
       }
-    }catch(e){ document.getElementById('pdfStatus').textContent='Erro: '+e.message;
-    }finally{ show(document.getElementById('pdfBusy'),false); }
+    }catch(e){ $('#pdfStatus').textContent='Erro: '+e.message;
+    }finally{ show($('#pdfBusy'),false); }
   }
 
   /* CRION */
-  document.getElementById('btnCRION')?.addEventListener('click', doCRION);
-  document.getElementById('qCRION')?.addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
-  document.getElementById('btnReIdxCRION')?.addEventListener('click', async ()=>{
-    document.getElementById('crionStatus').textContent='Reindexando CRION…'; show(document.getElementById('crionBusy'),true);
-    try{ const r=await call('reindexcrion',{}); document.getElementById('crionStatus').textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou"); }
-    catch(e){ document.getElementById('crionStatus').textContent='Erro: '+e.message; }
-    finally{ show(document.getElementById('crionBusy'),false); }
+  $('#btnCRION').addEventListener('click', doCRION);
+  $('#qCRION').addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
+  $('#btnReIdxCRION').addEventListener('click', async ()=>{
+    $('#crionStatus').textContent='Reindexando CRION…'; show($('#crionBusy'),true);
+    try{ const r=await call('reindexcrion',{}); $('#crionStatus').textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou"); }
+    catch(e){ $('#crionStatus').textContent='Erro: '+e.message; }
+    finally{ show($('#crionBusy'),false); }
   });
   async function doCRION(){
-    const q=(document.getElementById('qCRION').value||'').trim();
-    if(!q){ document.getElementById('crionStatus').textContent='Digite um termo.'; return; }
-    show(document.getElementById('crionBusy'),true); document.getElementById('crionStatus').textContent='Listando arquivos…'; document.getElementById('crionList').innerHTML="";
+    const q=($('#qCRION').value||'').trim();
+    if(!q){ $('#crionStatus').textContent='Digite um termo.'; return; }
+    show($('#crionBusy'),true); $('#crionStatus').textContent='Listando arquivos…'; $('#crionList').innerHTML="";
     try{
       const res = await call('searchcrion',{q});
-      if(!res || res.ok===false){ document.getElementById('crionStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
-      const items=res.items||[]; document.getElementById('crionStatus').textContent=`Resultados: ${items.length}`;
+      if(!res || res.ok===false){ $('#crionStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
+      const items=res.items||[]; $('#crionStatus').textContent=`Resultados: ${items.length}`;
       const frag=document.createDocumentFragment();
       items.forEach((it,idx)=>{
         const li=document.createElement('li'); li.className='item'; li.id='crion_'+idx;
@@ -437,23 +450,23 @@ document.addEventListener('DOMContentLoaded', () => {
                       <div class="hint" id="snip_crion_${idx}">Carregando prévias…</div>`;
         frag.appendChild(li);
       });
-      document.getElementById('crionList').appendChild(frag);
+      $('#crionList').appendChild(frag);
       if(items.length){
         let from=0;
         while(from < items.length){
           const r = await call('fetchcrionsnippets',{sessionId:res.sessionId, from, limit:6});
           (r.items||[]).forEach(row=>{
-            const el=document.getElementById('snip_crion_'+row.index);
+            const el=$('#snip_crion_'+row.index);
             el.innerHTML=(row.snippets && row.snippets.length)
               ? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("")
               : '<span class="hint">—</span>';
           });
           from = r.to;
         }
-        document.getElementById('crionStatus').textContent += " • prévias completas";
+        $('#crionStatus').textContent += " • prévias completas";
       }
-    }catch(e){ document.getElementById('crionStatus').textContent='Erro: '+e.message;
-    }finally{ show(document.getElementById('crionBusy'),false); }
+    }catch(e){ $('#crionStatus').textContent='Erro: '+e.message;
+    }finally{ show($('#crionBusy'),false); }
   }
 });
 </script>
