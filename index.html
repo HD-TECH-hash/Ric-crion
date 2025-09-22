@@ -30,11 +30,10 @@
   .header-logo{ height:44px; object-fit:contain; filter:drop-shadow(0 2px 4px #0002) }
   .left-img  { position:absolute; left:14px;  top:50%; transform:translateY(-50%) }
 
-  /* Agrupa botões + logo da direita (impede sobreposição) */
+  /* Direita: botões empilhados + logo HDS */
   .right-side{ position:absolute; right:14px; top:50%; transform:translateY(-50%);
-               display:flex; align-items:center; gap:12px; }
-  .right-side .header-logo{ height:44px }
-
+               display:flex; align-items:center; gap:16px; }
+  .actions{ display:flex; flex-direction:column; gap:10px; }
   .iconbtn{
     width:36px;height:36px;border-radius:12px;border:1px solid #ffffff40; display:grid;place-items:center;
     cursor:pointer;backdrop-filter:blur(4px); transition:.15s; box-shadow:0 6px 14px rgba(0,0,0,.15)
@@ -47,8 +46,8 @@
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
   @media (max-width:980px){
     .grid{grid-template-columns:1fr}
-    .right-side .header-logo{display:none}  /* some o logo da direita no mobile */
-    .right-side{right:14px}                 /* mantém os botões acessíveis */
+    .right-side .header-logo{display:none}  /* esconde HDS no mobile para sobrar espaço */
+    .right-side{right:14px}
     .header-logo{height:26px}
   }
 
@@ -104,9 +103,9 @@
            alt="Logo esquerdo">
       <!-- centro vazio -->
 
-      <!-- direita: botões + HDS (agrupados) -->
+      <!-- direita: botões empilhados + HDS -->
       <div class="right-side">
-        <div class="tools" aria-label="atalhos">
+        <div class="actions" aria-label="atalhos">
           <button id="toggleNote" type="button" class="iconbtn icon-note" title="Post-it">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M8 3h8a3 3 0 0 1 3 3v7l-7 7H8a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" stroke="#1f2937" stroke-width="2" fill="#fde68a"/>
@@ -278,13 +277,185 @@
   </div>
 
 <script>
-/* ======= CONFIG ======= */
 const APP_URL = "https://script.google.com/macros/s/AKfycbxnTEhSw1u5Ib0jCqJsURoZM30VfCpfeqKqKvYpXdKgJDUPrw8Q8hScbSzw4zVkI7u0rw/exec";
 
-/* ======= HELPERS ======= */
 const $ = s => document.querySelector(s);
 const show = (el, on=true)=>{ if(!el) return; el.style.display = on? '' : 'none'; };
 function esc(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 function cleanName(n){ return String(n||'').replace(/^(OCR_TMP_|TMP_SLIDES_)+/ig,''); }
 function link(url, txt){ return `<a href="${url}" target="_blank" rel="noopener">${esc(txt||url)}</a>`; }
-function humanSize(b){ if(!b||b<=0
+function humanSize(b){ if(!b||b<=0) return "—"; const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){ b/=1024; i++; } return b.toFixed(1)+" "+u[i]; }
+function call(endpoint, payload){
+  const url = APP_URL + "?fn=" + encodeURIComponent(endpoint);
+  return fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(payload||{}) })
+         .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
+}
+
+/* Modais */
+function openM(id){ $('#modal'+id).style.display='flex'; }
+function closeM(id){ $('#modal'+id).style.display='none'; }
+function backM1(){ closeM(2); openM(1); }
+
+/* Calc */
+const calc = { buf:"0", op:null, mem:0, fresh:true };
+function refresh(){ $('#scr').textContent = calc.buf; }
+function press(k){
+  if(/\d/.test(k)){ calc.buf = (calc.fresh||calc.buf==="0")? k : calc.buf+k; calc.fresh=false; return refresh(); }
+  if(k==="00"){ press("0"); return press("0"); }
+  if(k==="."){ if(!calc.buf.includes(".")) calc.buf += "."; calc.fresh=false; return refresh(); }
+  if(k==="C"){ calc.buf="0"; calc.op=null; calc.fresh=true; return refresh(); }
+  if(k==="±"){ if(calc.buf!=="0") calc.buf = calc.buf.startsWith("-")? calc.buf.slice(1):"-"+calc.buf; return refresh(); }
+  if(k==="%"){ calc.buf = String(parseFloat(calc.buf)/100); return refresh(); }
+  if("+-*/".includes(k)){ calc.mem=parseFloat(calc.buf); calc.op=k; calc.fresh=true; return; }
+  if(k==="=" && calc.op){ const a=calc.mem, b=parseFloat(calc.buf);
+    let v=0; switch(calc.op){case "+":v=a+b;break;case "-":v=a-b;break;case "*":v=a*b;break;case "/":v=b===0?"Erro":a/b;break;}
+    calc.buf=String(v); calc.op=null; calc.fresh=true; return refresh();
+  }
+}
+
+/* App */
+document.addEventListener('DOMContentLoaded', () => {
+  /* Post-it */
+  const noteWrap = $('#noteWrap'), noteArea = $('#noteArea');
+  $('#toggleNote').onclick = ()=>{ noteWrap.style.display = noteWrap.style.display ? "" : "block"; if(noteWrap.style.display) noteArea.focus(); };
+  $('#clearNote').onclick = ()=>{ noteArea.value=""; localStorage.removeItem('ric_note'); };
+  $('#closeNote').onclick = ()=>{ noteWrap.style.display="none"; };
+  noteArea.value = localStorage.getItem('ric_note') || "";
+  noteArea.addEventListener('input', ()=> localStorage.setItem('ric_note', noteArea.value));
+
+  /* Calc */
+  $('#toggleCalc').onclick = ()=>{ $('#calcWrap').style.display = $('#calcWrap').style.display? "" : "block"; refresh(); };
+  $('#closeCalc').onclick = ()=>{ $('#calcWrap').style.display="none"; };
+  $('#keys').addEventListener('click', e=>{ const k=e.target.dataset.k; if(k) press(k); });
+
+  /* Alerta */
+  $('#btnAlert').addEventListener('click', async ()=>{
+    const box=$('#alertBox'), msg=$('#alertMsg'), resp=$('#alertResp');
+    show(box,false); show($('#alertBusy'),true);
+    try{
+      const r = await call('getalert',{});
+      if(!r || r.ok===false){ msg.textContent="Falha ao consultar."; resp.textContent=""; show(box,true); return; }
+      if(!r.found){ msg.textContent="Sem recado no momento."; resp.textContent=""; show(box,true); return; }
+      msg.textContent = "🚨 " + String(r.mensagem||"—").toUpperCase();
+      resp.textContent = r.responsavel ? String(r.responsavel||"").toLowerCase() : "";
+      show(box,true);
+    }catch(e){ msg.textContent="Erro: "+e.message; resp.textContent=""; show(box,true);
+    }finally{ show($('#alertBusy'),false); }
+  });
+
+  let _newAlert="", _newResp="";
+  document.getElementById('btnAdjust')?.addEventListener('click', ()=>{ _newAlert=""; _newResp=""; document.getElementById('m1text').value=""; document.getElementById('m2text').value=""; openM(1); });
+  window.goM2 = function(){ _newAlert=(document.getElementById('m1text').value||"").trim(); if(!_newAlert){ document.getElementById('m1text').focus(); return; } closeM(1); openM(2); }
+  document.getElementById('m2text')?.addEventListener('input', e=>{ const v=e.target.value; e.target.value = v? v[0].toUpperCase()+v.slice(1).toLowerCase():v; });
+  window.saveAlert = async function(){
+    _newResp = document.getElementById('m2text').value.trim();
+    try{
+      document.getElementById('m2ok').disabled=true; document.getElementById('m2ok').textContent='Salvando...';
+      await call('adjustalert',{mensagem:_newAlert, responsavel:_newResp});
+      closeM(2); openM(3);
+    }catch(e){ closeM(2); alert("Falha ao ajustar: "+e.message);
+    }finally{ document.getElementById('m2ok').disabled=false; document.getElementById('m2ok').textContent='Salvar'; }
+  }
+
+  /* Sites */
+  document.getElementById('btnSites')?.addEventListener('click', doSites);
+  document.getElementById('qSites')?.addEventListener('keydown', e=>{ if(e.key==='Enter') doSites(); });
+  async function doSites(){
+    const q=(document.getElementById('qSites').value||'').trim();
+    if(!q){ document.getElementById('outSites').textContent='Digite a pergunta.'; return; }
+    show(document.getElementById('sitesBusy'),true); document.getElementById('outSites').textContent='—';
+    try{
+      const qRich = q + " — FORMATO: responda em português com texto útil e liste as URLs oficiais no final. Substitua observações por: 'Fontes oficiais Affix, Alter, Hapvida'.";
+      const r = await call('chat',{q:qRich});
+      const txt = (r && r.text) ? r.text : '—';
+      const html = String(txt).replace(/(https?:\/\/[^\s]+)/g, m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
+      document.getElementById('outSites').innerHTML = html;
+    }catch(e){ document.getElementById('outSites').textContent='Erro: '+e.message;
+    }finally{ show(document.getElementById('sitesBusy'),false); }
+  }
+
+  /* PDFs */
+  document.getElementById('btnPDF')?.addEventListener('click', doPDF);
+  document.getElementById('qPDF')?.addEventListener('keydown', e=>{ if(e.key==='Enter') doPDF(); });
+  async function doPDF(){
+    const q=(document.getElementById('qPDF').value||'').trim();
+    if(!q){ document.getElementById('pdfStatus').textContent='Digite um termo.'; return; }
+    show(document.getElementById('pdfBusy'),true); document.getElementById('pdfStatus').textContent='Listando arquivos...'; document.getElementById('pdfList').innerHTML="";
+    try{
+      const res = await call('searchindexed',{q});
+      if(!res || res.ok===false){ document.getElementById('pdfStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
+      const items=res.items||[]; document.getElementById('pdfStatus').textContent=`Resultados: ${items.length}`;
+      const frag=document.createDocumentFragment();
+      items.forEach((it,idx)=>{
+        const li=document.createElement('li'); li.className='item'; li.id='pdf_'+idx;
+        const meta = `<div class="hint">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+        li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                      <div class="hint" id="snip_pdf_${idx}">Carregando prévias…</div>`;
+        frag.appendChild(li);
+      });
+      document.getElementById('pdfList').appendChild(frag);
+      if(items.length){
+        let from=0;
+        while(from < items.length){
+          const r = await call('fetchindexedsnippets',{sessionId:res.sessionId, from, limit:6});
+          (r.items||[]).forEach(row=>{
+            const el=document.getElementById('snip_pdf_'+row.index);
+            if(el) el.innerHTML=(row.snippets && row.snippets.length)
+              ? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("")
+              : '<span class="hint">—</span>';
+          });
+          from = r.to;
+        }
+        document.getElementById('pdfStatus').textContent += " • prévias completas";
+      }
+    }catch(e){ document.getElementById('pdfStatus').textContent='Erro: '+e.message;
+    }finally{ show(document.getElementById('pdfBusy'),false); }
+  }
+
+  /* CRION */
+  document.getElementById('btnCRION')?.addEventListener('click', doCRION);
+  document.getElementById('qCRION')?.addEventListener('keydown', e=>{ if(e.key==='Enter') doCRION(); });
+  document.getElementById('btnReIdxCRION')?.addEventListener('click', async ()=>{
+    document.getElementById('crionStatus').textContent='Reindexando CRION…'; show(document.getElementById('crionBusy'),true);
+    try{ const r=await call('reindexcrion',{}); document.getElementById('crionStatus').textContent="Index CRION: "+(r && r.ok ? "OK" : "Falhou"); }
+    catch(e){ document.getElementById('crionStatus').textContent='Erro: '+e.message; }
+    finally{ show(document.getElementById('crionBusy'),false); }
+  });
+  async function doCRION(){
+    const q=(document.getElementById('qCRION').value||'').trim();
+    if(!q){ document.getElementById('crionStatus').textContent='Digite um termo.'; return; }
+    show(document.getElementById('crionBusy'),true); document.getElementById('crionStatus').textContent='Listando arquivos…'; document.getElementById('crionList').innerHTML="";
+    try{
+      const res = await call('searchcrion',{q});
+      if(!res || res.ok===false){ document.getElementById('crionStatus').textContent='Erro ao buscar: '+(res&&res.message?res.message:''); return; }
+      const items=res.items||[]; document.getElementById('crionStatus').textContent=`Resultados: ${items.length}`;
+      const frag=document.createDocumentFragment();
+      items.forEach((it,idx)=>{
+        const li=document.createElement('li'); li.className='item'; li.id='crion_'+idx;
+        const meta  = `<div class="hint">Tamanho: ${humanSize(it.size||0)} • Atualizado: ${it.updated? new Date(it.updated).toLocaleString(): "—"}</div>`;
+        li.innerHTML=`<div><b>${esc(cleanName(it.name))}</b> • ${link(it.url,'Abrir')}</div>${meta}
+                      <div class="hint" id="snip_crion_${idx}">Carregando prévias…</div>`;
+        frag.appendChild(li);
+      });
+      document.getElementById('crionList').appendChild(frag);
+      if(items.length){
+        let from=0;
+        while(from < items.length){
+          const r = await call('fetchcrionsnippets',{sessionId:res.sessionId, from, limit:6});
+          (r.items||[]).forEach(row=>{
+            const el=document.getElementById('snip_crion_'+row.index);
+            el.innerHTML=(row.snippets && row.snippets.length)
+              ? row.snippets.map(s=>`<div class="snip">${esc(s)}</div>`).join("")
+              : '<span class="hint">—</span>';
+          });
+          from = r.to;
+        }
+        document.getElementById('crionStatus').textContent += " • prévias completas";
+      }
+    }catch(e){ document.getElementById('crionStatus').textContent='Erro: '+e.message;
+    }finally{ show(document.getElementById('crionBusy'),false); }
+  }
+});
+</script>
+</body>
+</html>
